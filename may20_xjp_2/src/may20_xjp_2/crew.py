@@ -20,11 +20,17 @@ embedding_config={
 
 content_source = CrewDoclingSource(
     file_paths=[
-        "### Comprehensive Planning Tool for PRC Employing Gray Zone Tactics.md",
+        "Planning Tool for PRC Gray Zone Tactics.md",
         "XJP Instructions 1.md",
     ],
 )
 
+#pla_source = CrewDoclingSource(
+#    file_paths=[
+#        "PLA_doctrine.md",
+#        "Sun Tzu.md",
+#    ],
+#)
 #pdf_source = PDFKnowledgeSource(
 #    file_paths=["doc1.pdf", "doc2.pdf"]
 #)
@@ -97,6 +103,7 @@ class May20Xjp2():
         return Agent(
             config=self.agents_config['PLAOptionsStrategistAgent'], # type: ignore[index]
             verbose=True,
+            #knowledge_sources=[pla_source],
             embedder={
                 "provider": "ollama",
                 "config": {
