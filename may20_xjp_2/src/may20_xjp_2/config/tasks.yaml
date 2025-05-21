@@ -43,7 +43,6 @@ assess_signaling_and_recommend_strategic_path_task:
 
 generate_active_pla_options_task:
   description: >
-    IF human_select_strategic_path_task output starts with 'ACTIVE POSTURE:':
     Based on the specific active posture chosen ('{context.output}') and
     initial event analysis ('{context.output}'), develop 2-3 plausible,
     distinct, concise military/defense response options (max 300 words per option).
@@ -55,11 +54,12 @@ generate_active_pla_options_task:
   agent: PLAOptionsStrategistAgent
   context:
     - analyze_event_task
+    - develop_active_strategic_postures_task
+    - assess_signaling_and_recommend_strategic_path_task
 
 
 develop_active_diplomatic_strategy_task:
   description: >
-    IF human_select_strategic_path_task output starts with 'ACTIVE POSTURE:':
     Based on chosen posture ('{context.output}'), potential/selected PLA
     actions ('{context.output}', '{context.output}'), and analysis
     ('{context.output}'), develop a firm diplomatic strategy. Include
@@ -72,4 +72,6 @@ develop_active_diplomatic_strategy_task:
   agent: MFADiplomaticStrategistAgent
   context:
     - analyze_event_task
+    - develop_active_strategic_postures_task
+    - assess_signaling_and_recommend_strategic_path_task
     - generate_active_pla_options_task
