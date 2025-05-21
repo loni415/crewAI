@@ -1,0 +1,75 @@
+analyze_event_task:
+  description: >
+    Analyze foreign policy event: {input_event_description}. Detail: nature,
+    direct/indirect impact on Chinese core interests, initiating entity's
+    likely objectives/red lines, potential escalatory pathways, key
+    sensitivities for China. Output: Concise analytical brief (max 500 words).
+  expected_output: >
+    Concise analytical brief covering event details, impact, objectives,
+    escalation, and sensitivities.
+  agent: ForeignPolicyEventAnalystAgent
+
+develop_active_strategic_postures_task:
+  description: >
+    Based on analyses, define 2-3 plausible active strategic response
+    postures for China. Justify each by CCP priorities, risk tolerance,
+    and desired end-states. Output: Concise document (max 600 words total)
+    of active postures with justifications.
+  expected_output: >
+    Document outlining 2-3 distinct active strategic postures with
+    justifications.
+  agent: CCPStrategicPolicyAdvisor
+  context:
+    - analyze_event_task
+
+assess_signaling_and_recommend_strategic_path_task:
+  description: >
+    Review initial analyses and proposed active postures. Assess signaling
+    implications and escalation risks of each proposed active posture.
+    Then, provide an overarching recommendation for China's strategic path:
+    1. 'Active Posture' (specify which proposed active posture is best),
+    2. 'Strategic Ambiguity', or 3. 'Calibrated Delay'. Justify this
+    overall recommendation based on escalation control, achieving
+    objectives, and international perception management. Output: Concise
+    recommendation and risk assessment (max 500 words).
+  expected_output: >
+    Recommendation for 'Active Posture' (specifying one), 'Strategic
+    Ambiguity', or 'Calibrated Delay', with justification and risk
+    assessment of proposed active postures.
+  agent: StrategicSignalingAssessmentAgent
+  context:
+    - analyze_event_task
+    - develop_active_strategic_postures_task
+
+generate_active_pla_options_task:
+  description: >
+    IF human_select_strategic_path_task output starts with 'ACTIVE POSTURE:':
+    Based on the specific active posture chosen ('{context.output}') and
+    initial event analysis ('{context.output}'), develop 2-3 plausible,
+    distinct, concise military/defense response options (max 300 words per option).
+    Detail actions (conventional, cyber, space, info warfare), objectives,
+    resources, risks, deterrent effects. ELSE, state 'No PLA action for
+    non-active posture.'
+  expected_output: >
+    List of 2-3 military options or 'No PLA action for non-active posture.'
+  agent: PLAOptionsStrategistAgent
+  context:
+    - analyze_event_task
+
+
+develop_active_diplomatic_strategy_task:
+  description: >
+    IF human_select_strategic_path_task output starts with 'ACTIVE POSTURE:':
+    Based on chosen posture ('{context.output}'), potential/selected PLA
+    actions ('{context.output}', '{context.output}'), and analysis
+    ('{context.output}'), develop a firm diplomatic strategy. Include
+    core MFA statement (max 200 words), key talking points, target
+    actors/fora, offensive/de-escalation paths. ELSE, state 'No active
+    diplomatic strategy for this path.'
+  expected_output: >
+    Concise active diplomatic strategy & MFA statement, or 'No active
+    diplomatic strategy for this path.'
+  agent: MFADiplomaticStrategistAgent
+  context:
+    - analyze_event_task
+    - generate_active_pla_options_task
