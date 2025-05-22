@@ -29,7 +29,6 @@ def run():
     except Exception as e:
         raise Exception(f"An error occurred while running the crew: {e}")
     # Accessing the crew output
-    print(f"Raw Output: {crew_output.raw}")
     if crew_output.json_dict:
         print(f"JSON Output: {json.dumps(crew_output.json_dict, indent=2)}")
     if crew_output.pydantic:
@@ -43,15 +42,24 @@ def train():
     Train the crew for a given number of iterations.
     """
     inputs = {
-        "topic": "AI LLMs",
-        'current_year': str(datetime.now().year)
+        'input_event_description': 'Japan imposes unilateral fishing ban on the Senkaku Islands EEZ',
+        'current_year': str(datetime.now().year),
+        'aggression_level': '', # Default to empty (optional)
+        'domain_emphasis': ''    # Default to empty (Optional)
     }
+
     try:
-        May20Xjp2().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
-
+        crew_output = May20Xjp2().crew().kickoff(inputs=inputs)
     except Exception as e:
-        raise Exception(f"An error occurred while training the crew: {e}")
-
+        raise Exception(f"An error occurred while running the crew: {e}")
+    # Accessing the crew output
+    if crew_output.json_dict:
+        print(f"JSON Output: {json.dumps(crew_output.json_dict, indent=2)}")
+    if crew_output.pydantic:
+        print(f"Pydantic Output: {crew_output.pydantic}")
+    print(f"Tasks Output: {crew_output.tasks_output}")
+    print(f"Token Usage: {crew_output.token_usage}")
+    
 def replay():
     """
     Replay the crew execution from a specific task.

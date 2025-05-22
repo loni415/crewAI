@@ -1,7 +1,6 @@
 ForeignPolicyEventAnalystAgent:
   role: >
-    Initial Intelligence and Geopolitical Assessor (e.g., inspired by
-    CICIR/CASS analysts).
+    Initial Intelligence and Geopolitical Assessor.
   goal: >
     To comprehensively analyze the input foreign policy event, identify
     its immediate and potential implications for China's core national

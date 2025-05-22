@@ -19,14 +19,14 @@ llm = LLM(
 embedding_config={
     "provider": "ollama",
     "config": {
-        "model": "mxbai-embed-large",
+        "model": "bge-m3",
     }
 }
 
 content_source = CrewDoclingSource(
     file_paths=[
-        "Planning Tool for PRC Gray Zone Tactics.md",
-        "XJP Instructions 1.md",
+        "PRC_GrayZone_Planner.md",
+        "XJP_Instructions_1.md",
     ],
 )
 
@@ -75,7 +75,7 @@ class May20Xjp2():
             embedder={
                 "provider": "ollama",
                 "config": {
-                    "model": "mxbai-embed-large",
+                    "model": "bge-m3",
                     "base_url": "http://localhost:11434"
                 }
             },
@@ -90,7 +90,7 @@ class May20Xjp2():
             embedder={
                 "provider": "ollama",
                 "config": {
-                    "model": "mxbai-embed-large",
+                    "model": "bge-m3",
                     "base_url": "http://localhost:11434"
                 }
             },
@@ -104,7 +104,7 @@ class May20Xjp2():
             embedder={
                 "provider": "ollama",
                 "config": {
-                    "model": "mxbai-embed-large",
+                    "model": "bge-m3",
                     "base_url": "http://localhost:11434"
                 }
             },
@@ -120,7 +120,7 @@ class May20Xjp2():
             embedder={
                 "provider": "ollama",
                 "config": {
-                    "model": "mxbai-embed-large",
+                    "model": "bge-m3",
                     "base_url": "http://localhost:11434"
                 }
             },
@@ -135,7 +135,7 @@ class May20Xjp2():
             embedder={
                 "provider": "ollama",
                 "config": {
-                    "model": "mxbai-embed-large",
+                    "model": "bge-m3",
                     "base_url": "http://localhost:11434"
                 }
             },
@@ -154,7 +154,7 @@ class May20Xjp2():
             embedder={
                 "provider": "ollama",
                 "config": {
-                    "model": "mxbai-embed-large",
+                    "model": "bge-m3",
                     "base_url": "http://localhost:11434"
                 }
             },
