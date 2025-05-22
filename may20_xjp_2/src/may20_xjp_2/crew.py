@@ -197,6 +197,7 @@ class May20Xjp2():
     def format_final_response_task(self) -> Task: # New Task
         return Task(
             config=self.tasks_config['format_final_response_task'], # type: ignore[index]
+            output_filer="final_response.md"
         )
 
     @crew

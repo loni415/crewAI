@@ -25,9 +25,17 @@ def run():
     }
 
     try:
-        May20Xjp2().crew().kickoff(inputs=inputs)
+        crew_output = May20Xjp2().crew().kickoff(inputs=inputs)
     except Exception as e:
         raise Exception(f"An error occurred while running the crew: {e}")
+    # Accessing the crew output
+    print(f"Raw Output: {crew_output.raw}")
+    if crew_output.json_dict:
+        print(f"JSON Output: {json.dumps(crew_output.json_dict, indent=2)}")
+    if crew_output.pydantic:
+        print(f"Pydantic Output: {crew_output.pydantic}")
+    print(f"Tasks Output: {crew_output.tasks_output}")
+    print(f"Token Usage: {crew_output.token_usage}")
 
 
 def train():

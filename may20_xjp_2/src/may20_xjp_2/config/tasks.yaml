@@ -105,3 +105,4 @@ format_final_response_task:
     - assess_signaling_and_recommend_strategic_path_task
     - generate_active_pla_options_task
     - develop_active_diplomatic_strategy_task
+  output_file: output/final_response.md
