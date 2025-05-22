@@ -1,0 +1,3 @@
+2025-05-21 17:27:23: task_name="analyze_event_task", task="Analyze foreign policy event: Japan imposes unilateral fishing ban on the Senkaku Islands EEZ. Consider the provided Aggression Level:  and Domain Emphasis: . Detail: nature of the event, direct/indirect impact on Chinese core interests, initiating entity's likely objectives/red lines, potential escalatory pathways, key sensitivities for China. Output: Concise analytical brief (max 500 words).
+", agent="Initial Intelligence and Geopolitical Assessor (e.g., inspired by CICIR/CASS analysts).
+", status="started"

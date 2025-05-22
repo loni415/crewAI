@@ -2,12 +2,17 @@ from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
+from crewai.memory import LongTermMemory, ShortTermMemory, EntityMemory
+from crewai.memory.storage.rag_storage import RAGStorage
+from pydantic import BaseModel, Field
+
 from crewai.knowledge.source.crew_docling_source import CrewDoclingSource
 from crewai.knowledge.knowledge_config import KnowledgeConfig
-
+from crewai.memory.long_term.long_term_memory import LongTermMemory
+from crewai.memory.storage.ltm_sqlite_storage import LTMSQLiteStorage
 
 llm = LLM(
-    model="ollama/qwen3-30b-custom",
+    model="ollama/qwen3:30b-a3b-q8_0",
     base_url="http://localhost:11434"
 )
 
@@ -39,6 +44,14 @@ content_source = CrewDoclingSource(
 
 knowledge_config = KnowledgeConfig(results_limit=10, score_threshold=0.5)
 
+# Set up long-term memory (can customize db_path)
+long_term_memory = LongTermMemory(
+    storage=LTMSQLiteStorage(db_path="./long_term_memory.db")
+)
+
+entity_memory = EntityMemory(
+    storage=RAGStorage(type="entities", embedder_config=embedding_config)
+    )
 
 @CrewBase
 class May20Xjp2():
@@ -131,6 +144,22 @@ class May20Xjp2():
         # To learn more about structured task outputs,
         # task dependencies, and task callbacks, check out the documentation:
         # https://docs.crewai.com/concepts/tasks#overview-of-a-task
+
+
+    @agent
+    def ResponseSynthesizerAgent(self) -> Agent: # New Agent
+        return Agent(
+            config=self.agents_config['ResponseSynthesizerAgent'], # type: ignore[index]
+            verbose=True,
+            embedder={
+                "provider": "ollama",
+                "config": {
+                    "model": "mxbai-embed-large",
+                    "base_url": "http://localhost:11434"
+                }
+            },
+        )
+
     # --- Task Definitions ---
 
     @task
@@ -163,6 +192,13 @@ class May20Xjp2():
             config=self.tasks_config['develop_active_diplomatic_strategy_task'], # type: ignore[index]
         )
 
+
+    @task
+    def format_final_response_task(self) -> Task: # New Task
+        return Task(
+            config=self.tasks_config['format_final_response_task'], # type: ignore[index]
+        )
+
     @crew
     def crew(self) -> Crew:
         """Creates the May20Xjp2 crew"""
@@ -177,7 +213,12 @@ class May20Xjp2():
                 content_source
             ],
             verbose=True,
+            function_calling_llm=llm,
             chat_llm=llm,
             memory=True,
+            output_log_file="output.log",
+            long_term_memory=long_term_memory,
+            entity_memory=entity_memory,
+            knowledge_config=knowledge_config,
             embedder=embedding_config,
         )

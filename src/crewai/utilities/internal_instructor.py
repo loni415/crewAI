@@ -29,7 +29,11 @@ class InternalInstructor:
             import instructor
             from litellm import completion
 
-            self._client = instructor.from_litellm(completion)
+            self._client = instructor.from_litellm(
+                completion,
+                model=self.llm.model,
+                api_base=self.llm.base_url,
+                )
 
     def to_json(self):
         model = self.to_pydantic()

@@ -19,7 +19,9 @@ def run():
     """
     inputs = {
         'input_event_description': 'Japan imposes unilateral fishing ban on the Senkaku Islands EEZ',
-        'current_year': str(datetime.now().year)
+        'current_year': str(datetime.now().year),
+        'aggression_level': '', # Default to empty (optional)
+        'domain_emphasis': ''    # Default to empty (Optional)
     }
 
     try:
