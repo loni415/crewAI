@@ -210,6 +210,8 @@ class May20Xjp2():
             agents=self.agents,
             tasks=self.tasks,
             process=Process.sequential,
+            planning=True,
+            planning_llm="ollama/qwen3:30b-a3b-q8_0",
             knowledge_sources=[
                 content_source
             ],
