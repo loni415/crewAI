@@ -258,7 +258,7 @@ class May20Xjp2():
             function_calling_llm=llm,
             chat_llm=llm,
             memory=True,
-            output_log_file="output.log",
+            output_log_file="log.txt",
             long_term_memory=long_term_memory,
             entity_memory=entity_memory,
             knowledge_config=knowledge_config,
