@@ -202,14 +202,15 @@ class May20Xjp2():
         )
 
     @task
-    def develop_active_strategic_postures_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['develop_active_strategic_postures_task'], # type: ignore[index]
-        )
-    @task
     def assess_economic_tech_impact_task(self) -> Task:
         return Task(
             config=self.tasks_config['assess_economic_tech_impact_task'], # type: ignore[index]
+        )
+
+    @task
+    def develop_active_strategic_postures_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['develop_active_strategic_postures_task'], # type: ignore[index]
         )
 
     @task
@@ -249,7 +250,7 @@ class May20Xjp2():
             tasks=self.tasks,
             process=Process.sequential,
             planning=True,
-            planning_llm="ollama/qwen3:30b-a3b-q8_0",
+            planning_llm=llm,
             knowledge_sources=[
                 content_source
             ],
