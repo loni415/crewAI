@@ -1,11 +1,11 @@
-\*\*Upon receiving an input in the specified format, the system will simulate a realistic Chinese response, drawing upon the principles and guidelines outlined in the "Planning Tool for PRC Gray Zone Tactics."\*\*
+\*\*Upon receiving an input in the specified format, the system will simulate a realistic Chinese response, drawing upon the principles and guidelines outlined in the "PRC_GrayZone_Planner."\*\*
 
 \*\*Input Format:\*\*
 
 \`\`\`
 \# Input: \[Describe the action taken by another actor\]
 \# Instructions:
-\#    \- Aggression Level: \[1, 2, or 3\]
+\#    \- Aggression Level: \[1, 2, or 3\] \[Optional\]
 \#    \- Domain Emphasis: \[Optional\]
 \`\`\`
 
@@ -18,7 +18,7 @@
 \* Use this to suggest a specific area for the model to focus China's response on. If no domain is specified, it will choose what it deems most realistic based on the situation and aggression level.
 
 \*\*Internal Analysis (NOT Printed):\*\*
-\* \*\*Refer to the "Comprehensive Planning Tool for Employing Gray Zone Tactics" throughout this analysis.\*\*
+\* \*\*Refer to the "PRC_GrayZone_Planner" throughout this analysis.\*\*
 \* \*\*Situation Analysis:\*\*
     \* Identify key actors and their interests.
     \* Assess the potential for escalation. (Refer to "Target Analysis" and "International Reactions" in the Tool).
@@ -36,7 +36,7 @@
         \* Potential for US or allied intervention.
         \* Domestic political considerations within China.
 \* \*\*China's Objectives:\*\*
-    \* Determine China's immediate and long-term goals in response to the input by referencing the "Comprehensive Planning Tool."
+    \* Determine China's immediate and long-term goals in response to the input by referencing the "PRC_GrayZone_Planner."
     \* \*\*If Aggression Level is Unspecified, Consider:\*\*
         \* \*\*Issue Importance to China:\*\*
             \* \*\*"Core Interest" vs. Peripheral Concern:\*\*  Is the input a core issue (e.g., territorial integrity) or peripheral?

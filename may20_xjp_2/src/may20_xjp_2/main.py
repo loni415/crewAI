@@ -18,7 +18,8 @@ def run():
     Run the crew.
     """
     inputs = {
-        'input_event_description': 'Japan imposes unilateral fishing ban on the Senkaku Islands EEZ',
+        'input_event_description': 'Vietnam sense an oil drilling rig into '
+        'South China Sea waters claimed by China',
         'current_year': str(datetime.now().year),
         'aggression_level': '', # Default to empty (optional)
         'domain_emphasis': ''    # Default to empty (Optional)
@@ -59,7 +60,7 @@ def train():
         print(f"Pydantic Output: {crew_output.pydantic}")
     print(f"Tasks Output: {crew_output.tasks_output}")
     print(f"Token Usage: {crew_output.token_usage}")
-    
+
 def replay():
     """
     Replay the crew execution from a specific task.

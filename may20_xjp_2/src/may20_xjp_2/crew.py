@@ -72,6 +72,9 @@ class May20Xjp2():
         return Agent(
             config=self.agents_config['CCPStrategicPolicyAdvisor'], # type: ignore[index]
             verbose=True,
+            reasoning=True,
+            max_reasoning_attempts=3,
+            llm=llm,
             embedder={
                 "provider": "ollama",
                 "config": {
@@ -80,13 +83,31 @@ class May20Xjp2():
                 }
             },
         )
-
+    @agent
+    def EconomicAndTechImpactAnalystAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['EconomicAndTechImpactAnalystAgent'], # type: ignore[index]
+            verbose=True,
+            reasoning=True,
+            max_reasoning_attempts=3,
+            llm=llm,
+            embedder={
+                "provider": "ollama",
+                "config": {
+                    "model": "bge-m3",
+                    "base_url": "http://localhost:11434"
+                }
+            },
+        )
     # ForeignPolicyEventAnalystAgent
     @agent
     def ForeignPolicyEventAnalystAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['ForeignPolicyEventAnalystAgent'], # type: ignore[index]
             verbose=True,
+            reasoning=True,
+            max_reasoning_attempts=3,
+            llm=llm,
             embedder={
                 "provider": "ollama",
                 "config": {
@@ -101,6 +122,9 @@ class May20Xjp2():
         return Agent(
             config=self.agents_config['StrategicSignalingAssessmentAgent'], # type: ignore[index]
             verbose=True,
+            reasoning=True,
+            max_reasoning_attempts=3,
+            llm=llm,
             embedder={
                 "provider": "ollama",
                 "config": {
@@ -116,7 +140,10 @@ class May20Xjp2():
         return Agent(
             config=self.agents_config['PLAOptionsStrategistAgent'], # type: ignore[index]
             verbose=True,
-            #knowledge_sources=[pla_source],
+            reasoning=True,
+            max_reasoning_attempts=3,
+            llm=llm,
+              #knowledge_sources=[pla_source],
             embedder={
                 "provider": "ollama",
                 "config": {
@@ -132,6 +159,9 @@ class May20Xjp2():
         return Agent(
             config=self.agents_config['MFADiplomaticStrategistAgent'], # type: ignore[index]
             verbose=True,
+            reasoning=True,
+            max_reasoning_attempts=3,
+            llm=llm,
             embedder={
                 "provider": "ollama",
                 "config": {
@@ -151,6 +181,9 @@ class May20Xjp2():
         return Agent(
             config=self.agents_config['ResponseSynthesizerAgent'], # type: ignore[index]
             verbose=True,
+            reasoning=True,
+            max_reasoning_attempts=3,
+            llm=llm,
             embedder={
                 "provider": "ollama",
                 "config": {
@@ -172,6 +205,11 @@ class May20Xjp2():
     def develop_active_strategic_postures_task(self) -> Task:
         return Task(
             config=self.tasks_config['develop_active_strategic_postures_task'], # type: ignore[index]
+        )
+    @task
+    def assess_economic_tech_impact_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['assess_economic_tech_impact_task'], # type: ignore[index]
         )
 
     @task

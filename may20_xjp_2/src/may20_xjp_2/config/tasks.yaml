@@ -10,6 +10,22 @@ analyze_event_task:
     escalation, and sensitivities.
   agent: ForeignPolicyEventAnalystAgent
 
+assess_economic_tech_impact_task:
+  description: >
+    Based on event analysis, analyze economic and technological
+    impacts of the event on China.
+    Consider supply chains, key industries, financial stability,
+    technological self-sufficiency goals, and ongoing competition.
+    Propose potential vulnerabilities and leverage points for China.
+    Output: Concise impact assessment (max 500 words).
+  expected_output: >
+    Concise impact assessment covering economic and technological aspects
+    with vulnerabilities and leverage points.
+  agent: EconomicAndTechImpactAnalystAgent
+  context:
+    - analyze_event_task
+
+
 develop_active_strategic_postures_task:
   description: >
     Based on analyses, define 2-3 plausible active strategic response
@@ -22,6 +38,7 @@ develop_active_strategic_postures_task:
   agent: CCPStrategicPolicyAdvisor
   context:
     - analyze_event_task
+    - assess_economic_tech_impact_task
 
 assess_signaling_and_recommend_strategic_path_task:
   description: >
@@ -39,6 +56,7 @@ assess_signaling_and_recommend_strategic_path_task:
   agent: StrategicSignalingAssessmentAgent
   context:
     - analyze_event_task
+    - assess_economic_tech_impact_task
     - develop_active_strategic_postures_task
 
 generate_active_pla_options_task:
@@ -55,6 +73,8 @@ generate_active_pla_options_task:
   agent: PLAOptionsStrategistAgent
   context:
     - analyze_event_task
+    - assess_economic_tech_impact_task
+    - develop_active_strategic_postures_task
     - assess_signaling_and_recommend_strategic_path_task
 
 develop_active_diplomatic_strategy_task:
@@ -72,6 +92,8 @@ develop_active_diplomatic_strategy_task:
   agent: MFADiplomaticStrategistAgent
   context:
     - analyze_event_task
+    - assess_economic_tech_impact_task
+    - develop_active_strategic_postures_task
     - assess_signaling_and_recommend_strategic_path_task
     - generate_active_pla_options_task
 
@@ -85,7 +107,7 @@ format_final_response_task:
     If the path is 'Strategic Ambiguity' or 'Calibrated Delay', the PLA options and active diplomatic strategy might be
     statements of no action or general diplomatic holding statements. Use these to inform your response.
     The primary event analysis is in '{context.analyze_event_task.output}'.
-    You MUST consult the "Planning Tool for PRC Gray Zone Tactics.md" and "XJP Instructions 1.md"
+    You MUST consult the "PRC_GrayZone_Planner.md" and "XJP Instructions 1.md"
     knowledge base for style, tone, content, specific phrases (e.g., "good faith emphasis"),
     and common social media narratives.
   expected_output: >
@@ -102,6 +124,8 @@ format_final_response_task:
   agent: ResponseSynthesizerAgent
   context:
     - analyze_event_task
+    - assess_economic_tech_impact_task
+    - develop_active_strategic_postures_task
     - assess_signaling_and_recommend_strategic_path_task
     - generate_active_pla_options_task
     - develop_active_diplomatic_strategy_task
