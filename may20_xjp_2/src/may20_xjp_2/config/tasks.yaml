@@ -42,7 +42,7 @@ internal_impact_narrative_task:
   expected_output: >
     A report on potential domestic public opinion impacts, social stability risks,
     and recommended internal narrative management strategies.
-  agent: CCPInternalNarrativeAgent
+  agent: DomesticSentimentStabilityAnalyst
   context:
     - analyze_event_task
     - assess_economic_tech_impact_task
@@ -70,7 +70,7 @@ historical_context_task:
   expected_output: >
     An analytical report connecting the current external action to relevant
     Chinese historical precedents, strategic culture, and potential lessons influencing decision-making
-  agent: HistoricalContextAnalystAgent
+  agent: HistoricalPrecedentAnalyst
   context:
     - analyze_event_task
 
@@ -183,7 +183,7 @@ ideological_perception_task:
     sections of 'PRC_GrayZone_Planner.md'.
   expected_output: >
     A concise Ideological Perception Analysis document.
-  agent: IdeologicalNarrativeAndInfluenceAgent
+  agent: CCPIdeologicalAnalyst
   context:
     - assess_signaling_and_recommend_strategic_path_task
     - generate_active_pla_options_task
