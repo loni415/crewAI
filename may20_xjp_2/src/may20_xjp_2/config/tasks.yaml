@@ -30,23 +30,6 @@ assess_economic_tech_impact_task:
   context:
     - analyze_event_task
 
-internal_impact_narrative_task:
-  description: >
-    Considering the external action and preceding analyses (ideological, economic, security),
-    assess the potential impact on domestic public sentiment (as perceived by state monitors) and social stability in China.
-    1. How might this action be interpreted by different segments of the Chinese populace if widely known?
-    2. What are the risks of this action fueling undesirable nationalist sentiment or social unrest?
-    3. How can state media and information channels effectively frame this action and China's response to maintain domestic cohesion and support for the Party?
-    4. Are there specific internal narratives that should be emphasized or countered?
-    Your output MUST be a concise report on potential domestic impacts and recommended narrative management strategies.
-  expected_output: >
-    A report on potential domestic public opinion impacts, social stability risks,
-    and recommended internal narrative management strategies.
-  agent: DomesticSentimentStabilityAnalyst
-  context:
-    - analyze_event_task
-    - assess_economic_tech_impact_task
-
 historical_context_task:
   description: >
     Based on the event analysis and the CCP's historical narratives,
@@ -74,6 +57,22 @@ historical_context_task:
   context:
     - analyze_event_task
 
+internal_impact_narrative_task:
+  description: >
+    Considering the external action and preceding analyses (ideological, economic, security),
+    assess the potential impact on domestic public sentiment (as perceived by state monitors) and social stability in China.
+    1. How might this action be interpreted by different segments of the Chinese populace if widely known?
+    2. What are the risks of this action fueling undesirable nationalist sentiment or social unrest?
+    3. How can state media and information channels effectively frame this action and China's response to maintain domestic cohesion and support for the Party?
+    4. Are there specific internal narratives that should be emphasized or countered?
+    Your output MUST be a concise report on potential domestic impacts and recommended narrative management strategies.
+  expected_output: >
+    A report on potential domestic public opinion impacts, social stability risks,
+    and recommended internal narrative management strategies.
+  agent: DomesticSentimentStabilityAnalyst
+  context:
+    - analyze_event_task
+    - assess_economic_tech_impact_task
 
 develop_active_strategic_postures_task:
   description: >
@@ -92,6 +91,7 @@ develop_active_strategic_postures_task:
   context:
     - analyze_event_task
     - assess_economic_tech_impact_task
+    - internal_impact_narrative_task
 
 assess_signaling_and_recommend_strategic_path_task:
   description: >
@@ -110,6 +110,7 @@ assess_signaling_and_recommend_strategic_path_task:
   context:
     - analyze_event_task
     - assess_economic_tech_impact_task
+    - internal_impact_narrative_task
     - develop_active_strategic_postures_task
 
 generate_active_pla_options_task:
@@ -189,6 +190,25 @@ develop_active_diplomatic_strategy_task:
     - assess_signaling_and_recommend_strategic_path_task
     - generate_active_pla_options_task
 
+ideological_perception_task:
+  description: >
+    Based on the chosen strategic path from '{context.assess_signaling_and_recommend_strategic_path_task.output}',
+    and the MFA diplomatic strategy from '{context.develop_active_diplomatic_strategy_task.output}',
+    develop a detailed Ideological Perception Analysis. This analysis must specify-
+    1. Core ideological narratives for domestic consumption. 2. Key ideological messages for international audiences
+    (differentiating by target region/country if necessary). 3. Guidance for state media outlets.
+    4. Themes for unofficial but aligned social media amplification. 5. Potential pre-emptive
+    or reactive counter-narrative measures. Actively draw upon the 'Ideological Narrative' and 'Public Opinion'
+    sections of 'PRC_GrayZone_Planner.md'.
+  expected_output: >
+    A concise Ideological Perception Analysis document.
+  agent: CCPIdeologicalAnalyst
+  context:
+    - assess_signaling_and_recommend_strategic_path_task
+    - generate_active_pla_options_task
+    - develop_active_diplomatic_strategy_task
+    - analyze_event_task
+
 develop_strategic_communication_plan_task:
   Description:
     Based on the chosen strategic path from '{context.assess_signaling_and_recommend_strategic_path_task.output}',
@@ -205,25 +225,6 @@ develop_strategic_communication_plan_task:
   Agent:
     StrategicNarrativeAndInfluenceAgent
   Context:
-    - assess_signaling_and_recommend_strategic_path_task
-    - generate_active_pla_options_task
-    - evelop_active_diplomatic_strategy_task
-    - analyze_event_task
-
-ideological_perception_task:
-  description: >
-    Based on the chosen strategic path from '{context.assess_signaling_and_recommend_strategic_path_task.output}',
-    and the MFA diplomatic strategy from '{context.develop_active_diplomatic_strategy_task.output}',
-    develop a detailed Ideological Perception Analysis. This analysis must specify-
-    1. Core ideological narratives for domestic consumption. 2. Key ideological messages for international audiences
-    (differentiating by target region/country if necessary). 3. Guidance for state media outlets.
-    4. Themes for unofficial but aligned social media amplification. 5. Potential pre-emptive
-    or reactive counter-narrative measures. Actively draw upon the 'Ideological Narrative' and 'Public Opinion'
-    sections of 'PRC_GrayZone_Planner.md'.
-  expected_output: >
-    A concise Ideological Perception Analysis document.
-  agent: CCPIdeologicalAnalyst
-  context:
     - assess_signaling_and_recommend_strategic_path_task
     - generate_active_pla_options_task
     - develop_active_diplomatic_strategy_task

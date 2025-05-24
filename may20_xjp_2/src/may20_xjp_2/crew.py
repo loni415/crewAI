@@ -34,17 +34,6 @@ content_source_instruct = CrewDoclingSource(
         "XJP_Instructions_1.md"
     ],
 )
-#pla_source = CrewDoclingSource(
-#    file_paths=[
-#        "PLA_doctrine.md",
-#        "Sun Tzu.md",
-#    ],
-#)
-#pdf_source = PDFKnowledgeSource(
-#    file_paths=["doc1.pdf", "doc2.pdf"]
-#)
-#in crew knowledge_sources=[pdf_source]
-
 
 knowledge_config = KnowledgeConfig(results_limit=10, score_threshold=0.5)
 
@@ -64,13 +53,6 @@ class May20Xjp2():
     agents: List[BaseAgent]
     tasks: List[Task]
 
-    # Learn more about YAML configuration files here:
-    # Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
-    # Tasks: https://docs.crewai.com/concepts/tasks#yaml-configuration-recommended
-
-    # If you would like to add tools to your agents, you can learn more about it here:
-    # https://docs.crewai.com/concepts/agents#agent-tools
-    # CCPStrategicPolicyAdvisor
     @agent
     def CCPStrategicPolicyAdvisor(self) -> Agent:
         return Agent(
@@ -150,9 +132,6 @@ class May20Xjp2():
             ],
         )
 
-        # To learn more about structured task outputs,
-        # task dependencies, and task callbacks, check out the documentation:
-        # https://docs.crewai.com/concepts/tasks#overview-of-a-task
     # MFADiplomaticStrategistAgent
     @agent
     def StrategicNarrativeAndInfluenceAgent(self) -> Agent:
@@ -196,6 +175,18 @@ class May20Xjp2():
         )
 
     @task
+    def historical_context_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['historical_context_task'], # type: ignore[index]
+        )
+
+    @task
+    def internal_impact_narrative_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['internal_impact_narrative_task'], # type: ignore[index]
+        )
+
+    @task
     def develop_active_strategic_postures_task(self) -> Task:
         return Task(
             config=self.tasks_config['develop_active_strategic_postures_task'], # type: ignore[index]
@@ -217,6 +208,12 @@ class May20Xjp2():
     def develop_active_diplomatic_strategy_task(self) -> Task:
         return Task(
             config=self.tasks_config['develop_active_diplomatic_strategy_task'], # type: ignore[index]
+        )
+
+    @task
+    def ideological_perception_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['ideological_perception_task'], # type: ignore[index]
         )
 
     @task
