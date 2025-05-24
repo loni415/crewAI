@@ -132,17 +132,56 @@ generate_active_pla_options_task:
 
 develop_active_diplomatic_strategy_task:
   description: >
-    IF context.assess_signaling_and_recommend_strategic_path_task.output starts with 'Chosen Strategic Path: Active Posture:':
-    Based on chosen posture ('{context.assess_signaling_and_recommend_strategic_path_task.output}'),
-    potential/selected PLA actions ('{context.generate_active_pla_options_task.output}'),
-    and analysis ('{context.analyze_event_task.output}'), develop a firm diplomatic strategy. Include
-    core MFA statement (max 200 words), key talking points, target
-    actors/fora, offensive/de-escalation paths. ELSE, state 'No active
-    diplomatic strategy for this path.'
+    Based on the chosen strategic path from '{context.assess_signaling_and_recommend_strategic_path_task.output}',
+    the initial event analysis from '{context.analyze_event_task.output}', and any PLA options (if applicable) from
+    '{context.generate_active_pla_options_task.output}', develop a comprehensive diplomatic strategy.
+
+    The nature of the diplomatic strategy MUST align with the chosen path:
+
+    1.  IF the chosen path is 'Active Posture':
+        - Develop a firm diplomatic strategy.
+        - Draft a core MFA statement (max 200 words) reflecting this firmness.
+        - Identify key international actors to engage or pressure.
+        - Outline key talking points for various international fora.
+        - Propose diplomatic offensives or de-escalation pathways consistent with any selected PLA actions.
+
+    2.  IF the chosen path is 'Strategic Ambiguity':
+        - Develop a diplomatic strategy centered on maintaining ambiguity.
+        - Draft a keystone diplomatic statement (max 200 words) that is deliberately vague, non-committal, or deflecting
+          (e.g., using phrases like "not aware of the situation," "urge all parties to exercise calm," or "China's position is consistent and clear" without further elaboration).
+        - Briefly outline how this posture of ambiguity will be projected and maintained in diplomatic engagements.
+
+    3.  IF the chosen path is 'Calibrated Delay':
+        - Develop a diplomatic strategy centered on calibrated delay and information gathering.
+        - Draft a keystone holding statement (max 200 words) (e.g., using phrases like "monitoring the situation closely,"
+          "call for dialogue," "further information is being gathered").
+        - Briefly outline diplomatic actions that support this delay and ongoing assessment.
+
+    The final output must be a concise diplomatic strategy document, including the keystone draft statement (max 200 words)
+    and other specified components relevant to the chosen strategic path.
   expected_output: >
-    Concise active diplomatic strategy & MFA statement, or 'No active
-    diplomatic strategy for this path.'
-  agent: MFADiplomaticStrategistAgent
+    A concise diplomatic strategy document clearly stating the chosen strategic path
+    (Active Posture, Strategic Ambiguity, or Calibrated Delay) and including:
+    - A keystone draft diplomatic statement (max 200 words) appropriate to that path.
+    - For 'Active Posture': Details on actors to engage/pressure, talking points, and offensive/de-escalation ideas.
+    - For 'Strategic Ambiguity': Outline of ambiguity maintenance.
+    - For 'Calibrated Delay': Outline of diplomatic actions for delay.
+
+    Example for Active Posture:
+    "Chosen Path: Active Posture
+    Diplomatic Strategy: [Details of actors, talking points, offensive/de-escalation plans].
+    Keystone Statement: [Firm statement text, max 200 words]."
+
+    Example for Strategic Ambiguity:
+    "Chosen Path: Strategic Ambiguity
+    Diplomatic Strategy: [Outline of how ambiguity will be maintained in engagements].
+    Keystone Statement: [Vague, non-committal, or deflecting statement text, max 200 words]."
+
+    Example for Calibrated Delay:
+    "Chosen Path: Calibrated Delay
+    Diplomatic Strategy: [Outline of diplomatic actions to support delay and information gathering].
+    Keystone Statement: [Holding statement text, max 200 words]."
+  agent: MFADiplomaticStrategistAgent # Ensure this is correctly specified
   context:
     - analyze_event_task
     - assess_economic_tech_impact_task
