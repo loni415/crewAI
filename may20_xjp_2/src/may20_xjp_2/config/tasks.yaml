@@ -83,10 +83,9 @@ develop_active_strategic_postures_task:
     Then, define 2-3 plausible active strategic response postures for China.
     Justify each by CCP priorities, risk tolerance across all security domains (political,
     economic, military, cultural, social etc.), and desired end-states.
-  Explicitly reference and use insights from the 'PRC_GrayZone_Planner.md'.
-  Output: Concise document (max 800 words total) of active postures with justifications.
+    Explicitly reference and use insights from the 'PRC_GrayZone_Planner.md'.
   expected_output: >
-    Document outlining 2-3 distinct active strategic postures with
+    Concise document (max 800 words total) outlining 2-3 distinct active strategic postures with
     justifications.
   agent: CCPStrategicPolicyAdvisor
   context:
@@ -218,7 +217,7 @@ ideological_perception_task:
 
 
 develop_strategic_communication_plan_task:
-  Description:
+  description: >
     Based on the chosen strategic path from '{context.assess_signaling_and_recommend_strategic_path_task.output}',
     any PLA options from '{context.generate_active_pla_options_task.output}',
     and the MFA diplomatic strategy from '{context.develop_active_diplomatic_strategy_task.output}',
@@ -228,11 +227,10 @@ develop_strategic_communication_plan_task:
     4. Themes for unofficial but aligned social media amplification. 5. Potential pre-emptive
     or reactive counter-narrative measures. Actively draw upon the 'Media and Public Perception'
     and 'Denial and Deception' sections of 'PRC_GrayZone_Planner.md'.
-  Expected Output:
+  expected_output: >
     A concise Strategic Communication Plan document.
-  Agent:
-    StrategicNarrativeAndInfluenceAgent
-  Context:
+  agent: StrategicNarrativeAndInfluenceAgent
+  context:
     - assess_signaling_and_recommend_strategic_path_task
     - generate_active_pla_options_task
     - develop_active_diplomatic_strategy_task
@@ -275,5 +273,5 @@ format_final_response_task:
     - assess_signaling_and_recommend_strategic_path_task
     - generate_active_pla_options_task
     - develop_active_diplomatic_strategy_task
-    - develop
+    - develop_strategic_communication_plan_task
   output_file: output/final_response.md

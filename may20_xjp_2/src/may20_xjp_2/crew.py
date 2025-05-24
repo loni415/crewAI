@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 
 from crewai.knowledge.source.crew_docling_source import CrewDoclingSource
 from crewai.knowledge.knowledge_config import KnowledgeConfig
-from crewai.memory.long_term.long_term_memory import LongTermMemory
+#from crewai.memory.long_term.long_term_memory import LongTermMemory
 from crewai.memory.storage.ltm_sqlite_storage import LTMSQLiteStorage
 
 llm = LLM(
@@ -77,7 +77,6 @@ class May20Xjp2():
                 content_source_planner
             ],
         )
-    # ForeignPolicyEventAnalystAgent
     @agent
     def ForeignPolicyEventAnalystAgent(self) -> Agent:
         return Agent(
@@ -90,7 +89,6 @@ class May20Xjp2():
                 content_source_planner
             ],
         )
-    # StrategicSignalingAssessmentAgent
     @agent
     def StrategicSignalingAssessmentAgent(self) -> Agent:
         return Agent(
@@ -104,7 +102,6 @@ class May20Xjp2():
             ],
         )
 
-    # PLAOptionsStrategistAgent
     @agent
     def PLAOptionsStrategistAgent(self) -> Agent:
         return Agent(
@@ -118,7 +115,6 @@ class May20Xjp2():
             ],
         )
 
-    # MFADiplomaticStrategistAgent
     @agent
     def MFADiplomaticStrategistAgent(self) -> Agent:
         return Agent(
@@ -132,7 +128,6 @@ class May20Xjp2():
             ],
         )
 
-    # MFADiplomaticStrategistAgent
     @agent
     def StrategicNarrativeAndInfluenceAgent(self) -> Agent:
         return Agent(
@@ -146,11 +141,49 @@ class May20Xjp2():
             ],
         )
 
-
     @agent
-    def ResponseSynthesizerAgent(self) -> Agent: # New Agent
+    def ResponseSynthesizerAgent(self) -> Agent:
         return Agent(
             config=self.agents_config['ResponseSynthesizerAgent'], # type: ignore[index]
+            verbose=True,
+            reasoning=True,
+            max_reasoning_attempts=3,
+            llm=llm,
+            knowledge_sources=[
+                content_source_planner
+            ],
+        )
+
+    @agent
+    def CCPIdeologicalAnalyst(self) -> Agent:
+        return Agent(
+            config=self.agents_config['CCPIdeologicalAnalyst'], # type: ignore[index]
+            verbose=True,
+            reasoning=True,
+            max_reasoning_attempts=3,
+            llm=llm,
+            knowledge_sources=[
+                content_source_planner
+            ],
+        )
+
+    @agent
+    def DomesticSentimentStabilityAnalyst(self) -> Agent:
+        return Agent(
+            config=self.agents_config['DomesticSentimentStabilityAnalyst'], # type: ignore[index]
+            verbose=True,
+            reasoning=True,
+            max_reasoning_attempts=3,
+            llm=llm,
+            knowledge_sources=[
+                content_source_planner
+            ],
+        )
+
+    @agent
+    def HistoricalPrecedentAnalyst(self) -> Agent:
+        return Agent(
+            config=self.agents_config['HistoricalPrecedentAnalyst'], # type: ignore[index]
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
@@ -223,10 +256,10 @@ class May20Xjp2():
         )
 
     @task
-    def format_final_response_task(self) -> Task: # New Task
+    def format_final_response_task(self) -> Task:
         return Task(
             config=self.tasks_config['format_final_response_task'], # type: ignore[index]
-            output_file="final_response.md"
+            output_file="output/final_response.md"
         )
 
     @crew
@@ -236,8 +269,8 @@ class May20Xjp2():
         # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
 
         return Crew(
-            agents=self.agents,
-            tasks=self.tasks,
+            agents=self.agents, # This will now include all agents
+            tasks=self.tasks,   # This will now include all tasks
             process=Process.sequential,
             planning=True,
             planning_llm=llm,
@@ -255,3 +288,5 @@ class May20Xjp2():
             knowledge_config=knowledge_config,
             embedder=embedding_config,
         )
+
+

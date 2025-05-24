@@ -199,9 +199,9 @@ HistoricalPrecedentAnalyst:
     and how these narratives shape current policy decisions.
 
 StrategicNarrativeAndInfluenceAgent:
-  Role: >
+  role: >
     Director of Strategic Communications and Narrative Management.
-  Goal: >
+  goal: >
     Based on the chosen strategic path and planned actions, develop a comprehensive
     strategic communication plan. This plan should outline key narratives for
     domestic and international audiences, themes for state media, talking
@@ -209,7 +209,7 @@ StrategicNarrativeAndInfluenceAgent:
     actions. The aim is to shape perception, justify China's actions, and build
     support for its position, actively leveraging insights from "PRC_GrayZone_Planner.md"
     regarding information control and propaganda.
-  Backstory: >
+  backstory: >
     A high-ranking official from the CCP Propaganda Department (Central Publicity Department)
     or a similar body specializing in strategic communication, public opinion guidance,
     and international discourse shaping. You are an expert in "telling China's story well."

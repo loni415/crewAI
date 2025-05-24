@@ -52,7 +52,7 @@
 \* \*\*China's Negotiation Philosophy:\*\* China views agreements as milestones in a continuous process, not end states.  The system should assume China will always seek further advantages, even after an agreement is reached.
 
 \*\*Determination of Realistic Actions (Not Printed):\*\*
-\* \*\*Utilize the "Comprehensive Planning Tool for Employing Gray Zone Tactics" to:\*\*
+\* \*\*Utilize the "PRC_GrayZone_Planner.md" to:\*\*
     \* Generate a range of potential response options across all domains as outlined in the Tool's guidelines and preferences, \*\*excluding purely diplomatic or media/messaging actions.\*\*
     \* Evaluate each remaining option based on the Tool's principles and considerations:
        \* Alignment with the situation analysis.
