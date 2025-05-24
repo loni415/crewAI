@@ -27,12 +27,12 @@ content_source = CrewDoclingSource(
     file_paths=[
         "PRC_GrayZone_Planner.md",
         "XJP_Instructions_1.md",
-    ],
+    ]
 )
 
 #pla_source = CrewDoclingSource(
 #    file_paths=[
-#        "PLA_doctrine.md",
+#        "PLA_doctrine.md", 
 #        "Sun Tzu.md",
 #    ],
 #)
@@ -57,8 +57,46 @@ entity_memory = EntityMemory(
 class May20Xjp2():
     """May20Xjp2 crew"""
 
-    agents: List[BaseAgent]
-    tasks: List[Task]
+    agents_config: dict = {} # type: ignore
+    tasks_config: dict = {} # type: ignore
+    agents: List[BaseAgent] = [] # type: ignore
+    tasks: List[Task] = [] # type: ignore
+    
+    def __init__(self) -> None:
+        # Load agent and task configurations from YAML files
+        # Assuming 'agents.yaml' and 'tasks.yaml' are in 'src/may20_xjp_2/config/'
+        # Adjust paths if your YAML files are located elsewhere
+        import yaml
+        from pathlib import Path
+
+        base_path = Path(__file__).parent / 'config'
+        with open(base_path / 'agents.yaml', 'r') as f:
+            self.agents_config = yaml.safe_load(f)
+        with open(base_path / 'tasks.yaml', 'r') as f:
+            self.tasks_config = yaml.safe_load(f)
+            
+        self.agents = [ # type: ignore
+            self.ForeignPolicyEventAnalystAgent(),
+            self.EconomicAndTechImpactAnalystAgent(),
+            self.CCPStrategicPolicyAdvisor(),
+            self.StrategicSignalingAssessmentAgent(),
+            self.PLAOptionsStrategistAgent(),
+            self.MFADiplomaticStrategistAgent(),
+            self.ContentSelectorAgent(),
+            self.ResponseSynthesizerAgent()
+        ]
+
+        self.tasks = [ # type: ignore
+            self.analyze_event_task(),
+            self.assess_economic_tech_impact_task(),
+            self.develop_active_strategic_postures_task(),
+            self.assess_signaling_and_recommend_strategic_path_task(),
+            self.generate_active_pla_options_task(),
+            self.develop_active_diplomatic_strategy_task(),
+            self.select_content_task(),
+            self.format_final_response_task()
+        ]
+
 
     # Learn more about YAML configuration files here:
     # Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
@@ -175,6 +213,22 @@ class May20Xjp2():
         # task dependencies, and task callbacks, check out the documentation:
         # https://docs.crewai.com/concepts/tasks#overview-of-a-task
 
+    @agent
+    def ContentSelectorAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['ContentSelectorAgent'], # type: ignore[index]
+            verbose=True,
+            reasoning=True,
+            max_reasoning_attempts=3,
+            llm=llm,
+            embedder={
+                "provider": "ollama",
+                "config": {
+                    "model": "bge-m3",
+                    "base_url": "http://localhost:11434"
+                }
+            },
+        )
 
     @agent
     def ResponseSynthesizerAgent(self) -> Agent: # New Agent
@@ -231,6 +285,11 @@ class May20Xjp2():
             config=self.tasks_config['develop_active_diplomatic_strategy_task'], # type: ignore[index]
         )
 
+    @task
+    def select_content_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['select_content_task'], # type: ignore[index]
+        )
 
     @task
     def format_final_response_task(self) -> Task: # New Task
@@ -258,7 +317,7 @@ class May20Xjp2():
             function_calling_llm=llm,
             chat_llm=llm,
             memory=True,
-            output_log_file="output.log",
+            output_log_file="output.txt",
             long_term_memory=long_term_memory,
             entity_memory=entity_memory,
             knowledge_config=knowledge_config,

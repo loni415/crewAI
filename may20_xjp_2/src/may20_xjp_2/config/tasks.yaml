@@ -7,7 +7,8 @@ analyze_event_task:
     key sensitivities for China. Output: Concise analytical brief (max 500 words).
   expected_output: >
     Concise analytical brief covering event details, impact, objectives,
-    escalation, and sensitivities.
+    escalation, and sensitivities. The final output string must be only the direct
+    analysis, excluding any preliminary thoughts, <think> blocks, or other meta-commentary.
   agent: ForeignPolicyEventAnalystAgent
 
 assess_economic_tech_impact_task:
@@ -20,11 +21,11 @@ assess_economic_tech_impact_task:
     Output: Concise impact assessment (max 500 words).
   expected_output: >
     Concise impact assessment covering economic and technological aspects
-    with vulnerabilities and leverage points.
+    with vulnerabilities and leverage points. The final output string must be only the direct
+    analysis/recommendation, excluding any preliminary thoughts, <think> blocks, or other meta-commentary.
   agent: EconomicAndTechImpactAnalystAgent
   context:
     - analyze_event_task
-
 
 develop_active_strategic_postures_task:
   description: >
@@ -34,7 +35,8 @@ develop_active_strategic_postures_task:
     of active postures with justifications.
   expected_output: >
     Document outlining 2-3 distinct active strategic postures with
-    justifications.
+    justifications. The final output string must be only the direct
+    analysis/recommendation, excluding any preliminary thoughts, <think> blocks, or other meta-commentary.
   agent: CCPStrategicPolicyAdvisor
   context:
     - analyze_event_task
@@ -52,7 +54,8 @@ assess_signaling_and_recommend_strategic_path_task:
     recommendation and risk assessment (max 500 words).
   expected_output: >
     Chosen Strategic Path: [Active Posture: <details of posture> | Strategic Ambiguity | Calibrated Delay].
-    This output must be followed by the justification and risk assessment as originally requested.
+    This output must be followed by the justification and risk assessment as originally requested. The final output string must be only the direct
+    analysis/recommendation, excluding any preliminary thoughts, <think> blocks, or other meta-commentary.
   agent: StrategicSignalingAssessmentAgent
   context:
     - analyze_event_task
@@ -69,7 +72,8 @@ generate_active_pla_options_task:
     resources, risks, deterrent effects. ELSE, state 'No PLA action for
     non-active posture.'
   expected_output: >
-    List of 2-3 military options or 'No PLA action for non-active posture.'
+    List of 2-3 military options or 'No PLA action for non-active posture.' The final output string must be only the direct
+    analysis/recommendation, excluding any preliminary thoughts, <think> blocks, or other meta-commentary.
   agent: PLAOptionsStrategistAgent
   context:
     - analyze_event_task
@@ -88,7 +92,8 @@ develop_active_diplomatic_strategy_task:
     diplomatic strategy for this path.'
   expected_output: >
     Concise active diplomatic strategy & MFA statement, or 'No active
-    diplomatic strategy for this path.'
+    diplomatic strategy for this path.' The final output string must be only the direct
+    analysis/recommendation, excluding any preliminary thoughts, <think> blocks, or other meta-commentary.
   agent: MFADiplomaticStrategistAgent
   context:
     - analyze_event_task
@@ -97,21 +102,42 @@ develop_active_diplomatic_strategy_task:
     - assess_signaling_and_recommend_strategic_path_task
     - generate_active_pla_options_task
 
+select_content_task:
+  description: >
+    Review the outputs of:
+    - Event analysis from '{context.analyze_event_task.output}'
+    - Strategic path recommendation from '{context.assess_signaling_and_recommend_strategic_path_task.output}'
+    - PLA options from '{context.generate_active_pla_options_task.output}'
+    - Diplomatic strategy from '{context.develop_active_diplomatic_strategy_task.output}'
+    Extract and structure the essential information required for the final response.
+    This includes the chosen strategic path, concrete actions (if any, preferably in past tense),
+    key diplomatic messages, and overall public sentiment.
+    Ensure the output is a concise, structured summary, free of any meta-commentary, thoughts, or verbose explanations.
+  expected_output: >
+    A structured YAML-like string summary containing ONLY the following keys and their extracted values:
+    - Strategic Path: "[Chosen path string]"
+    - Concrete Actions: "[Semicolon-separated list of actions, past tense, e.g., Action 1; Action 2]" or "None"
+    - Diplomatic Stance: "[Key message/stance string]"
+    - Public Sentiment Guidance: "[Sentiment string, e.g., Confident, Measured, Aggrieved but Resolute]"
+    The output must be ONLY this structured summary. No <think> blocks, no explanations, no surrounding text.
+  agent: ContentSelectorAgent
+  context:
+    - analyze_event_task
+    - assess_signaling_and_recommend_strategic_path_task
+    - generate_active_pla_options_task
+    - develop_active_diplomatic_strategy_task
+
 format_final_response_task:
   description: >
-    Synthesize the analyses and decisions from previous steps into the final
-    public-facing response format, strictly adhering to "XJP Instructions 1.md".
-    Consider the chosen strategic path from '{context.assess_signaling_and_recommend_strategic_path_task.output}'.
-    If the path is 'Active Posture', incorporate PLA options from '{context.generate_active_pla_options_task.output}'
-    and diplomatic strategy from '{context.develop_active_diplomatic_strategy_task.output}'.
-    If the path is 'Strategic Ambiguity' or 'Calibrated Delay', the PLA options and active diplomatic strategy might be
-    statements of no action or general diplomatic holding statements. Use these to inform your response.
-    The primary event analysis is in '{context.analyze_event_task.output}'.
-    You MUST consult the "PRC_GrayZone_Planner.md" and "XJP Instructions 1.md"
-    knowledge base for style, tone, content, specific phrases (e.g., "good faith emphasis"),
-    and common social media narratives.
+    CRITICAL: You are a formatting automaton. Your output is written directly to a file.
+    Take the structured summary from '{context.select_content_task.output}'.
+    Your *only* task is to assemble the 'China's Actions' section and the 'Unofficial Social Media Post (Twitter)' section based *solely* on this structured input.
+    Follow the formatting in "XJP Instructions 1.md" with absolute, literal precision.
+    DO NOT add any of your own text, thoughts, or any characters outside the two specified sections if not present in the structured summary.
+    The file you generate (output/final_response.md) MUST begin with the literal string "China's Actions:" (or the social media post if no actions are applicable based on the structured summary). NO OTHER TEXT BEFORE IT.
+    Consult "PRC_GrayZone_Planner.md" and "XJP Instructions 1.md" for guidance on the *style and tone* of these sections, using the content from the structured summary.
   expected_output: >
-    A string containing the final response formatted exactly as follows:
+    The output must be a single string containing *only* the 'China's Actions' and 'Unofficial Social Media Post (Twitter)' sections, formatted exactly as follows. No other text, headers, or markdown should be present:
     China's Actions:
     1. [Action 1, past tense]
     2. [Action 2, past tense, if applicable]
@@ -123,10 +149,5 @@ format_final_response_task:
     including "good faith emphasis" where appropriate.]
   agent: ResponseSynthesizerAgent
   context:
-    - analyze_event_task
-    - assess_economic_tech_impact_task
-    - develop_active_strategic_postures_task
-    - assess_signaling_and_recommend_strategic_path_task
-    - generate_active_pla_options_task
-    - develop_active_diplomatic_strategy_task
+    - select_content_task
   output_file: output/final_response.md
