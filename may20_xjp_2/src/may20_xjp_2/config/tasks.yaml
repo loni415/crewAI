@@ -4,10 +4,15 @@ analyze_event_task:
     Consider the provided Aggression Level: {aggression_level} and Domain Emphasis: {domain_emphasis}.
     Detail: nature of the event, direct/indirect impact on Chinese core interests,
     initiating entity's likely objectives/red lines, potential escalatory pathways,
-    key sensitivities for China. Output: Concise analytical brief (max 500 words).
+    key sensitivities for China. Explicitly assess how this event might be
+    interpreted through the lens of China's historical narratives, its current
+    ideological discourse (e.g., National Rejuvenation, struggle against hegemonism),
+    and its potential ramifications for domestic public opinion and Party legitimacy.
+  Output: Concise analytical brief (max 700 words).
   expected_output: >
-    Concise analytical brief covering event details, impact, objectives,
-    escalation, and sensitivities.
+    Concise analytical brief covering event details, impact on core interests,
+    initiator's objectives/red lines, escalation pathways, key sensitivities,
+    and an analysis of the event's ideological and domestic narrative implications for China.
   agent: ForeignPolicyEventAnalystAgent
 
 assess_economic_tech_impact_task:
@@ -25,13 +30,61 @@ assess_economic_tech_impact_task:
   context:
     - analyze_event_task
 
+internal_impact_narrative_task:
+  description: >
+    Considering the external action and preceding analyses (ideological, economic, security),
+    assess the potential impact on domestic public sentiment (as perceived by state monitors) and social stability in China.
+    1. How might this action be interpreted by different segments of the Chinese populace if widely known?
+    2. What are the risks of this action fueling undesirable nationalist sentiment or social unrest?
+    3. How can state media and information channels effectively frame this action and China's response to maintain domestic cohesion and support for the Party?
+    4. Are there specific internal narratives that should be emphasized or countered?
+    Your output MUST be a concise report on potential domestic impacts and recommended narrative management strategies.
+  expected_output: >
+    A report on potential domestic public opinion impacts, social stability risks,
+    and recommended internal narrative management strategies.
+  agent: CCPInternalNarrativeAgent
+  context:
+    - analyze_event_task
+    - assess_economic_tech_impact_task
+
+historical_context_task:
+  description: >
+    Based on the event analysis and the CCP's historical narratives,
+    provide a concise overview of how this event aligns with or diverges from
+    China's historical experiences and ideological discourse. Highlight
+    key historical events, ideological themes, and narratives that can be
+    leveraged to frame the current situation in a manner that resonates with
+    both domestic and international audiences. Drawing upon Chinese history and
+    established strategic culture, provide an analysis of how past events and ingrained strategic thinking
+    might influence the current leadership's interpretation of and response to the external action.
+    1. Are there significant historical parallels (e.g., "Century of Humiliation",
+    past dealings with specific nations involved) that might shape perceptions?
+    2. Do any long-standing strategic principles (e.g., "keeping a low profile,"
+    "active defense," views on sovereignty) appear particularly relevant?
+    3. How might cultural factors influence the preferred style of response
+    (e.g., direct confrontation vs. indirect pressure, importance of "face")?
+    4. What historical lessons (successful or unsuccessful) might be drawn upon
+    by decision-makers in this context?
+    Your output MUST be a report detailing relevant historical precedents and
+    strategic cultural considerations pertinent to the external action.
+  expected_output: >
+    An analytical report connecting the current external action to relevant
+    Chinese historical precedents, strategic culture, and potential lessons influencing decision-making
+  agent: HistoricalContextAnalystAgent
+  context:
+    - analyze_event_task
+
 
 develop_active_strategic_postures_task:
   description: >
-    Based on analyses, define 2-3 plausible active strategic response
-    postures for China. Justify each by CCP priorities, risk tolerance,
-    and desired end-states. Output: Concise document (max 600 words total)
-    of active postures with justifications.
+    Based on the comprehensive initial analysis from '{context.analyze_event_task.output}'
+    and the economic/tech impact assessment from '{context.assess_economic_tech_impact_task.output}',
+    synthesize these findings through the lens of the 'Holistic National Security Concept'.
+    Then, define 2-3 plausible active strategic response postures for China.
+    Justify each by CCP priorities, risk tolerance across all security domains (political,
+    economic, military, cultural, social etc.), and desired end-states.
+  Explicitly reference and use insights from the 'PRC_GrayZone_Planner.md'.
+  Output: Concise document (max 800 words total) of active postures with justifications.
   expected_output: >
     Document outlining 2-3 distinct active strategic postures with
     justifications.
@@ -96,6 +149,46 @@ develop_active_diplomatic_strategy_task:
     - develop_active_strategic_postures_task
     - assess_signaling_and_recommend_strategic_path_task
     - generate_active_pla_options_task
+
+develop_strategic_communication_plan_task:
+  Description:
+    Based on the chosen strategic path from '{context.assess_signaling_and_recommend_strategic_path_task.output}',
+    any PLA options from '{context.generate_active_pla_options_task.output}',
+    and the MFA diplomatic strategy from '{context.develop_active_diplomatic_strategy_task.output}',
+    develop a detailed Strategic Communication Plan. This plan must specify-
+    1. Core narratives for domestic consumption. 2. Key messages for international audiences
+    (differentiating by target region/country if necessary). 3. Guidance for state media outlets.
+    4. Themes for unofficial but aligned social media amplification. 5. Potential pre-emptive
+    or reactive counter-narrative measures. Actively draw upon the 'Media and Public Perception'
+    and 'Denial and Deception' sections of 'PRC_GrayZone_Planner.md'.
+  Expected Output:
+    A concise Strategic Communication Plan document.
+  Agent:
+    StrategicNarrativeAndInfluenceAgent
+  Context:
+    - assess_signaling_and_recommend_strategic_path_task
+    - generate_active_pla_options_task
+    - evelop_active_diplomatic_strategy_task
+    - analyze_event_task
+
+ideological_perception_task:
+  description: >
+    Based on the chosen strategic path from '{context.assess_signaling_and_recommend_strategic_path_task.output}',
+    and the MFA diplomatic strategy from '{context.develop_active_diplomatic_strategy_task.output}',
+    develop a detailed Ideological Perception Analysis. This analysis must specify-
+    1. Core ideological narratives for domestic consumption. 2. Key ideological messages for international audiences
+    (differentiating by target region/country if necessary). 3. Guidance for state media outlets.
+    4. Themes for unofficial but aligned social media amplification. 5. Potential pre-emptive
+    or reactive counter-narrative measures. Actively draw upon the 'Ideological Narrative' and 'Public Opinion'
+    sections of 'PRC_GrayZone_Planner.md'.
+  expected_output: >
+    A concise Ideological Perception Analysis document.
+  agent: IdeologicalNarrativeAndInfluenceAgent
+  context:
+    - assess_signaling_and_recommend_strategic_path_task
+    - generate_active_pla_options_task
+    - develop_active_diplomatic_strategy_task
+    - analyze_event_task
 
 format_final_response_task:
   description: >

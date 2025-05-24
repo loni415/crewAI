@@ -23,13 +23,17 @@ embedding_config={
     }
 }
 
-content_source = CrewDoclingSource(
+content_source_planner = CrewDoclingSource(
     file_paths=[
-        "PRC_GrayZone_Planner.md",
-        "XJP_Instructions_1.md",
+        "PRC_GrayZone_Planner.md"
     ],
 )
 
+content_source_instruct = CrewDoclingSource(
+    file_paths=[
+        "XJP_Instructions_1.md"
+    ],
+)
 #pla_source = CrewDoclingSource(
 #    file_paths=[
 #        "PLA_doctrine.md",
@@ -75,13 +79,9 @@ class May20Xjp2():
             reasoning=True,
             max_reasoning_attempts=3,
             llm=llm,
-            embedder={
-                "provider": "ollama",
-                "config": {
-                    "model": "bge-m3",
-                    "base_url": "http://localhost:11434"
-                }
-            },
+            knowledge_sources=[
+                content_source_planner
+            ],
         )
     @agent
     def EconomicAndTechImpactAnalystAgent(self) -> Agent:
@@ -91,13 +91,9 @@ class May20Xjp2():
             reasoning=True,
             max_reasoning_attempts=3,
             llm=llm,
-            embedder={
-                "provider": "ollama",
-                "config": {
-                    "model": "bge-m3",
-                    "base_url": "http://localhost:11434"
-                }
-            },
+            knowledge_sources=[
+                content_source_planner
+            ],
         )
     # ForeignPolicyEventAnalystAgent
     @agent
@@ -108,13 +104,9 @@ class May20Xjp2():
             reasoning=True,
             max_reasoning_attempts=3,
             llm=llm,
-            embedder={
-                "provider": "ollama",
-                "config": {
-                    "model": "bge-m3",
-                    "base_url": "http://localhost:11434"
-                }
-            },
+            knowledge_sources=[
+                content_source_planner
+            ],
         )
     # StrategicSignalingAssessmentAgent
     @agent
@@ -125,13 +117,9 @@ class May20Xjp2():
             reasoning=True,
             max_reasoning_attempts=3,
             llm=llm,
-            embedder={
-                "provider": "ollama",
-                "config": {
-                    "model": "bge-m3",
-                    "base_url": "http://localhost:11434"
-                }
-            },
+            knowledge_sources=[
+                content_source_planner
+            ],
         )
 
     # PLAOptionsStrategistAgent
@@ -143,14 +131,9 @@ class May20Xjp2():
             reasoning=True,
             max_reasoning_attempts=3,
             llm=llm,
-              #knowledge_sources=[pla_source],
-            embedder={
-                "provider": "ollama",
-                "config": {
-                    "model": "bge-m3",
-                    "base_url": "http://localhost:11434"
-                }
-            },
+            knowledge_sources=[
+                content_source_planner
+            ],
         )
 
     # MFADiplomaticStrategistAgent
@@ -162,18 +145,27 @@ class May20Xjp2():
             reasoning=True,
             max_reasoning_attempts=3,
             llm=llm,
-            embedder={
-                "provider": "ollama",
-                "config": {
-                    "model": "bge-m3",
-                    "base_url": "http://localhost:11434"
-                }
-            },
+            knowledge_sources=[
+                content_source_planner
+            ],
         )
 
         # To learn more about structured task outputs,
         # task dependencies, and task callbacks, check out the documentation:
         # https://docs.crewai.com/concepts/tasks#overview-of-a-task
+    # MFADiplomaticStrategistAgent
+    @agent
+    def StrategicNarrativeAndInfluenceAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['StrategicNarrativeAndInfluenceAgent'], # type: ignore[index]
+            verbose=True,
+            reasoning=True,
+            max_reasoning_attempts=3,
+            llm=llm,
+            knowledge_sources=[
+                content_source_planner
+            ],
+        )
 
 
     @agent
@@ -184,13 +176,9 @@ class May20Xjp2():
             reasoning=True,
             max_reasoning_attempts=3,
             llm=llm,
-            embedder={
-                "provider": "ollama",
-                "config": {
-                    "model": "bge-m3",
-                    "base_url": "http://localhost:11434"
-                }
-            },
+            knowledge_sources=[
+                content_source_planner
+            ],
         )
 
     # --- Task Definitions ---
@@ -231,12 +219,17 @@ class May20Xjp2():
             config=self.tasks_config['develop_active_diplomatic_strategy_task'], # type: ignore[index]
         )
 
+    @task
+    def develop_strategic_communication_plan_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['develop_strategic_communication_plan_task'], # type: ignore[index]
+        )
 
     @task
     def format_final_response_task(self) -> Task: # New Task
         return Task(
             config=self.tasks_config['format_final_response_task'], # type: ignore[index]
-            output_filer="final_response.md"
+            output_file="final_response.md"
         )
 
     @crew
@@ -252,7 +245,8 @@ class May20Xjp2():
             planning=True,
             planning_llm=llm,
             knowledge_sources=[
-                content_source
+                content_source_planner,
+                content_source_instruct
             ],
             verbose=True,
             function_calling_llm=llm,
