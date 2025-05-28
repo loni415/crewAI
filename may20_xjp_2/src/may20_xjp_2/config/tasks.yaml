@@ -108,6 +108,7 @@ assess_signaling_and_recommend_strategic_path_task:
     Chosen Strategic Path: [Active Posture: <details of posture> | Strategic Ambiguity | Calibrated Delay].
     This output must be followed by the justification and risk assessment as originally requested.
   agent: StrategicSignalingAssessmentAgent
+  human_input: True
   context:
     - analyze_event_task
     - assess_economic_tech_impact_task
@@ -184,7 +185,7 @@ develop_active_diplomatic_strategy_task:
     "Chosen Path: Calibrated Delay
     Diplomatic Strategy: [Outline of diplomatic actions to support delay and information gathering].
     Keystone Statement: [Holding statement text, max 200 words]."
-  agent: MFADiplomaticStrategistAgent # Ensure this is correctly specified
+  agent: MFADiplomaticStrategistAgent
   context:
     - analyze_event_task
     - assess_economic_tech_impact_task
@@ -254,6 +255,9 @@ format_final_response_task:
     You MUST consult the "PRC_GrayZone_Planner.md" and "XJP Instructions 1.md"
     knowledge base for style, tone, content, specific phrases (e.g., "good faith emphasis"),
     and common social media narratives.
+
+    Do NOT include any of the thinking, logic, or reasoning behind the response. Do NOY
+    include any of the analysis or decision-making process such as any content with tag <thinking> or <reasoning>.
   expected_output: >
     A string containing the final response formatted exactly as follows:
     China's Actions:

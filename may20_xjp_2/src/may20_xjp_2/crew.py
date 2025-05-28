@@ -60,6 +60,7 @@ class May20Xjp2():
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
+            memory=True,
             llm=llm,
             knowledge_sources=[
                 content_source_planner
@@ -72,6 +73,7 @@ class May20Xjp2():
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
+            memory=True,
             llm=llm,
             knowledge_sources=[
                 content_source_planner
@@ -84,6 +86,7 @@ class May20Xjp2():
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
+            memory=True,
             llm=llm,
             knowledge_sources=[
                 content_source_planner
@@ -96,6 +99,7 @@ class May20Xjp2():
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
+            memory=True,
             llm=llm,
             knowledge_sources=[
                 content_source_planner
@@ -109,6 +113,7 @@ class May20Xjp2():
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
+            memory=True,
             llm=llm,
             knowledge_sources=[
                 content_source_planner
@@ -122,6 +127,7 @@ class May20Xjp2():
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
+            memory=True,
             llm=llm,
             knowledge_sources=[
                 content_source_planner
@@ -135,6 +141,7 @@ class May20Xjp2():
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
+            memory=True,
             llm=llm,
             knowledge_sources=[
                 content_source_planner
@@ -148,6 +155,7 @@ class May20Xjp2():
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
+            memory=True,
             llm=llm,
             knowledge_sources=[
                 content_source_planner
@@ -161,6 +169,7 @@ class May20Xjp2():
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
+            memory=True,
             llm=llm,
             knowledge_sources=[
                 content_source_planner
@@ -174,6 +183,7 @@ class May20Xjp2():
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
+            memory=True,
             llm=llm,
             knowledge_sources=[
                 content_source_planner
@@ -187,6 +197,7 @@ class May20Xjp2():
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
+            memory=True,
             llm=llm,
             knowledge_sources=[
                 content_source_planner

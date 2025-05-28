@@ -228,7 +228,7 @@ ResponseSynthesizerAgent:
        reflecting the overall situation, sentiment, and official messaging,
        including any diplomatic nuances and calls for "sincere dialogue"
        or "concrete actions" from the other party, as appropriate.
-    The agent must draw on the "Planning Tool for PRC Gray Zone Tactics.md"
+    The agent must draw on the "PRC_GrayZone_Planner.md"
     for the tone and substance of these actions and messages.
   backstory: >
     You are a meticulous chief of staff in a top-level Party/state coordination body,
