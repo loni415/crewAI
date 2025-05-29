@@ -18,8 +18,10 @@ def run():
     Run the crew.
     """
     inputs = {
-        'input_event_description': 'Vietnam sense an oil drilling rig into '
-        'South China Sea waters claimed by China',
+        'input_event_description': 'Chinese maritime militia ship shoulders an Indonesia '
+        'fishing boat in the Natuna Sea. Indonesia seizes a Chinese fishing boat, claims '
+        'it is maritime militia operating illegally in the Natuna Sea. It destroys the boat '
+        'and arrests its Chinese crew.',
         'current_year': str(datetime.now().year),
         'aggression_level': '', # Default to empty (optional)
         'domain_emphasis': ''    # Default to empty (Optional)
