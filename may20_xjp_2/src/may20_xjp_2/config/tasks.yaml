@@ -102,11 +102,12 @@ assess_signaling_and_recommend_strategic_path_task:
     1. 'Active Posture' (specify which proposed active posture is best),
     2. 'Strategic Ambiguity', or 3. 'Calibrated Delay'. Justify this
     overall recommendation based on escalation control, achieving
-    objectives, and international perception management. Output: Concise
-    recommendation and risk assessment (max 500 words).
+    objectives, and international perception management.
+    Ask human user to confirm the chosen path.
   expected_output: >
     Chosen Strategic Path: [Active Posture: <details of posture> | Strategic Ambiguity | Calibrated Delay].
     This output must be followed by the justification and risk assessment as originally requested.
+    Wait for human confirmation before proceeding to the next task.
   agent: StrategicSignalingAssessmentAgent
   human_input: True
   context:
