@@ -261,8 +261,13 @@ class May20Xjp2():
 
     @task
     def ideological_perception_task(self) -> Task:
+        task_config = self.tasks_config['ideological_perception_task']
+
         return Task(
-            config=self.tasks_config.get('ideological_perception_task', {}), # type: ignore[index]
+            description=task_config['description'],
+            expected_output=task_config['expected_output'],
+            agent=self.CCPIdeologicalAnalyst(),
+            context=[self.assess_signaling_and_recommend_strategic_path_task()],
         )
 
     @task
