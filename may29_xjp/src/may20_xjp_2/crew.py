@@ -225,6 +225,12 @@ class May20Xjp2():
         )
 
     @task
+    def internal_impact_narrative_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['internal_impact_narrative_task'], # type: ignore[index]
+        )
+
+    @task
     def develop_active_strategic_postures_task(self) -> Task:
         return Task(
             config=self.tasks_config['develop_active_strategic_postures_task'], # type: ignore[index]
@@ -253,16 +259,11 @@ class May20Xjp2():
             config=self.tasks_config['develop_active_diplomatic_strategy_task'], # type: ignore[index]
         )
 
+
     @task
     def curate_context_digest_task(self) -> Task:
         return Task(
             config=self.tasks_config['curate_context_digest_task'],  # ← fixed key
-        )
-
-    @task
-    def internal_impact_narrative_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['internal_impact_narrative_task'], # type: ignore[index]
         )
 
     @task
