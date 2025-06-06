@@ -126,6 +126,7 @@ assess_signaling_and_recommend_strategic_path_task:
   context:
     - analyze_event_task
     - develop_active_strategic_postures_task
+  agent: StrategicSignalingAssessmentAgent
 
 generate_active_pla_options_task:
   description: >
