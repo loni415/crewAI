@@ -173,11 +173,14 @@ develop_active_diplomatic_strategy_task:
 
 ideological_perception_task:
   description: >
-    Extract ONLY the ideological pivots in
-    {context.assess_signaling_and_recommend_strategic_path_task.output}
-    and produce a ≤300-word “Ideological Compliance & Leverage Memo”.
-    Ignore all other upstream outputs.
+    Review {context.assess_signaling_and_recommend_strategic_path_task.output}
+    to extract pivotal ideological themes and doctrinal cues. Explain how the
+    recommended path aligns with Party ideology and Xi Jinping Thought. Flag any
+    potentially non-compliant or risky language and suggest high-ground frames
+    for official messaging. Ignore all other upstream outputs.
   expected_output: |
+    memo: |
+      "… concise (≤300 words) Ideological Compliance & Leverage Memo …"
     key_frames:
       - "…"
       - "…"
