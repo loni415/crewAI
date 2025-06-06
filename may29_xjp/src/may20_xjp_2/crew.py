@@ -250,8 +250,8 @@ class May20Xjp2():
     @task
     def ideological_perception_task(self) -> Task:
         return Task(
-            config=self.tasks_config['ideological_perception_task'], # type:
-         )
+            config=self.tasks_config['ideological_perception_task'], # type: ignore[index]
+        )
 
     @task
     def develop_active_diplomatic_strategy_task(self) -> Task:

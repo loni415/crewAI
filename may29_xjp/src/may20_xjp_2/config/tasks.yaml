@@ -74,7 +74,7 @@ internal_impact_narrative_task:
 
 develop_active_strategic_postures_task:
   description: >
-    Synthesise the core event facts from
+    Synthesize the core event facts from
     {context.analyze_event_task.core_event_details}
     together with the economic/tech impact assessment in
     {context.assess_economic_tech_impact_task.vulnerabilities}
@@ -103,29 +103,29 @@ assess_signaling_and_recommend_strategic_path_task:
     overarching path (‘Active Posture’, ‘Strategic Ambiguity’, or
     ‘Calibrated Delay’) with justification.  Ask the human user to confirm
     the choice before downstream tasks proceed.
-        expected_output: >
-          **Human Review Required**
+  expected_output: >
+    **Human Review Required**
 
-          **Proposed Strategic Postures (from CCPStrategicPolicyAdvisor):**
-          1. Posture A: [Details]
-             - Justification: ...
-          2. Posture B: [Details]
-             - Justification: ...
+    **Proposed Strategic Postures (from CCPStrategicPolicyAdvisor):**
+    1. Posture A: [Details]
+        - Justification: ...
+    2. Posture B: [Details]
+        - Justification: ...
 
-          **Strategic Signaling Assessment Agent's Analysis:**
-          - Signaling Implications of Posture A: ...
-          - Escalatory Risks of Posture A: ...
-          - Signaling Implications of Posture B: ...
-          - Escalatory Risks of Posture B: ...
-          - Analysis of 'Strategic Ambiguity' option: ...
-          - Analysis of 'Calibrated Delay' option: ...
+    **Strategic Signaling Assessment Agent's Analysis:**
+    - Signaling Implications of Posture A: ...
+    - Escalatory Risks of Posture A: ...
+    - Signaling Implications of Posture B: ...
+    - Escalatory Risks of Posture B: ...
+    - Analysis of 'Strategic Ambiguity' option: ...
+    - Analysis of 'Calibrated Delay' option: ...
 
-          **Strategic Signaling Assessment Agent's Recommendation:**
-          Recommended Path: [Active Posture: <details> | Strategic Ambiguity | Calibrated Delay]
-          Justification for Recommendation: ...
+    **Strategic Signaling Assessment Agent's Recommendation:**
+    Recommended Path: [Active Posture: <details> | Strategic Ambiguity | Calibrated Delay]
+    Justification for Recommendation: ...
 
-          **Your Decision is Required Below:**
-          Chosen Strategic Path: [Human to fill: e.g., Active Posture: Posture A | Strategic Ambiguity | Calibrated Delay]
+    **Your Decision is Required Below:**
+    Chosen Strategic Path: [Human to fill: e.g., Active Posture: Posture A | Strategic Ambiguity | Calibrated Delay]
   human_input: True
   context:
     - analyze_event_task
@@ -207,27 +207,27 @@ develop_strategic_communication_plan_task:
 # instead of pulling seven separate blobs.
 
 curate_context_digest_task:
-    description: >
-      Collate the following into a single digest ≤600 tokens:
-        – {context.analyze_event_task.core_event_details}
-        – {context.assess_signaling_and_recommend_strategic_path_task.output}
-        – {context.generate_active_pla_options_task.military_options}
-        – {context.develop_active_diplomatic_strategy_task.keystone_statement}
-        – {context.ideological_perception_task.key_frames}
-        – {context.historical_context_task.output}
-        – {context.internal_impact_narrative_task.output}
+  description: >
+    Collate the following into a single digest ≤600 tokens:
+      – {context.analyze_event_task.core_event_details}
+      – {context.assess_signaling_and_recommend_strategic_path_task.output}
+      – {context.generate_active_pla_options_task.military_options}
+      – {context.develop_active_diplomatic_strategy_task.keystone_statement}
+      – {context.ideological_perception_task.key_frames}
+      – {context.historical_context_task.output}
+      – {context.internal_impact_narrative_task.output}
   expected_output: |
     digest: |
       "… consolidated bullet list …"
-    context:
-      - analyze_event_task
-      - assess_signaling_and_recommend_strategic_path_task
-      - generate_active_pla_options_task
-      - develop_active_diplomatic_strategy_task
-      - ideological_perception_task
-      - historical_context_task
-      - internal_impact_narrative_task
-    agent: ContextCuratorAgent
+  context:
+    - analyze_event_task
+    - assess_signaling_and_recommend_strategic_path_task
+    - generate_active_pla_options_task
+    - develop_active_diplomatic_strategy_task
+    - ideological_perception_task
+    - historical_context_task
+    - internal_impact_narrative_task
+  agent: ContextCuratorAgent
 
 
 format_final_response_task:
