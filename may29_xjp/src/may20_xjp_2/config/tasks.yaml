@@ -130,6 +130,7 @@ assess_signaling_and_recommend_strategic_path_task:
   context:
     - analyze_event_task
     - develop_active_strategic_postures_task
+  agent: StrategicSignalingAssessmentAgent
 
 generate_active_pla_options_task:
   description: >
@@ -198,31 +199,35 @@ develop_strategic_communication_plan_task:
     A concise Strategic Communication Plan document.
   agent: StrategicNarrativeAndInfluenceAgent
   context:
-    - curate_context_digest_task.digest
-# instead of pulling seven separate blobs.
-
-curate_context_digest_task:
-  description: >
-    Collate the following into a single digest ≤600 tokens:
-      – {context.analyze_event_task.core_event_details}
-      – {context.assess_signaling_and_recommend_strategic_path_task.output}
-      – {context.generate_active_pla_options_task.military_options}
-      – {context.develop_active_diplomatic_strategy_task.keystone_statement}
-      – {context.ideological_perception_task.key_frames}
-      – {context.historical_context_task.output}
-      – {context.internal_impact_narrative_task.output}
-  expected_output: |
-    digest: |
-      "… consolidated bullet list …"
-  context:
     - analyze_event_task
     - assess_signaling_and_recommend_strategic_path_task
     - generate_active_pla_options_task
     - develop_active_diplomatic_strategy_task
     - ideological_perception_task
-    - historical_context_task
-    - internal_impact_narrative_task
-  agent: ContextCuratorAgent
+# instead of pulling seven separate blobs.
+
+curate_context_digest_task:
+    description: >
+      Collate the following into a single digest ≤600 tokens:
+        – {context.analyze_event_task.core_event_details}
+        – {context.assess_signaling_and_recommend_strategic_path_task.output}
+        – {context.generate_active_pla_options_task.military_options}
+        – {context.develop_active_diplomatic_strategy_task.keystone_statement}
+        – {context.ideological_perception_task.key_frames}
+        – {context.historical_context_task.output}
+        – {context.internal_impact_narrative_task.output}
+  expected_output: |
+    digest: |
+      "… consolidated bullet list …"
+    context:
+      - analyze_event_task
+      - assess_signaling_and_recommend_strategic_path_task
+      - generate_active_pla_options_task
+      - develop_active_diplomatic_strategy_task
+      - ideological_perception_task
+      - historical_context_task
+      - internal_impact_narrative_task
+    agent: ContextCuratorAgent
 
 
 format_final_response_task:
