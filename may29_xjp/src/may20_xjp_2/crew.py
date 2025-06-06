@@ -204,7 +204,19 @@ class May20Xjp2():
             ],
         )
 
-    # --- Task Definitions ---
+    @agent
+    def ContextCuratorAgent(self) -> Agent:
+        return Agent(
+            config=self.agents_config['ContextCuratorAgent'], # type: ignore[index]
+            verbose=True,
+            reasoning=True,
+            max_reasoning_attempts=3,
+            memory=True,
+            llm=llm,
+            knowledge_sources=[
+                content_source_planner
+            ],
+        )
 
     @task
     def analyze_event_task(self) -> Task:
