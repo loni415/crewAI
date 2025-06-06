@@ -250,7 +250,7 @@ class May20Xjp2():
     @task
     def ideological_perception_task(self) -> Task:
         return Task(
-            config=self.tasks_config['ideological_perception_task'], # type: ignore[index]
+            config=self.tasks_config.get('ideological_perception_task', {}), # type: ignore[index]
         )
 
     @task
