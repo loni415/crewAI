@@ -2,12 +2,9 @@ analyze_event_task:
   description: >
     Analyze foreign policy event: {input_event_description}.
     Consider the provided Aggression Level: {aggression_level} and Domain Emphasis: {domain_emphasis}.
-    Detail: nature of the event, direct/indirect impact on Chinese core interests,
-    initiating entity's likely objectives/red lines, potential escalatory pathways,
-    key sensitivities for China. Explicitly assess how this event might be
-    interpreted through the lens of China's historical narratives, its current
-    ideological discourse (e.g., National Rejuvenation, struggle against hegemonism),
-    and its potential ramifications for domestic public opinion and Party legitimacy.
+    Detail: nature of the event, its direct/indirect impact on Chinese core geopolitical and security interests,
+    the initiating entity's likely objectives/red lines, potential escalatory pathways,
+    and key security-related sensitivities for China.
   expected_output: |
     core_event_details: < 70 words
     risk_score: 1‑5
@@ -127,8 +124,8 @@ assess_signaling_and_recommend_strategic_path_task:
 
 generate_active_pla_options_task:
   description: >
-    Based on {context.analyze_event_task.top_red_lines} produce ≤3 PLA options
-    (one sentence each) that dovetail with the signalling path.
+    Based on the human-chosen strategic path from {context.assess_signaling_and_recommend_strategic_path_task.output} and considering {context.analyze_event_task.top_red_lines}, produce ≤3 PLA options
+    (one sentence each) that align with this path.
   expected_output: |
     military_options:
       - name: "Show‑of‑Force Patrol"
@@ -184,8 +181,15 @@ develop_strategic_communication_plan_task:
     4. Themes for unofficial but aligned social media amplification. 5. Potential pre-emptive
     or reactive counter-narrative measures. Actively draw upon the 'Media and Public Perception'
     and 'Denial and Deception' sections of 'PRC_GrayZone_Planner.md'.
-  expected_output: >
-    A concise Strategic Communication Plan document.
+  expected_output: |
+    plan_document: <full text of the communication plan>
+    key_narrative_themes_for_social_media:
+      - "Theme A for social media (example)"
+      - "Theme B for social media (example)"
+    key_messages_domestic:
+      - "Message 1 for domestic audience (example)"
+      - "Message 2 for domestic audience (example)"
+    # Add other structured elements as deemed necessary by the agent
   agent: StrategicNarrativeAndInfluenceAgent
   context:
     - curate_context_digest_task.digest
@@ -241,6 +245,8 @@ format_final_response_task:
         - Adhere to common Chinese social media narrative styles.
   agent: ResponseSynthesizerAgent
   context:
-    - curate_context_digest_task.digest
+    - curate_context_digest_task
+    - generate_active_pla_options_task
+    - develop_active_diplomatic_strategy_task
 # instead of pulling seven separate blobs.
   output_file: output/final_response.md
