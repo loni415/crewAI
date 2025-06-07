@@ -135,17 +135,13 @@ assess_signaling_and_recommend_strategic_path_task:
 generate_active_pla_options_task:
   description: >
     Based on {context.analyze_event_task.top_red_lines} produce ≤3 PLA options
-    (one sentence each) that dovetail with the signalling path chosen in
-    {context.assess_signaling_and_recommend_strategic_path_task.output}.
-    # This task is conditional: It should only produce options if the chosen strategic path includes 'Active Posture'.
-    # The PLAOptionsStrategistAgent's internal logic is expected to handle this condition.
+    (one sentence each) that dovetail with the signalling path.
   expected_output: |
-    military_options: # Should be empty or indicate 'Not Applicable' if condition not met.
+    military_options:
       - name: "Show‑of‑Force Patrol"
         summary: "…"
       - name: "Precision Drill …"
         summary: "…"
-  is_conditional: true
   context:
     - analyze_event_task
     - assess_signaling_and_recommend_strategic_path_task
@@ -206,7 +202,11 @@ develop_strategic_communication_plan_task:
     A concise Strategic Communication Plan document.
   agent: StrategicNarrativeAndInfluenceAgent
   context:
-    - curate_context_digest_task
+    - analyze_event_task
+    - assess_signaling_and_recommend_strategic_path_task
+    - generate_active_pla_options_task
+    - develop_active_diplomatic_strategy_task
+    - ideological_perception_task
 # instead of pulling seven separate blobs.
 
 curate_context_digest_task:
@@ -220,25 +220,8 @@ curate_context_digest_task:
       – {context.historical_context_task.output}
       – {context.internal_impact_narrative_task.output}
   expected_output: |
-    digest: >-
-      core_event_details: "Summary of event details (approx. 70 words)."
-      risk_score: "Calculated risk score (1-5)."
-      top_red_lines:
-        - "Red line 1"
-        - "Red line 2"
-      chosen_strategic_path: "The strategic path chosen by human input (e.g., Active Posture: Posture A, Strategic Ambiguity, Calibrated Delay)."
-      # PLA options should only be populated if 'Active Posture' was chosen. Otherwise, 'Not Applicable' or empty list.
-      pla_options:
-        - name: "Military Option 1 Name (e.g., Show-of-Force Patrol)"
-          summary: "Summary of military option 1."
-        - name: "Military Option 2 Name"
-          summary: "Summary of military option 2."
-      keystone_diplomatic_statement: "Full text of the keystone MFA diplomatic statement (approx. 200 words)."
-      ideological_key_frames:
-        - "Key ideological frame 1."
-        - "Key ideological frame 2."
-      historical_context_summary: "Concise summary of relevant historical precedents and strategic cultural considerations."
-      internal_impact_summary: "Concise summary of potential domestic public opinion impacts, social stability risks, and narrative strategies."
+    digest: |
+      "… consolidated bullet list …"
   context:
     - analyze_event_task
     - assess_signaling_and_recommend_strategic_path_task
