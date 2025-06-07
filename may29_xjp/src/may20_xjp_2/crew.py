@@ -280,10 +280,23 @@ class May20Xjp2():
 
     @task
     def curate_context_digest_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['curate_context_digest_task'],  # ← fixed key
-        )
+        task_config = self.tasks_config['curate_context_digest_task']
 
+        return Task(
+            description=task_config['description'],
+            expected_output=task_config['expected_output'],
+            agent=self.ContextCuratorAgent(),
+            context=[
+                self.analyze_event_task(),
+                self.assess_signaling_and_recommend_strategic_path_task(),
+                self.generate_active_pla_options_task(),
+                self.develop_active_diplomatic_strategy_task(),
+                self.ideological_perception_task(),
+                self.historical_context_task(),
+                self.internal_impact_narrative_task()
+            ],
+        )
+    
     @task
     def develop_strategic_communication_plan_task(self) -> Task:
         return Task(

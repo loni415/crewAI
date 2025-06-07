@@ -208,7 +208,7 @@ StrategicNarrativeAndInfluenceAgent:
 
 ContextCuratorAgent:
   role: >
-    Lightweight Summariser & Prompt Token Optimiser.
+    Lightweight Summarizer & Prompt Token Optimizer.
   goal: >
     Collate the essential bullet capsules from upstream tasks into a single
     digest ≤ 600 tokens for consumption by final synthesis tasks.

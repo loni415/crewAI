@@ -239,6 +239,7 @@ curate_context_digest_task:
         - "Key ideological frame 2."
       historical_context_summary: "Concise summary of relevant historical precedents and strategic cultural considerations."
       internal_impact_summary: "Concise summary of potential domestic public opinion impacts, social stability risks, and narrative strategies."
+  agent: ContextCuratorAgent
   context:
     - analyze_event_task
     - assess_signaling_and_recommend_strategic_path_task
@@ -247,7 +248,7 @@ curate_context_digest_task:
     - ideological_perception_task
     - historical_context_task
     - internal_impact_narrative_task
-  agent: ContextCuratorAgent
+
 
 
 format_final_response_task:
