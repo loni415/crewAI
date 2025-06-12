@@ -253,11 +253,21 @@ class May20Xjp2():
     def assess_signaling_and_recommend_strategic_path_task(self) -> Task:
         return Task(
             config=self.tasks_config['assess_signaling_and_recommend_strategic_path_task'], # type: ignore[index]
+            human_input=True
         )
+
     @task
     def generate_active_pla_options_task(self) -> Task:
+        task_config = self.tasks_config['generate_active_pla_options_task']
+
         return Task(
-            config=self.tasks_config['generate_active_pla_options_task'], # type: ignore[index]
+            description=task_config['description'],
+            expected_output=task_config['expected_output'],
+            agent=self.PLAOptionsStrategistAgent(),
+            context=[
+                self.analyze_event_task(),
+                self.assess_signaling_and_recommend_strategic_path_task()
+            ],
         )
 
     @task
@@ -273,10 +283,21 @@ class May20Xjp2():
 
     @task
     def develop_active_diplomatic_strategy_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['develop_active_diplomatic_strategy_task'], # type: ignore[index]
-        )
+        task_config = self.tasks_config['develop_active_diplomatic_strategy_task']
 
+        return Task(
+            description=task_config['description'],
+            expected_output=task_config['expected_output'],
+            agent=self.MFADiplomaticStrategistAgent(),
+            context=[
+                self.analyze_event_task(),
+                self.assess_signaling_and_recommend_strategic_path_task(),
+                self.generate_active_pla_options_task(),
+                self.ideological_perception_task(),
+                self.historical_context_task(),
+                self.internal_impact_narrative_task()
+            ],
+        )
 
     @task
     def curate_context_digest_task(self) -> Task:
@@ -296,45 +317,53 @@ class May20Xjp2():
                 self.internal_impact_narrative_task()
             ],
         )
-    
+
     @task
     def develop_strategic_communication_plan_task(self) -> Task:
+        task_config = self.tasks_config['develop_strategic_communication_plan_task']
+
         return Task(
-            config=self.tasks_config['develop_strategic_communication_plan_task'], # type: ignore[index]
+            description=task_config['description'],
+            expected_output=task_config['expected_output'],
+            agent=self.StrategicNarrativeAndInfluenceAgent(),
+            context=[self.curate_context_digest_task()],
         )
 
     @task
     def format_final_response_task(self) -> Task:
+        task_config = self.tasks_config['format_final_response_task']
+
         return Task(
-            config=self.tasks_config['format_final_response_task'], # type: ignore[index]
+            description=task_config['description'],
+            expected_output=task_config['expected_output'],
+            agent=self.ResponseSynthesizerAgent(),
+            context=[
+                self.curate_context_digest_task(),
+                self.develop_strategic_communication_plan_task()  # Add this
+            ],
             output_file="output/final_response.md"
         )
-
-    @crew
-    def crew(self) -> Crew:
-        """Creates the May20Xjp2 crew"""
-        # To learn how to add knowledge sources to your crew, check out the documentation:
-        # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
-
-        return Crew(
-            agents=self.agents, # This will now include all agents
-            tasks=self.tasks,   # This will now include all tasks
-            process=Process.sequential,
-            planning=True,
-            planning_llm=llm,
-            knowledge_sources=[
-                content_source_planner,
-                content_source_instruct
-            ],
-            verbose=True,
-            function_calling_llm=llm,
-            chat_llm=llm,
-            memory=True,
-            output_log_file="log.txt",
-            long_term_memory=long_term_memory,
-            entity_memory=entity_memory,
-            knowledge_config=knowledge_config,
-            embedder=embedding_config,
-        )
-
-
+@crew
+def crew(self) -> Crew:
+    """Creates the May20Xjp2 crew"""
+    return Crew(
+        agents=self.agents,
+        tasks=self.tasks,
+        process=Process.sequential,  # Keep sequential for now, but consider Process.hierarchical if you want more control
+        planning=True,
+        planning_llm=llm,
+        knowledge_sources=[
+            content_source_planner,
+            content_source_instruct
+        ],
+        verbose=True,
+        function_calling_llm=llm,
+        chat_llm=llm,
+        memory=True,
+        output_log_file="log.txt",
+        long_term_memory=long_term_memory,
+        entity_memory=entity_memory,
+        knowledge_config=knowledge_config,
+        embedder=embedding_config,
+        max_rpm=10,  # Consider adding rate limiting if needed
+    )
