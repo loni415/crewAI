@@ -343,27 +343,27 @@ class May20Xjp2():
             ],
             output_file="output/final_response.md"
         )
-@crew
-def crew(self) -> Crew:
-    """Creates the May20Xjp2 crew"""
-    return Crew(
-        agents=self.agents,
-        tasks=self.tasks,
-        process=Process.sequential,  # Keep sequential for now, but consider Process.hierarchical if you want more control
-        planning=True,
-        planning_llm=llm,
-        knowledge_sources=[
-            content_source_planner,
-            content_source_instruct
-        ],
-        verbose=True,
-        function_calling_llm=llm,
-        chat_llm=llm,
-        memory=True,
-        output_log_file="log.txt",
-        long_term_memory=long_term_memory,
-        entity_memory=entity_memory,
-        knowledge_config=knowledge_config,
-        embedder=embedding_config,
-        max_rpm=10,  # Consider adding rate limiting if needed
-    )
+    @crew
+    def crew(self) -> Crew:
+        """Creates the May20Xjp2 crew"""
+        return Crew(
+            agents=self.agents,
+            tasks=self.tasks,
+            process=Process.sequential,
+            planning=True,
+            planning_llm=llm,
+            knowledge_sources=[
+                content_source_planner,
+                content_source_instruct
+            ],
+            verbose=True,
+            function_calling_llm=llm,
+            chat_llm=llm,
+            memory=True,
+            output_log_file="log.txt",
+            long_term_memory=long_term_memory,
+            entity_memory=entity_memory,
+            knowledge_config=knowledge_config,
+            embedder=embedding_config,
+            max_rpm=10,
+        )
