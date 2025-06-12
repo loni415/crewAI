@@ -306,7 +306,9 @@ format_final_response_task:
 
     Select most realistic, impactful actions based on chosen strategic path.
     Consult "PRC_GrayZone_Planner.md" and "XJP Instructions 1.md" for style and tone.
-    Do NOT include reasoning or analysis - only final formatted response.
+
+    **CRITICAL: Do NOT include reasoning, analysis, thinking process, or internal deliberations.
+    Only provide the final formatted response as specified in the expected output.**
   expected_output: >
     **STRATEGIC PATH SELECTED:** [Active Posture/Strategic Ambiguity/Calibrated Delay]
 

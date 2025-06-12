@@ -366,4 +366,5 @@ class May20Xjp2():
             knowledge_config=knowledge_config,
             embedder=embedding_config,
             max_rpm=10,
+            manager_llm=llm,
         )
