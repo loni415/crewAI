@@ -261,17 +261,11 @@ class May20Xjp2():
         return Task(
             config=self.tasks_config['generate_active_pla_options_task'], # type: ignore[index]
         )
-
     @task
     def ideological_perception_task(self) -> Task:
-        task_config = self.tasks_config['ideological_perception_task']
-
         return Task(
-            description=task_config['description'],
-            expected_output=task_config['expected_output'],
-            agent=self.CCPIdeologicalAnalyst(),
-            context=[self.assess_signaling_and_recommend_strategic_path_task()],
-        )
+            config=self.tasks_config['ideological_perception_task'], # type: ignore[index]
+    )
 
     @task
     def develop_active_diplomatic_strategy_task(self) -> Task:
