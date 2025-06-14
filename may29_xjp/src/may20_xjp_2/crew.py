@@ -102,7 +102,8 @@ class May20Xjp2():
             memory=True,
             llm=llm,
             knowledge_sources=[
-                content_source_planner
+                content_source_planner,
+                content_source_instruct
             ],
         )
 
