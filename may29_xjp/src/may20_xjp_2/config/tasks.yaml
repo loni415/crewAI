@@ -277,5 +277,4 @@ format_final_response_task:
   agent: ResponseSynthesizerAgent
   context:
     - curate_context_digest_task
-# instead of pulling seven separate blobs.
   output_file: output/final_response.md
