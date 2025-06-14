@@ -251,7 +251,7 @@ develop_strategic_communication_plan_task:
   agent: StrategicNarrativeAndInfluenceAgent
   context:
     - curate_context_digest_task
-
+# instead of pulling seven separate blobs.
 
 curate_context_digest_task:
   description: >
