@@ -135,17 +135,13 @@ assess_signaling_and_recommend_strategic_path_task:
 generate_active_pla_options_task:
   description: >
     Based on {context.analyze_event_task.top_red_lines} produce ≤3 PLA options
-    (one sentence each) that dovetail with the signalling path chosen in
-    {context.assess_signaling_and_recommend_strategic_path_task.output}.
-    # This task is conditional: It should only produce options if the chosen strategic path includes 'Active Posture'.
-    # The PLAOptionsStrategistAgent's internal logic is expected to handle this condition.
+    (one sentence each) that dovetail with the signalling path.
   expected_output: |
-    military_options: # Should be empty or indicate 'Not Applicable' if condition not met.
+    military_options:
       - name: "Show‑of‑Force Patrol"
         summary: "…"
       - name: "Precision Drill …"
         summary: "…"
-  is_conditional: true
   context:
     - analyze_event_task
     - assess_signaling_and_recommend_strategic_path_task
