@@ -254,21 +254,11 @@ class May20Xjp2():
     def assess_signaling_and_recommend_strategic_path_task(self) -> Task:
         return Task(
             config=self.tasks_config['assess_signaling_and_recommend_strategic_path_task'], # type: ignore[index]
-            human_input=True
         )
-
     @task
     def generate_active_pla_options_task(self) -> Task:
-        task_config = self.tasks_config['generate_active_pla_options_task']
-
         return Task(
-            description=task_config['description'],
-            expected_output=task_config['expected_output'],
-            agent=self.PLAOptionsStrategistAgent(),
-            context=[
-                self.analyze_event_task(),
-                self.assess_signaling_and_recommend_strategic_path_task()
-            ],
+            config=self.tasks_config['generate_active_pla_options_task'], # type: ignore[index]
         )
 
     @task
@@ -284,72 +274,39 @@ class May20Xjp2():
 
     @task
     def develop_active_diplomatic_strategy_task(self) -> Task:
-        task_config = self.tasks_config['develop_active_diplomatic_strategy_task']
-
         return Task(
-            description=task_config['description'],
-            expected_output=task_config['expected_output'],
-            agent=self.MFADiplomaticStrategistAgent(),
-            context=[
-                self.analyze_event_task(),
-                self.assess_signaling_and_recommend_strategic_path_task(),
-                self.generate_active_pla_options_task(),
-                self.ideological_perception_task(),
-                self.historical_context_task(),
-                self.internal_impact_narrative_task()
-            ],
+            config=self.tasks_config['develop_active_diplomatic_strategy_task'], # type: ignore[index]
         )
+
 
     @task
     def curate_context_digest_task(self) -> Task:
-        task_config = self.tasks_config['curate_context_digest_task']
-
         return Task(
-            description=task_config['description'],
-            expected_output=task_config['expected_output'],
-            agent=self.ContextCuratorAgent(),
-            context=[
-                self.analyze_event_task(),
-                self.assess_signaling_and_recommend_strategic_path_task(),
-                self.generate_active_pla_options_task(),
-                self.develop_active_diplomatic_strategy_task(),
-                self.ideological_perception_task(),
-                self.historical_context_task(),
-                self.internal_impact_narrative_task()
-            ],
+            config=self.tasks_config['curate_context_digest_task'],  # ← fixed key
         )
 
     @task
     def develop_strategic_communication_plan_task(self) -> Task:
-        task_config = self.tasks_config['develop_strategic_communication_plan_task']
-
         return Task(
-            description=task_config['description'],
-            expected_output=task_config['expected_output'],
-            agent=self.StrategicNarrativeAndInfluenceAgent(),
-            context=[self.curate_context_digest_task()],
+            config=self.tasks_config['develop_strategic_communication_plan_task'], # type: ignore[index]
         )
 
     @task
     def format_final_response_task(self) -> Task:
-        task_config = self.tasks_config['format_final_response_task']
-
         return Task(
-            description=task_config['description'],
-            expected_output=task_config['expected_output'],
-            agent=self.ResponseSynthesizerAgent(),
-            context=[
-                self.curate_context_digest_task(),
-                self.develop_strategic_communication_plan_task()  # Add this
-            ],
+            config=self.tasks_config['format_final_response_task'], # type: ignore[index]
             output_file="output/final_response.md"
         )
+
     @crew
     def crew(self) -> Crew:
         """Creates the May20Xjp2 crew"""
+        # To learn how to add knowledge sources to your crew, check out the documentation:
+        # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
+
         return Crew(
-            agents=self.agents,
-            tasks=self.tasks,
+            agents=self.agents, # This will now include all agents
+            tasks=self.tasks,   # This will now include all tasks
             process=Process.sequential,
             planning=True,
             planning_llm=llm,
@@ -366,6 +323,4 @@ class May20Xjp2():
             entity_memory=entity_memory,
             knowledge_config=knowledge_config,
             embedder=embedding_config,
-            max_rpm=10,
-            manager_llm=llm,
         )

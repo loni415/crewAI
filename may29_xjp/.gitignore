@@ -1,5 +1,3 @@
 .env
 __pycache__/
 .DS_Store
-
-long_term_memory.db
