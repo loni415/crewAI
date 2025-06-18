@@ -12,7 +12,7 @@ from crewai.knowledge.knowledge_config import KnowledgeConfig
 from crewai.memory.storage.ltm_sqlite_storage import LTMSQLiteStorage
 
 llm = LLM(
-    model="ollama/qwen3:32b-q8_0",
+    model="ollama/mixtral:8x22b-instruct-v0.1-q2_K",
     base_url="http://localhost:11434"
 )
 
