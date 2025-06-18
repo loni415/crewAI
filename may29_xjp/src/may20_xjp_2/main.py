@@ -42,7 +42,7 @@ def train():
     Train the crew for a given number of iterations.
     """
     inputs = {
-        'input_event_description': 'Japan imposes unilateral fishing ban on the Senkaku Islands EEZ',
+        'input_event_description': 'Taiwan is caught conducting cyber espionage against PRC',
         'current_year': str(datetime.now().year),
         'aggression_level': '', # Default to empty (optional)
         'domain_emphasis': ''    # Default to empty (Optional)
