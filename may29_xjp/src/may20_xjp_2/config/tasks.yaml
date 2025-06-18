@@ -3,17 +3,17 @@ analyze_event_task:
     Analyze foreign policy event: {input_event_description}.
     Consider the provided Aggression Level: {aggression_level} and Domain Emphasis: {domain_emphasis}.
     Detail: nature of the event, direct/indirect impact on Chinese core interests,
-    initiating entity's likely objectives/red lines, potential escalatory pathways,
+    initiating entity's likely objectives/red-lines, potential escalatory pathways,
     key sensitivities for China. Explicitly assess how this event might be
     interpreted through the lens of China's historical narratives, its current
-    ideological discourse (e.g., National Rejuvenation, struggle against hegemonism),
+    ideological discourse (e.g., "National Rejuvenation", struggle against hegemonism),
     and its potential ramifications for domestic public opinion and Party legitimacy.
   expected_output: |
-    core_event_details: < 70 words
-    risk_score: 1‑5
+    core_event_details: < 70 words
+    risk_score: 1-5
     top_red_lines:
-      - "…"
-      - "…"
+      - "..."
+      - "..."
   agent: ForeignPolicyEventAnalystAgent
 
 assess_economic_tech_impact_task:
@@ -21,8 +21,8 @@ assess_economic_tech_impact_task:
     Using {context.analyze_event_task.core_event_details}, evaluate economic &
     tech impacts. Ignore ideological angles.
   expected_output: |
-    vulnerabilities: [ "…", "…" ]
-    leverage_points:  [ "…", "…" ]
+    vulnerabilities: [ "...", "..." ]
+    leverage_points:  [ "...", "..." ]
   context:
     - analyze_event_task
   agent: EconomicAndTechImpactAnalystAgent
@@ -81,11 +81,11 @@ develop_active_strategic_postures_task:
     + {context.assess_economic_tech_impact_task.leverage_points}.
     Integrate historical precedents from {context.historical_context_task.output}
     and domestic sentiment considerations from {context.internal_impact_narrative_task.output}.
-    Through the lens of the “Holistic National Security Concept”,
+    Through the lens of the "Holistic National Security Concept",
     define **2-3 active strategic postures** for China and justify each
-    (≤ 800 words total).  Reference relevant guidance in PRC_GrayZone_Planner.md.
+    (<= 800 words total).  Reference relevant guidance in PRC_GrayZone_Planner.md.
   expected_output: >
-    Concise document (≤ 800 words) outlining 2-3 distinct active strategic
+    Concise document (<= 800 words) outlining 2-3 distinct active strategic
     postures with justifications.
   context:
     - analyze_event_task
@@ -96,55 +96,36 @@ develop_active_strategic_postures_task:
 
 assess_signaling_and_recommend_strategic_path_task:
   description: >
-    Based on the strategic postures from {context.develop_active_strategic_postures_task.output}
-    and the original event facts in {context.analyze_event_task.core_event_details},
-    present THREE distinct strategic response approaches for human selection:
-
-    1. **Active Posture**: Immediate, assertive response with concrete actions (military, economic, diplomatic)
-    2. **Strategic Ambiguity**: Maintain calculated uncertainty about China's intentions and responses
-    3. **Calibrated Delay**: Measured postponement of response while gathering intelligence and preparing options
-
-    For each approach, analyze signaling implications, escalation risks, and likely outcomes.
-    Present a clear recommendation but require human confirmation of the chosen path.
+    Review the proposed active postures from
+    {context.develop_active_strategic_postures_task.output} plus the
+    original event facts in {context.analyze_event_task.core_event_details}.
+    Assess signalling implications and escalation risks, then recommend ONE
+    overarching path ('Active Posture', 'Strategic Ambiguity', or
+    'Calibrated Delay') with justification.  Ask the human user to confirm
+    the choice before downstream tasks proceed.
   expected_output: >
-    ***STRATEGIC RESPONSE PATH SELECTION***
+    **Human Review Required**
 
-    **EVENT CONTEXT:**
-    {Brief summary of the triggering event and key stakes}
+    **Proposed Strategic Postures (from CCPStrategicPolicyAdvisor):**
+    1. Posture A: [Details]
+        - Justification: ...
+    2. Posture B: [Details]
+        - Justification: ...
 
-    **THREE RESPONSE APPROACHES:**
+    **Strategic Signaling Assessment Agent's Analysis:**
+    - Signaling Implications of Posture A: ...
+    - Escalatory Risks of Posture A: ...
+    - Signaling Implications of Posture B: ...
+    - Escalatory Risks of Posture B: ...
+    - Analysis of 'Strategic Ambiguity' option: ...
+    - Analysis of 'Calibrated Delay' option: ...
 
-    **OPTION 1: ACTIVE POSTURE**
-    - Description: Immediate assertive response demonstrating China's resolve
-    - Concrete Actions Would Include: [2-3 specific examples from postures analysis]
-    - Signaling Effect: [Clear, strong deterrent message]
-    - Escalation Risk: [High/Medium/Low with justification]
-    - Timeline: Immediate (24-72 hours)
+    **Strategic Signaling Assessment Agent's Recommendation:**
+    Recommended Path: [Active Posture: <details> | Strategic Ambiguity | Calibrated Delay]
+    Justification for Recommendation: ...
 
-    **OPTION 2: STRATEGIC AMBIGUITY**
-    - Description: Maintain uncertainty about China's response while preserving options
-    - Concrete Actions Would Include: [Vague statements, behind-scenes preparation]
-    - Signaling Effect: [Keeps adversaries guessing, maintains flexibility]
-    - Escalation Risk: [High/Medium/Low with justification]
-    - Timeline: Extended (1-2 weeks)
-
-    **OPTION 3: CALIBRATED DELAY**
-    - Description: Measured postponement while gathering intelligence and preparing comprehensive response
-    - Concrete Actions Would Include: [Information gathering, consultations, preparation]
-    - Signaling Effect: [Deliberate, measured response suggesting serious consideration]
-    - Escalation Risk: [High/Medium/Low with justification]
-    - Timeline: Extended (2-4 weeks)
-
-    **AGENT RECOMMENDATION:** [Option X]
-    **Justification:** [2-3 sentences explaining why this option best fits the situation]
-
-    **HUMAN DECISION REQUIRED:**
-    Please select ONE of the following:
-    A) Active Posture
-    B) Strategic Ambiguity
-    C) Calibrated Delay
-
-    Your Choice: [Human to fill: A, B, or C]
+    **Your Decision is Required Below:**
+    Chosen Strategic Path: [Human to fill: e.g., Active Posture: Posture A | Strategic Ambiguity | Calibrated Delay]
   human_input: True
   context:
     - analyze_event_task
@@ -153,64 +134,34 @@ assess_signaling_and_recommend_strategic_path_task:
 
 generate_active_pla_options_task:
   description: >
-    Based on the human-selected strategic path from {context.assess_signaling_and_recommend_strategic_path_task.output}:
-
-    - IF "Active Posture" was selected: Generate 2-3 specific PLA military options that align with the chosen approach
-    - IF "Strategic Ambiguity" was selected: Generate 1-2 ambiguous military preparations that don't reveal intentions
-    - IF "Calibrated Delay" was selected: Generate intelligence-gathering and preparation activities only
-
-    Reference {context.analyze_event_task.top_red_lines} to ensure options are appropriately calibrated.
+    Based on {context.analyze_event_task.top_red_lines} produce <=3 PLA options
+    (one sentence each) that dovetail with the signalling path.
   expected_output: |
-    selected_path: "[Active Posture/Strategic Ambiguity/Calibrated Delay]"
     military_options:
-      - name: "[Option name based on selected path]"
-        summary: "[Detailed summary]"
-        path_alignment: "[How this aligns with chosen strategic approach]"
-  is_conditional: true
+      - name: "Show-of-Force Patrol"
+        summary: "..."
+      - name: "Precision Drill ..."
+        summary: "..."
   context:
     - analyze_event_task
     - assess_signaling_and_recommend_strategic_path_task
   agent: PLAOptionsStrategistAgent
 
-ideological_perception_task:
-  description: >
-    Review the human-selected strategic path from {context.assess_signaling_and_recommend_strategic_path_task.output}
-    and analyze ideological alignment:
-
-    - Extract pivotal ideological themes and doctrinal cues relevant to the chosen path
-    - Explain how the selected approach aligns with Party ideology and Xi Jinping Thought
-    - Flag any potentially non-compliant language based on the chosen strategy
-    - Suggest high-ground ideological frames for official messaging that match the strategic approach
-
-    Tailor ideological framing to support the selected path (active/ambiguous/delayed).
-  expected_output: |
-    selected_path: "[Active Posture/Strategic Ambiguity/Calibrated Delay]"
-    memo: |
-      "Concise (≤300 words) Ideological Compliance & Leverage Memo tailored to chosen path"
-    key_frames:
-      - "Ideological frame 1 supporting selected strategy"
-      - "Ideological frame 2 supporting selected strategy"
-    compliance_assessment: "Analysis of how chosen path aligns with Party doctrine"
-  context:
-    - assess_signaling_and_recommend_strategic_path_task
-  agent: CCPIdeologicalAnalyst
-
-
 develop_active_diplomatic_strategy_task:
   description: >
-    Based on the human-selected strategic path from {context.assess_signaling_and_recommend_strategic_path_task.output},
-    craft the MFA strategy with path-specific approaches:
-
-    - IF "Active Posture" was selected: Draft strong, definitive diplomatic statements with clear positions
-    - IF "Strategic Ambiguity" was selected: Create carefully worded statements that preserve flexibility
-    - IF "Calibrated Delay" was selected: Focus on procedural statements about consultations
+    Using ONLY:
+      - {context.analyze_event_task.core_event_details}
+      - {context.assess_signaling_and_recommend_strategic_path_task.output}
+      - {context.generate_active_pla_options_task.military_options}
+      - {context.ideological_perception_task.key_frames}
+      - {context.historical_context_task.output}
+      - {context.internal_impact_narrative_task.output}
+    craft the MFA strategy (see path-conditional instructions).
   expected_output: |
-    chosen_path: "[Active Posture/Strategic Ambiguity/Calibrated Delay]"
+    chosen_path: "Active Posture | Strategic Ambiguity | Calibrated Delay"
     keystone_statement: |
-      "Draft MFA line (≤200 words) tailored to chosen strategic path"
-    engagement_plan:
-      - "Primary diplomatic channels and messaging"
-    path_rationale: "How diplomatic approach aligns with chosen strategy"
+      "Draft MFA line ( <=200 words ) ..."
+    engagement_plan: [ "actor -> engagement mode", "..." ]
   context:
     - analyze_event_task
     - assess_signaling_and_recommend_strategic_path_task
@@ -220,49 +171,50 @@ develop_active_diplomatic_strategy_task:
     - internal_impact_narrative_task
   agent: MFADiplomaticStrategistAgent
 
+ideological_perception_task:
+  description: >
+    Review {context.assess_signaling_and_recommend_strategic_path_task.output}
+    to extract pivotal ideological themes and doctrinal cues. Explain how the
+    recommended path aligns with Party ideology and Xi Jinping Thought. Flag any
+    potentially non-compliant or risky language and suggest high-ground frames
+    for official messaging. Ignore all other upstream outputs.
+  expected_output: |
+    memo: |
+      "... concise (<=300 words) Ideological Compliance & Leverage Memo ..."
+    key_frames:
+      - "..."
+      - "..."
+  context:
+    - assess_signaling_and_recommend_strategic_path_task
+  agent: CCPIdeologicalAnalyst
+
 
 develop_strategic_communication_plan_task:
   description: >
-    Using the consolidated context from {context.curate_context_digest_task.digest},
-    craft a Strategic Communication Plan that adapts messaging to the chosen strategic path:
-
-    - IF "Active Posture": Emphasize strength, resolve, and justified defensive actions
-    - IF "Strategic Ambiguity": Focus on principled positions while avoiding specific commitments
-    - IF "Calibrated Delay": Highlight deliberation, consultation, and measured consideration
+    Use the consolidated bullet list in {context.curate_context_digest_task.digest}
+    to craft a Strategic Communication Plan. This plan must specify-
+    1. Core narratives for domestic consumption. 2. Key messages for international audiences
+    (differentiating by target region/country if necessary). 3. Guidance for state media outlets.
+    4. Themes for unofficial but aligned social media amplification. 5. Potential pre-emptive
+    or reactive counter-narrative measures. Actively draw upon the 'Media and Public Perception'
+    and 'Denial and Deception' sections of 'PRC_GrayZone_Planner.md'.
   expected_output: >
-    **STRATEGIC COMMUNICATION PLAN**
-
-    **Selected Path:** [Active Posture/Strategic Ambiguity/Calibrated Delay]
-
-    **Domestic Narratives:**
-    - Core message for Chinese audiences
-
-    **International Messaging:**
-    - Primary message for global audiences
-
-    **Media Guidance:**
-    - State media talking points
-
-    **Social Media Strategy:**
-    - Unofficial amplification themes
-
-    **Counter-Narrative Measures:**
-    - Anticipated opposing narratives
+    A concise Strategic Communication Plan document.
   agent: StrategicNarrativeAndInfluenceAgent
   context:
     - curate_context_digest_task
-
+# instead of pulling seven separate blobs.
 
 curate_context_digest_task:
   description: >
-    Collate the following into a single digest ≤600 tokens:
-      – {context.analyze_event_task.core_event_details}
-      – {context.assess_signaling_and_recommend_strategic_path_task.output}
-      – {context.generate_active_pla_options_task.military_options}
-      – {context.develop_active_diplomatic_strategy_task.keystone_statement}
-      – {context.ideological_perception_task.key_frames}
-      – {context.historical_context_task.output}
-      – {context.internal_impact_narrative_task.output}
+    Collate the following into a single digest <=600 tokens:
+      - {context.analyze_event_task.core_event_details}
+      - {context.assess_signaling_and_recommend_strategic_path_task.output}
+      - {context.generate_active_pla_options_task.military_options}
+      - {context.develop_active_diplomatic_strategy_task.keystone_statement}
+      - {context.ideological_perception_task.key_frames}
+      - {context.historical_context_task.output}
+      - {context.internal_impact_narrative_task.output}
   expected_output: |
     digest: >-
       core_event_details: "Summary of event details (approx. 70 words)."
@@ -283,7 +235,6 @@ curate_context_digest_task:
         - "Key ideological frame 2."
       historical_context_summary: "Concise summary of relevant historical precedents and strategic cultural considerations."
       internal_impact_summary: "Concise summary of potential domestic public opinion impacts, social stability risks, and narrative strategies."
-  agent: ContextCuratorAgent
   context:
     - analyze_event_task
     - assess_signaling_and_recommend_strategic_path_task
@@ -292,37 +243,39 @@ curate_context_digest_task:
     - ideological_perception_task
     - historical_context_task
     - internal_impact_narrative_task
-
+  agent: ContextCuratorAgent
 
 
 format_final_response_task:
   description: >
-    Synthesize analyses into final public-facing response format, adhering to "XJP Instructions 1.md".
-
-    **Path-Specific Output Requirements:**
-    - IF "Active Posture": Include 2-3 concrete, decisive actions in past tense from PLA and diplomatic options
-    - IF "Strategic Ambiguity": Include 1-2 measured, non-committal actions that preserve flexibility
-    - IF "Calibrated Delay": Include procedural/consultative actions showing deliberate consideration
-
-    Select most realistic, impactful actions based on chosen strategic path.
-    Consult "PRC_GrayZone_Planner.md" and "XJP Instructions 1.md" for style and tone.
-
-    **CRITICAL: Do NOT include reasoning, analysis, thinking process, or internal deliberations.
-    Only provide the final formatted response as specified in the expected output.**
+    Synthesize the analyses and decisions from previous steps into the final
+    public-facing response format, strictly adhering to "XJP Instructions 1.md".
+    Consider the chosen strategic path from '{context.assess_signaling_and_recommend_strategic_path_task.output}'.
+    If the path is 'Active Posture', draw concrete actions primarily from the PLA options
+    in '{context.generate_active_pla_options_task.output}' and key diplomatic actions
+    from '{context.develop_active_diplomatic_strategy_task.output}'.
+    Select 2-3 of the most realistic, impactful, and concrete actions, ensuring they are in past tense.
+    Consult "PRC_GrayZone_Planner.md" and "XJP Instructions 1.md" for style, tone, and content.
+    The "China's Actions" should be distinct, non-overlapping, and represent tangible steps taken.
+    Do NOT include any of the thinking, logic, or reasoning behind the response.
   expected_output: >
-    **STRATEGIC PATH SELECTED:** [Active Posture/Strategic Ambiguity/Calibrated Delay]
-
-    **China's Actions:**
-    1. [Action 1, past tense, aligned with chosen path]
+    A string containing the final response formatted exactly as follows:
+    China's Actions:
+    1. [Action 1, past tense]
     2. [Action 2, past tense, if applicable]
     3. [Action 3, past tense, if applicable]
 
-    **Official Statement:**
-    [Key diplomatic statement from MFA strategy, adapted to chosen path]
-
-    **Unofficial Social Media Post (Twitter):**
-    [Max 280 characters reflecting chosen strategic approach, including good faith emphasis per XJP Instructions, with appropriate hashtags/emojis]
+    For the "Unofficial Social Media Post (Twitter)":
+        - Max 280 characters.
+        - Reflect overall situation, sentiment, and official messaging.
+        - Incorporate key diplomatic messages (e.g., calls for dialogue, statements made) from
+          '{context.develop_active_diplomatic_strategy_task.output}' and narrative themes from
+          '{context.develop_strategic_communication_plan_task.output}'.
+        - Include "good faith emphasis" as per "XJP Instructions 1.md".
+        - Use informal language, relevant hashtags/emojis.
+        - Adhere to common Chinese social media narrative styles.
   agent: ResponseSynthesizerAgent
   context:
     - curate_context_digest_task
+# instead of pulling seven separate blobs.
   output_file: output/final_response.md
