@@ -54,7 +54,7 @@ crew_brains = [
 knowledge_sources=[
                 content_source_planner,
                 content_source_instruct,
-            ]
+]
 
 # Set up long-term memory
 long_term_memory = LongTermMemory(
@@ -172,7 +172,6 @@ class May20Xjp2:
 
     @agent
     def CCPIdeologicalAnalyst(self) -> Agent:
-        print(self.agents_config['CCPIdeologicalAnalyst'])  # type: ignore[index]
         return Agent(
             config=self.agents_config['CCPIdeologicalAnalyst'],  # type: ignore[index]
             verbose=True,
@@ -254,7 +253,6 @@ class May20Xjp2:
 
     @task
     def ideological_perception_task(self) -> Task:
-        print(self.tasks_config['ideological_perception_task'])  # Debugging
         return Task(
             config=self.tasks_config['ideological_perception_task'],  # type: ignore[index]
             context=[
