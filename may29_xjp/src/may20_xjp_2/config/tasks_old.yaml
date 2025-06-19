@@ -3,17 +3,17 @@ analyze_event_task:
     Analyze foreign policy event: {input_event_description}.
     Consider the provided Aggression Level: {aggression_level} and Domain Emphasis: {domain_emphasis}.
     Detail: nature of the event, direct/indirect impact on Chinese core interests,
-    initiating entity's likely objectives/red lines, potential escalatory pathways,
+    initiating entity's likely objectives/red-lines, potential escalatory pathways,
     key sensitivities for China. Explicitly assess how this event might be
     interpreted through the lens of China's historical narratives, its current
-    ideological discourse (e.g., National Rejuvenation, struggle against hegemonism),
+    ideological discourse (e.g., "National Rejuvenation", struggle against hegemonism),
     and its potential ramifications for domestic public opinion and Party legitimacy.
   expected_output: |
-    core_event_details: < 70 words
-    risk_score: 1‑5
+    core_event_details: < 70 words
+    risk_score: 1-5
     top_red_lines:
-      - "…"
-      - "…"
+      - "..."
+      - "..."
   agent: ForeignPolicyEventAnalystAgent
 
 assess_economic_tech_impact_task:
@@ -21,8 +21,8 @@ assess_economic_tech_impact_task:
     Using {context.analyze_event_task.core_event_details}, evaluate economic &
     tech impacts. Ignore ideological angles.
   expected_output: |
-    vulnerabilities: [ "…", "…" ]
-    leverage_points:  [ "…", "…" ]
+    vulnerabilities: [ "...", "..." ]
+    leverage_points:  [ "...", "..." ]
   context:
     - analyze_event_task
   agent: EconomicAndTechImpactAnalystAgent
@@ -81,11 +81,11 @@ develop_active_strategic_postures_task:
     + {context.assess_economic_tech_impact_task.leverage_points}.
     Integrate historical precedents from {context.historical_context_task.output}
     and domestic sentiment considerations from {context.internal_impact_narrative_task.output}.
-    Through the lens of the “Holistic National Security Concept”,
+    Through the lens of the "Holistic National Security Concept",
     define **2-3 active strategic postures** for China and justify each
-    (≤ 800 words total).  Reference relevant guidance in PRC_GrayZone_Planner.md.
+    (<= 800 words total).  Reference relevant guidance in PRC_GrayZone_Planner.md.
   expected_output: >
-    Concise document (≤ 800 words) outlining 2-3 distinct active strategic
+    Concise document (<= 800 words) outlining 2-3 distinct active strategic
     postures with justifications.
   context:
     - analyze_event_task
@@ -100,8 +100,8 @@ assess_signaling_and_recommend_strategic_path_task:
     {context.develop_active_strategic_postures_task.output} plus the
     original event facts in {context.analyze_event_task.core_event_details}.
     Assess signalling implications and escalation risks, then recommend ONE
-    overarching path (‘Active Posture’, ‘Strategic Ambiguity’, or
-    ‘Calibrated Delay’) with justification.  Ask the human user to confirm
+    overarching path ('Active Posture', 'Strategic Ambiguity', or
+    'Calibrated Delay') with justification.  Ask the human user to confirm
     the choice before downstream tasks proceed.
   expected_output: >
     **Human Review Required**
@@ -134,14 +134,14 @@ assess_signaling_and_recommend_strategic_path_task:
 
 generate_active_pla_options_task:
   description: >
-    Based on {context.analyze_event_task.top_red_lines} produce ≤3 PLA options
+    Based on {context.analyze_event_task.top_red_lines} produce <=3 PLA options
     (one sentence each) that dovetail with the signalling path.
   expected_output: |
     military_options:
-      - name: "Show‑of‑Force Patrol"
-        summary: "…"
-      - name: "Precision Drill …"
-        summary: "…"
+      - name: "Show-of-Force Patrol"
+        summary: "..."
+      - name: "Precision Drill ..."
+        summary: "..."
   context:
     - analyze_event_task
     - assess_signaling_and_recommend_strategic_path_task
@@ -150,18 +150,18 @@ generate_active_pla_options_task:
 develop_active_diplomatic_strategy_task:
   description: >
     Using ONLY:
-      – {context.analyze_event_task.core_event_details}
-      – {context.assess_signaling_and_recommend_strategic_path_task.output}
-      – {context.generate_active_pla_options_task.military_options}
-      – {context.ideological_perception_task.key_frames}
-      – {context.historical_context_task.output}
-      – {context.internal_impact_narrative_task.output}
-    craft the MFA strategy (see path‑conditional instructions).
+      - {context.analyze_event_task.core_event_details}
+      - {context.assess_signaling_and_recommend_strategic_path_task.output}
+      - {context.generate_active_pla_options_task.military_options}
+      - {context.ideological_perception_task.key_frames}
+      - {context.historical_context_task.output}
+      - {context.internal_impact_narrative_task.output}
+    craft the MFA strategy (see path-conditional instructions).
   expected_output: |
     chosen_path: "Active Posture | Strategic Ambiguity | Calibrated Delay"
     keystone_statement: |
-      "Draft MFA line ( ≤200 words ) …"
-    engagement_plan: [ "actor ⇒ engagement mode", "…" ]
+      "Draft MFA line ( <=200 words ) ..."
+    engagement_plan: [ "actor -> engagement mode", "..." ]
   context:
     - analyze_event_task
     - assess_signaling_and_recommend_strategic_path_task
@@ -180,10 +180,10 @@ ideological_perception_task:
     for official messaging. Ignore all other upstream outputs.
   expected_output: |
     memo: |
-      "… concise (≤300 words) Ideological Compliance & Leverage Memo …"
+      "... concise (<=300 words) Ideological Compliance & Leverage Memo ..."
     key_frames:
-      - "…"
-      - "…"
+      - "..."
+      - "..."
   context:
     - assess_signaling_and_recommend_strategic_path_task
   agent: CCPIdeologicalAnalyst
@@ -202,26 +202,39 @@ develop_strategic_communication_plan_task:
     A concise Strategic Communication Plan document.
   agent: StrategicNarrativeAndInfluenceAgent
   context:
-    - analyze_event_task
-    - assess_signaling_and_recommend_strategic_path_task
-    - generate_active_pla_options_task
-    - develop_active_diplomatic_strategy_task
-    - ideological_perception_task
+    - curate_context_digest_task
 # instead of pulling seven separate blobs.
 
 curate_context_digest_task:
   description: >
-    Collate the following into a single digest ≤600 tokens:
-      – {context.analyze_event_task.core_event_details}
-      – {context.assess_signaling_and_recommend_strategic_path_task.output}
-      – {context.generate_active_pla_options_task.military_options}
-      – {context.develop_active_diplomatic_strategy_task.keystone_statement}
-      – {context.ideological_perception_task.key_frames}
-      – {context.historical_context_task.output}
-      – {context.internal_impact_narrative_task.output}
+    Collate the following into a single digest <=600 tokens:
+      - {context.analyze_event_task.core_event_details}
+      - {context.assess_signaling_and_recommend_strategic_path_task.output}
+      - {context.generate_active_pla_options_task.military_options}
+      - {context.develop_active_diplomatic_strategy_task.keystone_statement}
+      - {context.ideological_perception_task.key_frames}
+      - {context.historical_context_task.output}
+      - {context.internal_impact_narrative_task.output}
   expected_output: |
-    digest: |
-      "… consolidated bullet list …"
+    digest: >-
+      core_event_details: "Summary of event details (approx. 70 words)."
+      risk_score: "Calculated risk score (1-5)."
+      top_red_lines:
+        - "Red line 1"
+        - "Red line 2"
+      chosen_strategic_path: "The strategic path chosen by human input (e.g., Active Posture: Posture A, Strategic Ambiguity, Calibrated Delay)."
+      # PLA options should only be populated if 'Active Posture' was chosen. Otherwise, 'Not Applicable' or empty list.
+      pla_options:
+        - name: "Military Option 1 Name (e.g., Show-of-Force Patrol)"
+          summary: "Summary of military option 1."
+        - name: "Military Option 2 Name"
+          summary: "Summary of military option 2."
+      keystone_diplomatic_statement: "Full text of the keystone MFA diplomatic statement (approx. 200 words)."
+      ideological_key_frames:
+        - "Key ideological frame 1."
+        - "Key ideological frame 2."
+      historical_context_summary: "Concise summary of relevant historical precedents and strategic cultural considerations."
+      internal_impact_summary: "Concise summary of potential domestic public opinion impacts, social stability risks, and narrative strategies."
   context:
     - analyze_event_task
     - assess_signaling_and_recommend_strategic_path_task
