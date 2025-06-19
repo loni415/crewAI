@@ -5,8 +5,9 @@ from typing import List
 from crewai.memory import LongTermMemory, ShortTermMemory, EntityMemory
 from crewai.memory.storage.rag_storage import RAGStorage
 from pydantic import BaseModel, Field
+from crewai.knowledge.knowledge import Knowledge
+from crewai.knowledge.knowledge_config import KnowledgeConfig #change src/crewai/knowledge/knowledge_config.py
 
-from crewai.knowledge.knowledge_config import KnowledgeConfig
 from crewai.knowledge.source.crew_docling_source import CrewDoclingSource
 
 from crewai.memory.long_term.long_term_memory import LongTermMemory
@@ -39,6 +40,22 @@ content_source_instruct = CrewDoclingSource(
     ]
 )
 
+
+agent_brains = [
+    content_source_instruct,
+    content_source_planner,
+]
+
+crew_brains = [
+    content_source_instruct,
+    content_source_planner,
+]
+
+knowledge_sources=[
+                content_source_planner,
+                content_source_instruct,
+            ]
+
 # Set up long-term memory
 long_term_memory = LongTermMemory(
     storage=LTMSQLiteStorage(db_path="./long_term_memory.db")
@@ -53,7 +70,6 @@ entity_memory = EntityMemory(
 @CrewBase
 class May20Xjp2:
     """May20Xjp2 crew"""
-
     agents: List[BaseAgent]
     tasks: List[Task]
 
@@ -64,7 +80,6 @@ class May20Xjp2:
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
-            memory=True,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -76,7 +91,6 @@ class May20Xjp2:
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
-            memory=True,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -88,7 +102,6 @@ class May20Xjp2:
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
-            memory=True,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -100,7 +113,6 @@ class May20Xjp2:
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
-            memory=True,
             llm=llm,
             knowledge_sources=[
                 content_source_planner,
@@ -115,7 +127,6 @@ class May20Xjp2:
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
-            memory=True,
             llm=llm,
             knowledge_sources=[
                 content_source_planner,
@@ -130,7 +141,6 @@ class May20Xjp2:
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
-            memory=True,
             llm=llm,
             knowledge_sources=[
                 content_source_planner,
@@ -145,7 +155,6 @@ class May20Xjp2:
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
-            memory=True,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -157,7 +166,6 @@ class May20Xjp2:
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
-            memory=True,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -169,7 +177,6 @@ class May20Xjp2:
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
-            memory=True,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -181,7 +188,6 @@ class May20Xjp2:
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
-            memory=True,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -193,7 +199,6 @@ class May20Xjp2:
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
-            memory=True,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -205,7 +210,6 @@ class May20Xjp2:
             verbose=True,
             reasoning=True,
             max_reasoning_attempts=3,
-            memory=True,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -303,19 +307,13 @@ class May20Xjp2:
     @crew
     def crew(self) -> Crew:
         """Creates the May20Xjp2 crew"""
-        knowledge_config = KnowledgeConfig(results_limit=10, score_threshold=0.5)
-
         return Crew(
             agents=self.agents,
             tasks=self.tasks,
             process=Process.sequential,
             planning=True,
             planning_llm=llm,
-            knowledge_sources=[
-                content_source_planner,
-                content_source_instruct,
-            ],
-            knowledge_config=knowledge_config,
+            knowledge_sources=[content_source_planner, content_source_instruct],
             verbose=True,
             function_calling_llm=llm,
             chat_llm=llm,
