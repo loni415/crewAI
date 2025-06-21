@@ -79,7 +79,7 @@ class May20Xjp2:
             config=self.agents_config['CCPStrategicPolicyAdvisor'],  # type: ignore[index]
             verbose=True,
             reasoning=True,
-            max_reasoning_attempts=3,
+            max_reasoning_attempts=1,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -90,7 +90,7 @@ class May20Xjp2:
             config=self.agents_config['EconomicAndTechImpactAnalystAgent'],  # type: ignore[index]
             verbose=True,
             reasoning=True,
-            max_reasoning_attempts=3,
+            max_reasoning_attempts=1,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -101,7 +101,7 @@ class May20Xjp2:
             config=self.agents_config['ForeignPolicyEventAnalystAgent'],  # type: ignore[index]
             verbose=True,
             reasoning=True,
-            max_reasoning_attempts=3,
+            max_reasoning_attempts=1,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -112,7 +112,7 @@ class May20Xjp2:
             config=self.agents_config['StrategicSignalingAssessmentAgent'],  # type: ignore[index]
             verbose=True,
             reasoning=True,
-            max_reasoning_attempts=3,
+            max_reasoning_attempts=1,
             llm=llm,
             knowledge_sources=[
                 content_source_planner,
@@ -126,7 +126,7 @@ class May20Xjp2:
             config=self.agents_config['PLAOptionsStrategistAgent'],  # type: ignore[index]
             verbose=True,
             reasoning=True,
-            max_reasoning_attempts=3,
+            max_reasoning_attempts=1,
             llm=llm,
             knowledge_sources=[
                 content_source_planner,
@@ -140,7 +140,7 @@ class May20Xjp2:
             config=self.agents_config['MFADiplomaticStrategistAgent'],  # type: ignore[index]
             verbose=True,
             reasoning=True,
-            max_reasoning_attempts=3,
+            max_reasoning_attempts=1,
             llm=llm,
             knowledge_sources=[
                 content_source_planner,
@@ -154,7 +154,7 @@ class May20Xjp2:
             config=self.agents_config['StrategicNarrativeAndInfluenceAgent'],  # type: ignore[index]
             verbose=True,
             reasoning=True,
-            max_reasoning_attempts=3,
+            max_reasoning_attempts=1,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -165,7 +165,7 @@ class May20Xjp2:
             config=self.agents_config['ResponseSynthesizerAgent'],  # type: ignore[index]
             verbose=True,
             reasoning=True,
-            max_reasoning_attempts=3,
+            max_reasoning_attempts=1,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -176,7 +176,7 @@ class May20Xjp2:
             config=self.agents_config['CCPIdeologicalAnalyst'],  # type: ignore[index]
             verbose=True,
             reasoning=True,
-            max_reasoning_attempts=3,
+            max_reasoning_attempts=1,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -187,7 +187,7 @@ class May20Xjp2:
             config=self.agents_config['DomesticSentimentStabilityAnalyst'],  # type: ignore[index]
             verbose=True,
             reasoning=True,
-            max_reasoning_attempts=3,
+            max_reasoning_attempts=1,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -198,7 +198,7 @@ class May20Xjp2:
             config=self.agents_config['HistoricalPrecedentAnalyst'],  # type: ignore[index]
             verbose=True,
             reasoning=True,
-            max_reasoning_attempts=3,
+            max_reasoning_attempts=1,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )
@@ -209,7 +209,7 @@ class May20Xjp2:
             config=self.agents_config['ContextCuratorAgent'],  # type: ignore[index]
             verbose=True,
             reasoning=True,
-            max_reasoning_attempts=3,
+            max_reasoning_attempts=1,
             llm=llm,
             knowledge_sources=[content_source_planner],
         )

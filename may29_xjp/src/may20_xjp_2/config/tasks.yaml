@@ -179,11 +179,10 @@ ideological_perception_task:
     potentially non-compliant or risky language and suggest high-ground frames
     for official messaging. Ignore all other upstream outputs.
   expected_output: |
-    memo: |
-      "... concise (<=300 words) Ideological Compliance & Leverage Memo ..."
+    memo: "Concise (<=300 words) Ideological Compliance & Leverage Memo."
     key_frames:
-      - "..."
-      - "..."
+      - "Ideological frame 1"
+      - "Ideological frame 2"
   context:
     - assess_signaling_and_recommend_strategic_path_task
   agent: CCPIdeologicalAnalyst
