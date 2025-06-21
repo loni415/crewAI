@@ -178,7 +178,7 @@ ideological_perception_task:
     recommended path aligns with Party ideology and Xi Jinping Thought. Flag any
     potentially non-compliant or risky language and suggest high-ground frames
     for official messaging. Ignore all other upstream outputs.
-  expected_output: |
+  expected_output:
     memo: |
       "... concise (<=300 words) Ideological Compliance & Leverage Memo ..."
     key_frames:

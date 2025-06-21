@@ -300,36 +300,65 @@ class May20Xjp2:
     def generate_active_pla_options_task(self) -> Task:
         return Task(
             config=self.tasks_config['generate_active_pla_options_task'],  # type: ignore[index]
+            context=[
+                self.analyze_event_task(),
+                self.assess_signaling_and_recommend_strategic_path_task(),
+            ],
         )
 
     @task
     def ideological_perception_task(self) -> Task:
         return Task(
             config=self.tasks_config['ideological_perception_task'],  # type: ignore[index]
+            context=[
+                self.assess_signaling_and_recommend_strategic_path_task(),
+            ],
         )
 
     @task
     def develop_active_diplomatic_strategy_task(self) -> Task:
         return Task(
             config=self.tasks_config['develop_active_diplomatic_strategy_task'],  # type: ignore[index]
+            context=[
+                self.analyze_event_task(),
+                self.assess_signaling_and_recommend_strategic_path_task(),
+                self.generate_active_pla_options_task(),
+                self.ideological_perception_task(),
+                self.historical_context_task(),
+                self.internal_impact_narrative_task(),
+            ],
         )
 
     @task
     def curate_context_digest_task(self) -> Task:
         return Task(
             config=self.tasks_config['curate_context_digest_task'],  # type: ignore[index]
+            context=[
+                self.analyze_event_task(),
+                self.assess_signaling_and_recommend_strategic_path_task(),
+                self.generate_active_pla_options_task(),
+                self.develop_active_diplomatic_strategy_task(),
+                self.ideological_perception_task(),
+                self.historical_context_task(),
+                self.internal_impact_narrative_task(),
+            ],
         )
 
     @task
     def develop_strategic_communication_plan_task(self) -> Task:
         return Task(
             config=self.tasks_config['develop_strategic_communication_plan_task'],  # type: ignore[index]
+            context=[self.curate_context_digest_task()],
         )
 
     @task
     def format_final_response_task(self) -> Task:
         return Task(
             config=self.tasks_config['format_final_response_task'],  # type: ignore[index]
+            context=[
+                self.curate_context_digest_task(),
+                self.develop_strategic_communication_plan_task(),
+            ],
         )
 
     @crew

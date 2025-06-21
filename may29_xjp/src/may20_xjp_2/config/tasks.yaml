@@ -187,7 +187,6 @@ ideological_perception_task:
     - assess_signaling_and_recommend_strategic_path_task
   agent: CCPIdeologicalAnalyst
 
-
 develop_strategic_communication_plan_task:
   description: >
     Use the consolidated bullet list in {context.curate_context_digest_task.digest}
