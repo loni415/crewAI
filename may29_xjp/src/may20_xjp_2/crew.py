@@ -25,10 +25,8 @@ import yaml
 @CrewBase
 class May20Xjp2:
     """May20Xjp2 crew"""
-    agents: List[BaseAgent]
-    tasks: List[Task]
 
-    
+
     agents_config_path = 'config/agents.yaml'
     tasks_config_path = 'config/tasks.yaml'
 
