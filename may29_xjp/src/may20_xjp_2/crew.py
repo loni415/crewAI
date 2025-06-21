@@ -13,102 +13,14 @@ from crewai.knowledge.source.crew_docling_source import CrewDoclingSource
 from crewai.memory.long_term.long_term_memory import LongTermMemory
 from crewai.memory.storage.ltm_sqlite_storage import LTMSQLiteStorage
 
-# Initialize LLM
-llm = LLM(
-    model="ollama/mixtral:8x22b-instruct-v0.1-q2_K",
-    base_url="http://localhost:11434"
-)
-
-# Embedding configuration
-embedding_config = {
-    "provider": "ollama",
-    "config": {
-        "model": "bge-m3",
-    }
-}
-
-# Content sources
-content_source_planner = CrewDoclingSource(
-    file_paths=[
-        "PRC_GrayZone_Planner.md",
-    ]
-)
-
-content_source_instruct = CrewDoclingSource(
-    file_paths=[
-        "XJP_Instructions_1.md",
-    ]
-)
+from crewai import Agent, Crew, Process, Task, LLM
+from crewai.project import CrewBase, agent, crew, task
 
 
-agent_brains = [
-    content_source_instruct,
-    content_source_planner,
-]
+from crewai import Agent, Crew, Process, Task, LLM
+from crewai.project import CrewBase, agent, crew, task
 
-crew_brains = [
-    content_source_instruct,
-    content_source_planner,
-]
-
-knowledge_sources=[
-                content_source_planner,
-                content_source_instruct,
-]
-
-# Set up long-term memory
-long_term_memory = LongTermMemory(
-    storage=LTMSQLiteStorage(db_path="./long_term_memory.db")
-)
-
-# Set up entity memory
-entity_memory = EntityMemory(
-    storage=RAGStorage(type="entities", embedder_config=embedding_config)
-)
-
-import logging
-
-logging.basicConfig(level=logging.DEBUG)
-
-def log_agent_output(agent_func):
-    def wrapper(*args, **kwargs):
-        agent_instance = agent_func(*args, **kwargs)
-        # Try to call an available method for execution:
-        method = None
-        for m in ['call', 'run', 'execute']:
-            method = getattr(agent_instance, m, None)
-            if callable(method):
-                break
-        if method:
-            try:
-                output = method()
-                logging.debug(f"Agent '{agent_func.__name__}' output: {output}")
-            except Exception as e:
-                logging.debug(f"Agent '{agent_func.__name__}' execution error: {e}")
-        else:
-            logging.debug(f"Agent '{agent_func.__name__}' has no executable method.")
-        return agent_instance
-    return wrapper
-
-def log_task_output(task_func):
-    def wrapper(*args, **kwargs):
-        task_instance = task_func(*args, **kwargs)
-        # Try to call an available method for execution:
-        method = None
-        for m in ['execute', 'run', 'call']:
-            method = getattr(task_instance, m, None)
-            if callable(method):
-                break
-        if method:
-            try:
-                output = method()
-                logging.debug(f"Task '{task_func.__name__}' output: {output}")
-            except Exception as e:
-                logging.debug(f"Task '{task_func.__name__}' execution error: {e}")
-        else:
-            logging.debug(f"Task '{task_func.__name__}' has no executable method.")
-        return task_instance
-    return wrapper
+import yaml
 
 @CrewBase
 class May20Xjp2:
@@ -116,221 +28,122 @@ class May20Xjp2:
     agents: List[BaseAgent]
     tasks: List[Task]
 
+    
+    agents_config_path = 'config/agents.yaml'
+    tasks_config_path = 'config/tasks.yaml'
+
+    def __init__(self):
+        # Load the YAML configurations and assign as dicts
+        with open(self.agents_config_path, 'r') as f:
+            self.agents_config = yaml.safe_load(f)
+        with open(self.tasks_config_path, 'r') as f:
+            self.tasks_config = yaml.safe_load(f)
+
+        # Initialize LLM once for the crew instance
+        self.llm = LLM(
+            model="ollama/mixtral:8x22b-instruct-v0.1-q2_K",
+            base_url="http://localhost:11434"
+        )
+
     @agent
-    @log_agent_output
     def CCPStrategicPolicyAdvisor(self) -> Agent:
-        return Agent(
-            config=self.agents_config['CCPStrategicPolicyAdvisor'],  # type: ignore[index]
-            verbose=True,
-            reasoning=True,
-            max_reasoning_attempts=1,
-            llm=llm,
-            knowledge_sources=[content_source_planner],
-        )
+        return Agent(**self.agents_config['CCPStrategicPolicyAdvisor'], llm=self.llm, verbose=True)
 
     @agent
-    @log_agent_output
     def EconomicAndTechImpactAnalystAgent(self) -> Agent:
-        return Agent(
-            config=self.agents_config['EconomicAndTechImpactAnalystAgent'],  # type: ignore[index]
-            verbose=True,
-            reasoning=True,
-            max_reasoning_attempts=1,
-            llm=llm,
-            knowledge_sources=[content_source_planner],
-        )
+        return Agent(**self.agents_config['EconomicAndTechImpactAnalystAgent'], llm=self.llm, verbose=True)
 
     @agent
-    @log_agent_output
     def ForeignPolicyEventAnalystAgent(self) -> Agent:
-        return Agent(
-            config=self.agents_config['ForeignPolicyEventAnalystAgent'],  # type: ignore[index]
-            verbose=True,
-            reasoning=True,
-            max_reasoning_attempts=1,
-            llm=llm,
-            knowledge_sources=[content_source_planner],
-        )
+        return Agent(**self.agents_config['ForeignPolicyEventAnalystAgent'], llm=self.llm, verbose=True)
 
     @agent
-    @log_agent_output
     def StrategicSignalingAssessmentAgent(self) -> Agent:
-        return Agent(
-            config=self.agents_config['StrategicSignalingAssessmentAgent'],  # type: ignore[index]
-            verbose=True,
-            reasoning=True,
-            max_reasoning_attempts=1,
-            llm=llm,
-            knowledge_sources=[
-                content_source_planner,
-                content_source_instruct,
-            ],
-        )
+        return Agent(**self.agents_config['StrategicSignalingAssessmentAgent'], llm=self.llm, verbose=True)
 
     @agent
-    @log_agent_output
     def PLAOptionsStrategistAgent(self) -> Agent:
-        return Agent(
-            config=self.agents_config['PLAOptionsStrategistAgent'],  # type: ignore[index]
-            verbose=True,
-            reasoning=True,
-            max_reasoning_attempts=1,
-            llm=llm,
-            knowledge_sources=[
-                content_source_planner,
-                content_source_instruct,
-            ],
-        )
+        return Agent(**self.agents_config['PLAOptionsStrategistAgent'], llm=self.llm, verbose=True)
 
     @agent
-    @log_agent_output
     def MFADiplomaticStrategistAgent(self) -> Agent:
-        return Agent(
-            config=self.agents_config['MFADiplomaticStrategistAgent'],  # type: ignore[index]
-            verbose=True,
-            reasoning=True,
-            max_reasoning_attempts=1,
-            llm=llm,
-            knowledge_sources=[
-                content_source_planner,
-                content_source_instruct,
-            ],
-        )
+        return Agent(**self.agents_config['MFADiplomaticStrategistAgent'], llm=self.llm, verbose=True)
 
     @agent
-    @log_agent_output
     def StrategicNarrativeAndInfluenceAgent(self) -> Agent:
-        return Agent(
-            config=self.agents_config['StrategicNarrativeAndInfluenceAgent'],  # type: ignore[index]
-            verbose=True,
-            reasoning=True,
-            max_reasoning_attempts=1,
-            llm=llm,
-            knowledge_sources=[content_source_planner],
-        )
+        return Agent(**self.agents_config['StrategicNarrativeAndInfluenceAgent'], llm=self.llm, verbose=True)
 
     @agent
-    @log_agent_output
     def ResponseSynthesizerAgent(self) -> Agent:
-        return Agent(
-            config=self.agents_config['ResponseSynthesizerAgent'],  # type: ignore[index]
-            verbose=True,
-            reasoning=True,
-            max_reasoning_attempts=1,
-            llm=llm,
-            knowledge_sources=[content_source_planner],
-        )
+        return Agent(**self.agents_config['ResponseSynthesizerAgent'], llm=self.llm, verbose=True)
 
     @agent
-    @log_agent_output
     def CCPIdeologicalAnalyst(self) -> Agent:
-        return Agent(
-            config=self.agents_config['CCPIdeologicalAnalyst'],  # type: ignore[index]
-            verbose=True,
-            reasoning=True,
-            max_reasoning_attempts=1,
-            llm=llm,
-            knowledge_sources=[content_source_planner],
-        )
+        return Agent(**self.agents_config['CCPIdeologicalAnalyst'], llm=self.llm, verbose=True)
 
     @agent
-    @log_agent_output
     def DomesticSentimentStabilityAnalyst(self) -> Agent:
-        return Agent(
-            config=self.agents_config['DomesticSentimentStabilityAnalyst'],  # type: ignore[index]
-            verbose=True,
-            reasoning=True,
-            max_reasoning_attempts=1,
-            llm=llm,
-            knowledge_sources=[content_source_planner],
-        )
+        return Agent(**self.agents_config['DomesticSentimentStabilityAnalyst'], llm=self.llm, verbose=True)
 
     @agent
-    @log_agent_output
     def HistoricalPrecedentAnalyst(self) -> Agent:
-        return Agent(
-            config=self.agents_config['HistoricalPrecedentAnalyst'],  # type: ignore[index]
-            verbose=True,
-            reasoning=True,
-            max_reasoning_attempts=1,
-            llm=llm,
-            knowledge_sources=[content_source_planner],
-        )
+        return Agent(**self.agents_config['HistoricalPrecedentAnalyst'], llm=self.llm, verbose=True)
 
     @agent
-    @log_agent_output
     def ContextCuratorAgent(self) -> Agent:
-        return Agent(
-            config=self.agents_config['ContextCuratorAgent'],  # type: ignore[index]
-            verbose=True,
-            reasoning=True,
-            max_reasoning_attempts=1,
-            llm=llm,
-            knowledge_sources=[content_source_planner],
-        )
+        return Agent(**self.agents_config['ContextCuratorAgent'], llm=self.llm, verbose=True)
+
+    # --- TASK DEFINITIONS ---
+    # This explicit wiring is the robust way to ensure your crew works,
+    # bypassing any potential bugs in the framework's automatic wiring.
 
     @task
     def analyze_event_task(self) -> Task:
-        return Task(config=self.tasks_config['analyze_event_task'])  # type: ignore[index]
+        return Task(config=self.tasks_config['analyze_event_task'], agent=self.ForeignPolicyEventAnalystAgent())
 
     @task
     def assess_economic_tech_impact_task(self) -> Task:
-        return Task(config=self.tasks_config['assess_economic_tech_impact_task'])  # type: ignore[index]
+        return Task(config=self.tasks_config['assess_economic_tech_impact_task'], agent=self.EconomicAndTechImpactAnalystAgent())
 
     @task
     def historical_context_task(self) -> Task:
-        return Task(config=self.tasks_config['historical_context_task'])  # type: ignore[index]
+        return Task(config=self.tasks_config['historical_context_task'], agent=self.HistoricalPrecedentAnalyst())
 
     @task
     def internal_impact_narrative_task(self) -> Task:
-        return Task(config=self.tasks_config['internal_impact_narrative_task'])  # type: ignore[index]
+        return Task(config=self.tasks_config['internal_impact_narrative_task'], agent=self.DomesticSentimentStabilityAnalyst())
 
     @task
     def develop_active_strategic_postures_task(self) -> Task:
-        return Task(config=self.tasks_config['develop_active_strategic_postures_task'])  # type: ignore[index]
+        return Task(config=self.tasks_config['develop_active_strategic_postures_task'], agent=self.CCPStrategicPolicyAdvisor())
 
     @task
     def assess_signaling_and_recommend_strategic_path_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['assess_signaling_and_recommend_strategic_path_task'],  # type: ignore[index]
-            human_input=True,
-        )
+        return Task(config=self.tasks_config['assess_signaling_and_recommend_strategic_path_task'], agent=self.StrategicSignalingAssessmentAgent())
 
     @task
     def generate_active_pla_options_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['generate_active_pla_options_task'],  # type: ignore[index]
-        )
+        return Task(config=self.tasks_config['generate_active_pla_options_task'], agent=self.PLAOptionsStrategistAgent())
 
     @task
     def ideological_perception_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['ideological_perception_task'],  # type: ignore[index]
-        )
+        return Task(config=self.tasks_config['ideological_perception_task'], agent=self.CCPIdeologicalAnalyst())
 
     @task
     def develop_active_diplomatic_strategy_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['develop_active_diplomatic_strategy_task'],  # type: ignore[index]
-        )
+        return Task(config=self.tasks_config['develop_active_diplomatic_strategy_task'], agent=self.MFADiplomaticStrategistAgent())
 
     @task
     def curate_context_digest_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['curate_context_digest_task'],  # type: ignore[index]
-        )
+        return Task(config=self.tasks_config['curate_context_digest_task'], agent=self.ContextCuratorAgent())
 
     @task
     def develop_strategic_communication_plan_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['develop_strategic_communication_plan_task'],  # type: ignore[index]
-        )
+        return Task(config=self.tasks_config['develop_strategic_communication_plan_task'], agent=self.StrategicNarrativeAndInfluenceAgent())
 
     @task
-    def format_final_response_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['format_final_response_task'],  # type: ignore[index]
-        )
+    def format_final_response__task(self) -> Task:
+        return Task(config=self.tasks_config['format_final_response_task'], agent=self.ResponseSynthesizerAgent())
 
     @crew
     def crew(self) -> Crew:
@@ -339,17 +152,7 @@ class May20Xjp2:
             agents=self.agents,
             tasks=self.tasks,
             process=Process.sequential,
-            planning=True,
-            planning_llm=llm,
-            knowledge_sources=[content_source_planner, content_source_instruct],
             verbose=True,
-            function_calling_llm=llm,
-            chat_llm=llm,
             memory=True,
-            output_log_file="log.txt",
-            long_term_memory=long_term_memory,
-            entity_memory=entity_memory,
-            embedder=embedding_config,
-            max_rpm=10,
-            manager_llm=llm,
+            manager_llm=self.llm,
         )
