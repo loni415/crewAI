@@ -5,8 +5,8 @@ import json
 from datetime import datetime
 
 #from may29_xjp.src.may20_xjp_2.crew_alt import May20Xjp2
+from may20_xjp_2.crew import May20Xjp2
 
-from may29_xjp.src.may20_xjp_2.crew import May20Xjp2
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
 # This main file is intended to be a way for you to run your

@@ -1,34 +1,39 @@
+import os
+import yaml
+from typing import List
+from pydantic import BaseModel, Field
+
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
-from typing import List
 from crewai.memory import LongTermMemory, ShortTermMemory, EntityMemory
 from crewai.memory.storage.rag_storage import RAGStorage
-from pydantic import BaseModel, Field
+from crewai.memory.storage.ltm_sqlite_storage import LTMSQLiteStorage
 from crewai.knowledge.knowledge import Knowledge
-from crewai.knowledge.knowledge_config import KnowledgeConfig #change src/crewai/knowledge/knowledge_config.py
+from crewai.knowledge.knowledge_config import KnowledgeConfig  # change src/crewai/knowledge/knowledge_config.py
+from crewai.knowledge.source.crew_docling_source import CrewDoclingSource
+import os
+import yaml
+from typing import List
+from pydantic import BaseModel, Field
 
+from crewai import Agent, Crew, Process, Task, LLM
+from crewai.project import CrewBase, agent, crew, task
+from crewai.agents.agent_builder.base_agent import BaseAgent
+from crewai.memory import LongTermMemory, ShortTermMemory, EntityMemory
+from crewai.memory.storage.rag_storage import RAGStorage
+from crewai.memory.storage.ltm_sqlite_storage import LTMSQLiteStorage
+from crewai.knowledge.knowledge import Knowledge
+from crewai.knowledge.knowledge_config import KnowledgeConfig  # change src/crewai/knowledge/knowledge_config.py
 from crewai.knowledge.source.crew_docling_source import CrewDoclingSource
 
-from crewai.memory.long_term.long_term_memory import LongTermMemory
-from crewai.memory.storage.ltm_sqlite_storage import LTMSQLiteStorage
-
-from crewai import Agent, Crew, Process, Task, LLM
-from crewai.project import CrewBase, agent, crew, task
-
-
-from crewai import Agent, Crew, Process, Task, LLM
-from crewai.project import CrewBase, agent, crew, task
-
-import yaml
-
+_CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 @CrewBase
 class May20Xjp2:
     """May20Xjp2 crew"""
 
-
-    agents_config_path = 'config/agents.yaml'
-    tasks_config_path = 'config/tasks.yaml'
+    agents_config_path = os.path.join(_CURRENT_DIR, 'config/agents.yaml')
+    tasks_config_path = os.path.join(_CURRENT_DIR, 'config/tasks.yaml')
 
     def __init__(self):
         # Load the YAML configurations and assign as dicts
@@ -36,6 +41,13 @@ class May20Xjp2:
             self.agents_config = yaml.safe_load(f)
         with open(self.tasks_config_path, 'r') as f:
             self.tasks_config = yaml.safe_load(f)
+
+
+        # DEBUG: Check the type and content of the problematic task config
+        ipt_config = self.tasks_config.get('ideological_perception_task')
+        print(f"DEBUG: Type of ideological_perception_task config: {type(ipt_config)}")
+        print(f"DEBUG: Content of ideological_perception_task config: {ipt_config}")
+        # END DEBUG
 
         # Initialize LLM once for the crew instance
         self.llm = LLM(
@@ -125,7 +137,10 @@ class May20Xjp2:
 
     @task
     def ideological_perception_task(self) -> Task:
-        return Task(config=self.tasks_config['ideological_perception_task'], agent=self.CCPIdeologicalAnalyst())
+        task_config_to_pass = self.tasks_config['ideological_perception_task']
+        print(f"DEBUG INSIDE TASK METHOD: Type of task_config_to_pass for ideological_perception_task: {type(task_config_to_pass)}")
+        print(f"DEBUG INSIDE TASK METHOD: Content: {task_config_to_pass}")
+        return Task(config=task_config_to_pass, agent=self.CCPIdeologicalAnalyst())
 
     @task
     def develop_active_diplomatic_strategy_task(self) -> Task:
@@ -140,7 +155,7 @@ class May20Xjp2:
         return Task(config=self.tasks_config['develop_strategic_communication_plan_task'], agent=self.StrategicNarrativeAndInfluenceAgent())
 
     @task
-    def format_final_response__task(self) -> Task:
+    def format_final_response_task(self) -> Task:
         return Task(config=self.tasks_config['format_final_response_task'], agent=self.ResponseSynthesizerAgent())
 
     @crew
