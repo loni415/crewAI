@@ -229,37 +229,6 @@ develop_active_diplomatic_strategy_task:
     - internal_impact_narrative_task
   agent: MFADiplomaticStrategistAgent
 
-develop_strategic_communication_plan_task:
-  description: >
-    Using the consolidated context from {context.curate_context_digest_task.digest},
-    craft a Strategic Communication Plan that adapts messaging to the chosen strategic path:
-
-    - IF "Active Posture": Emphasize strength, resolve, and justified defensive actions
-    - IF "Strategic Ambiguity": Focus on principled positions while avoiding specific commitments
-    - IF "Calibrated Delay": Highlight deliberation, consultation, and measured consideration
-  expected_output: >
-    **STRATEGIC COMMUNICATION PLAN**
-
-    **Selected Path:** [Active Posture/Strategic Ambiguity/Calibrated Delay]
-
-    **Domestic Narratives:**
-    - Core message for Chinese audiences
-
-    **International Messaging:**
-    - Primary message for global audiences
-
-    **Media Guidance:**
-    - State media talking points
-
-    **Social Media Strategy:**
-    - Unofficial amplification themes
-
-    **Counter-Narrative Measures:**
-    - Anticipated opposing narratives
-  context:
-    - curate_context_digest_task
-  agent: StrategicNarrativeAndInfluenceAgent
-
 curate_context_digest_task:
   description: >
     Collate the following into a single digest <=600 tokens:
@@ -302,6 +271,37 @@ curate_context_digest_task:
     - internal_impact_narrative_task
   agent: ContextCuratorAgent
 
+develop_strategic_communication_plan_task:
+  description: >
+    Using the consolidated context from {context.curate_context_digest_task.digest},
+    craft a Strategic Communication Plan that adapts messaging to the chosen strategic path:
+
+    - IF "Active Posture": Emphasize strength, resolve, and justified defensive actions
+    - IF "Strategic Ambiguity": Focus on principled positions while avoiding specific commitments
+    - IF "Calibrated Delay": Highlight deliberation, consultation, and measured consideration
+  expected_output: >
+    **STRATEGIC COMMUNICATION PLAN**
+
+    **Selected Path:** [Active Posture/Strategic Ambiguity/Calibrated Delay]
+
+    **Domestic Narratives:**
+    - Core message for Chinese audiences
+
+    **International Messaging:**
+    - Primary message for global audiences
+
+    **Media Guidance:**
+    - State media talking points
+
+    **Social Media Strategy:**
+    - Unofficial amplification themes
+
+    **Counter-Narrative Measures:**
+    - Anticipated opposing narratives
+  context:
+    - curate_context_digest_task
+  agent: StrategicNarrativeAndInfluenceAgent
+
 format_final_response_task:
   description: >
     Synthesize analyses into final public-facing response format, adhering to "XJP Instructions 1.md".
@@ -331,5 +331,6 @@ format_final_response_task:
     [Max 280 characters reflecting chosen strategic approach, including good faith emphasis per XJP Instructions, with appropriate hashtags/emojis]
   context:
     - curate_context_digest_task
+    - develop_strategic_communication_plan_task
   agent: ResponseSynthesizerAgent
   output_file: output/final_response.md
