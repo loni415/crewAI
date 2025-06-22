@@ -1,5 +1,4 @@
-
-    # 22jun_xjp/src/22jun_xjp/crew.py
+# 22jun_xjp/src/22jun_xjp/crew.py
 
 import os
 import yaml
@@ -12,8 +11,8 @@ from crewai.agents.agent_builder.base_agent import BaseAgent
 _CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 @CrewBase
-class May20Xjp2:
-    """May20Xjp2 crew"""
+class Jun22Xjp:
+    """Jun22Xjp crew"""
 
     agents_config_path = os.path.join(_CURRENT_DIR, "config/agents.yaml")
     tasks_config_path = os.path.join(_CURRENT_DIR, "config/tasks.yaml")
@@ -213,7 +212,7 @@ class May20Xjp2:
 
     @crew
     def crew(self) -> Crew:
-        """Creates the May20Xjp2 crew"""
+        """Creates the Jun22Xjp crew"""
         return Crew(
             agents=self.agents,
             tasks=self.tasks,
