@@ -10,6 +10,8 @@ analyze_event_task:
     ideological discourse (e.g., National Rejuvenation, struggle against hegemonism),
     and its potential ramifications for domestic public opinion and Party legitimacy.
   expected_output: |
+    Format your response as follows:
+
     core_event_details: < 70 words
     risk_score: 1-5
     top_red_lines:
@@ -22,6 +24,8 @@ assess_economic_tech_impact_task:
     Using {context.analyze_event_task.core_event_details}, evaluate economic &
     tech impacts. Ignore ideological angles.
   expected_output: |
+    Format your response as follows:
+
     vulnerabilities: [ "...", "..." ]
     leverage_points:  [ "...", "..." ]
   context:
@@ -162,7 +166,9 @@ generate_active_pla_options_task:
 
     Reference {context.analyze_event_task.top_red_lines} to ensure options are appropriately calibrated.
   expected_output: |
-    selected_path: "[Active Posture/Strategic Ambiguity/Calibrated Delay]"
+    Based on whether selected_path is "[Active Posture/Strategic Ambiguity/Calibrated Delay]"
+    format your response as follows:
+
     military_options:
       - name: "[Option name based on selected path]"
         summary: "[Detailed summary]"
@@ -185,7 +191,9 @@ ideological_perception_task:
 
     Tailor ideological framing to support the selected path (active/ambiguous/delayed).
   expected_output: |
-    selected_path: "[Active Posture/Strategic Ambiguity/Calibrated Delay]"
+    Based on whether selected_path is selected_path is "[Active Posture/Strategic Ambiguity/Calibrated Delay]"
+    format your response as follows:
+
     memo: |
       "Concise (<=300 words) Ideological Compliance & Leverage Memo tailored to chosen path"
     key_frames:
@@ -205,7 +213,9 @@ develop_active_diplomatic_strategy_task:
     - IF "Strategic Ambiguity" was selected: Create carefully worded statements that preserve flexibility
     - IF "Calibrated Delay" was selected: Focus on procedural statements about consultations
   expected_output: |
-    chosen_path: "[Active Posture/Strategic Ambiguity/Calibrated Delay]"
+    Based on whether selected_path is selected_path is: "[Active Posture/Strategic Ambiguity/Calibrated Delay]"
+    format your response as follows:
+
     keystone_statement: |
       "Draft MFA line (<=200 words) tailored to chosen strategic path"
     engagement_plan:
@@ -262,6 +272,8 @@ curate_context_digest_task:
       - {context.historical_context_task.output}
       - {context.internal_impact_narrative_task.output}
   expected_output: |
+    Format your response as follows:
+
     digest: >-
       core_event_details: "Summary of event details (approx. 70 words)."
       risk_score: "Calculated risk score (1-5)."
