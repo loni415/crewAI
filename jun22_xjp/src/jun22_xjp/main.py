@@ -6,8 +6,6 @@ from datetime import datetime
 
 from jun22_xjp.crew import Jun22Xjp
 
-warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
-
 # This main file is intended to be a way for you to run your
 # crew locally, so refrain from adding unnecessary logic into this file.
 # Replace with inputs you want to test with, it will automatically
@@ -34,7 +32,7 @@ def run():
         print(f"Pydantic Output: {crew_output.pydantic}")
     print(f"Tasks Output: {crew_output.tasks_output}")
     print(f"Token Usage: {crew_output.token_usage}")
-
+    print(crew_output)
 
 def train():
     """Train the crew for a given number of iterations."""
