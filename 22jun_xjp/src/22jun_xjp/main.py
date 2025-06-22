@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 import sys
 import warnings
-
+import json
 from datetime import datetime
 
-from 22jun_xjp.crew import 22JunXjp
+# from may29_xjp.src.may20_xjp_2.crew_alt import May20Xjp2
+from may20_xjp_2.crew import May20Xjp2
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
@@ -13,56 +14,69 @@ warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 # Replace with inputs you want to test with, it will automatically
 # interpolate any tasks and agents information
 
+
 def run():
-    """
-    Run the crew.
-    """
+    """Run the crew."""
     inputs = {
-        'topic': 'AI LLMs',
-        'current_year': str(datetime.now().year)
+        "input_event_description": "Taiwan is caught conducting cyber espionage against PRC",
+        "current_year": str(datetime.now().year),
+        "aggression_level": "",
+        "domain_emphasis": "",
     }
-    
+
     try:
-        22JunXjp().crew().kickoff(inputs=inputs)
+        crew_output = May20Xjp2().crew().kickoff(inputs=inputs)
     except Exception as e:
         raise Exception(f"An error occurred while running the crew: {e}")
 
+    if crew_output.json_dict:
+        print(f"JSON Output: {json.dumps(crew_output.json_dict, indent=2)}")
+    if crew_output.pydantic:
+        print(f"Pydantic Output: {crew_output.pydantic}")
+    print(f"Tasks Output: {crew_output.tasks_output}")
+    print(f"Token Usage: {crew_output.token_usage}")
+
 
 def train():
-    """
-    Train the crew for a given number of iterations.
-    """
+    """Train the crew for a given number of iterations."""
     inputs = {
-        "topic": "AI LLMs",
-        'current_year': str(datetime.now().year)
+        "input_event_description": "Taiwan is caught conducting cyber espionage against PRC",
+        "current_year": str(datetime.now().year),
+        "aggression_level": "",
+        "domain_emphasis": "",
     }
-    try:
-        22JunXjp().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
 
+    try:
+        crew_output = May20Xjp2().crew().kickoff(inputs=inputs)
     except Exception as e:
-        raise Exception(f"An error occurred while training the crew: {e}")
+        raise Exception(f"An error occurred while running the crew: {e}")
+
+    if crew_output.json_dict:
+        print(f"JSON Output: {json.dumps(crew_output.json_dict, indent=2)}")
+    if crew_output.pydantic:
+        print(f"Pydantic Output: {crew_output.pydantic}")
+    print(f"Tasks Output: {crew_output.tasks_output}")
+    print(f"Token Usage: {crew_output.token_usage}")
+
 
 def replay():
-    """
-    Replay the crew execution from a specific task.
-    """
+    """Replay the crew execution from a specific task."""
     try:
-        22JunXjp().crew().replay(task_id=sys.argv[1])
-
+        May20Xjp2().crew().replay(task_id=sys.argv[1])
     except Exception as e:
         raise Exception(f"An error occurred while replaying the crew: {e}")
 
+
 def test():
-    """
-    Test the crew execution and returns the results.
-    """
+    """Test the crew execution and returns the results."""
     inputs = {
         "topic": "AI LLMs",
-        "current_year": str(datetime.now().year)
+        "current_year": str(datetime.now().year),
     }
-    
-    try:
-        22JunXjp().crew().test(n_iterations=int(sys.argv[1]), eval_llm=sys.argv[2], inputs=inputs)
 
+    try:
+        May20Xjp2().crew().test(
+            n_iterations=int(sys.argv[1]), eval_llm=sys.argv[2], inputs=inputs
+        )
     except Exception as e:
         raise Exception(f"An error occurred while testing the crew: {e}")
