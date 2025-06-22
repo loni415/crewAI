@@ -22,7 +22,7 @@ assess_economic_tech_impact_task:
     tech impacts. Ignore ideological angles.
   expected_output: |
     vulnerabilities: [ "...", "..." ]
-    leverage_points: [ "...", "..." ]
+    leverage_points:  [ "...", "..." ]
   context:
     - analyze_event_task
   agent: EconomicAndTechImpactAnalystAgent
@@ -83,9 +83,9 @@ develop_active_strategic_postures_task:
     and domestic sentiment considerations from {context.internal_impact_narrative_task.output}.
     Through the lens of the "Holistic National Security Concept",
     define **2-3 active strategic postures** for China and justify each
-    (≤ 800 words total).  Reference relevant guidance in PRC_GrayZone_Planner.md.
+    (<= 800 words total).  Reference relevant guidance in PRC_GrayZone_Planner.md.
   expected_output: >
-    Concise document (≤ 800 words) outlining 2-3 distinct active strategic
+    Concise document (<= 800 words) outlining 2-3 distinct active strategic
     postures with justifications.
   context:
     - analyze_event_task
@@ -186,7 +186,7 @@ ideological_perception_task:
   expected_output: |
     selected_path: "[Active Posture/Strategic Ambiguity/Calibrated Delay]"
     memo: |
-      "Concise (≤300 words) Ideological Compliance & Leverage Memo tailored to chosen path"
+      "Concise (<=300 words) Ideological Compliance & Leverage Memo tailored to chosen path"
     key_frames:
       - "Ideological frame 1 supporting selected strategy"
       - "Ideological frame 2 supporting selected strategy"
@@ -206,7 +206,7 @@ develop_active_diplomatic_strategy_task:
   expected_output: |
     chosen_path: "[Active Posture/Strategic Ambiguity/Calibrated Delay]"
     keystone_statement: |
-      "Draft MFA line (≤200 words) tailored to chosen strategic path"
+      "Draft MFA line (<=200 words) tailored to chosen strategic path"
     engagement_plan:
       - "Primary diplomatic channels and messaging"
     path_rationale: "How diplomatic approach aligns with chosen strategy"
@@ -252,7 +252,7 @@ develop_strategic_communication_plan_task:
 
 curate_context_digest_task:
   description: >
-    Collate the following into a single digest ≤600 tokens:
+    Collate the following into a single digest <=600 tokens:
       - {context.analyze_event_task.core_event_details}
       - {context.assess_signaling_and_recommend_strategic_path_task.output}
       - {context.generate_active_pla_options_task.military_options}
