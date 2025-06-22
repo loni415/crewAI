@@ -1,64 +1,222 @@
-from crewai import Agent, Crew, Process, Task
+import os
+import yaml
+
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
-from crewai.agents.agent_builder.base_agent import BaseAgent
-from typing import List
-# If you want to run a snippet of code before or after the crew starts,
-# you can use the @before_kickoff and @after_kickoff decorators
-# https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
+
+_CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 @CrewBase
-class 22JunXjp():
-    """22JunXjp crew"""
+class May20Xjp2:
+    """May20Xjp2 crew"""
 
-    agents: List[BaseAgent]
-    tasks: List[Task]
+    agents_config_path = os.path.join(_CURRENT_DIR, "config/agents.yaml")
+    tasks_config_path = os.path.join(_CURRENT_DIR, "config/tasks.yaml")
 
-    # Learn more about YAML configuration files here:
-    # Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
-    # Tasks: https://docs.crewai.com/concepts/tasks#yaml-configuration-recommended
-    
-    # If you would like to add tools to your agents, you can learn more about it here:
-    # https://docs.crewai.com/concepts/agents#agent-tools
+    def __init__(self) -> None:
+        with open(self.agents_config_path, "r", encoding="utf-8") as f:
+            self.agents_config = yaml.safe_load(f)
+        with open(self.tasks_config_path, "r", encoding="utf-8") as f:
+            self.tasks_config = yaml.safe_load(f)
+
+        self.llm = LLM(
+            model="ollama/mixtral:8x22b-instruct-v0.1-q2_K",
+            base_url="http://localhost:11434",
+        )
+
+    # --- AGENT DEFINITIONS ---
     @agent
-    def researcher(self) -> Agent:
+    def CCPStrategicPolicyAdvisor(self) -> Agent:
         return Agent(
-            config=self.agents_config['researcher'], # type: ignore[index]
-            verbose=True
+            **self.agents_config["CCPStrategicPolicyAdvisor"],
+            llm=self.llm,
+            verbose=True,
         )
 
     @agent
-    def reporting_analyst(self) -> Agent:
+    def EconomicAndTechImpactAnalystAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['reporting_analyst'], # type: ignore[index]
-            verbose=True
+            **self.agents_config["EconomicAndTechImpactAnalystAgent"],
+            llm=self.llm,
+            verbose=True,
         )
 
-    # To learn more about structured task outputs,
-    # task dependencies, and task callbacks, check out the documentation:
-    # https://docs.crewai.com/concepts/tasks#overview-of-a-task
+    @agent
+    def ForeignPolicyEventAnalystAgent(self) -> Agent:
+        return Agent(
+            **self.agents_config["ForeignPolicyEventAnalystAgent"],
+            llm=self.llm,
+            verbose=True,
+        )
+
+    @agent
+    def StrategicSignalingAssessmentAgent(self) -> Agent:
+        return Agent(
+            **self.agents_config["StrategicSignalingAssessmentAgent"],
+            llm=self.llm,
+            verbose=True,
+        )
+
+    @agent
+    def PLAOptionsStrategistAgent(self) -> Agent:
+        return Agent(
+            **self.agents_config["PLAOptionsStrategistAgent"],
+            llm=self.llm,
+            verbose=True,
+        )
+
+    @agent
+    def MFADiplomaticStrategistAgent(self) -> Agent:
+        return Agent(
+            **self.agents_config["MFADiplomaticStrategistAgent"],
+            llm=self.llm,
+            verbose=True,
+        )
+
+    @agent
+    def StrategicNarrativeAndInfluenceAgent(self) -> Agent:
+        return Agent(
+            **self.agents_config["StrategicNarrativeAndInfluenceAgent"],
+            llm=self.llm,
+            verbose=True,
+        )
+
+    @agent
+    def ResponseSynthesizerAgent(self) -> Agent:
+        return Agent(
+            **self.agents_config["ResponseSynthesizerAgent"],
+            llm=self.llm,
+            verbose=True,
+        )
+
+    @agent
+    def CCPIdeologicalAnalyst(self) -> Agent:
+        return Agent(
+            **self.agents_config["CCPIdeologicalAnalyst"],
+            llm=self.llm,
+            verbose=True,
+        )
+
+    @agent
+    def DomesticSentimentStabilityAnalyst(self) -> Agent:
+        return Agent(
+            **self.agents_config["DomesticSentimentStabilityAnalyst"],
+            llm=self.llm,
+            verbose=True,
+        )
+
+    @agent
+    def HistoricalPrecedentAnalyst(self) -> Agent:
+        return Agent(
+            **self.agents_config["HistoricalPrecedentAnalyst"],
+            llm=self.llm,
+            verbose=True,
+        )
+
+    @agent
+    def ContextCuratorAgent(self) -> Agent:
+        return Agent(
+            **self.agents_config["ContextCuratorAgent"],
+            llm=self.llm,
+            verbose=True,
+        )
+
+    # --- TASK DEFINITIONS ---
     @task
-    def research_task(self) -> Task:
+    def analyze_event_task(self) -> Task:
         return Task(
-            config=self.tasks_config['research_task'], # type: ignore[index]
+            config=self.tasks_config["analyze_event_task"],
+            agent=self.ForeignPolicyEventAnalystAgent(),
         )
 
     @task
-    def reporting_task(self) -> Task:
+    def assess_economic_tech_impact_task(self) -> Task:
         return Task(
-            config=self.tasks_config['reporting_task'], # type: ignore[index]
-            output_file='report.md'
+            config=self.tasks_config["assess_economic_tech_impact_task"],
+            agent=self.EconomicAndTechImpactAnalystAgent(),
+        )
+
+    @task
+    def historical_context_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["historical_context_task"],
+            agent=self.HistoricalPrecedentAnalyst(),
+        )
+
+    @task
+    def internal_impact_narrative_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["internal_impact_narrative_task"],
+            agent=self.DomesticSentimentStabilityAnalyst(),
+        )
+
+    @task
+    def develop_active_strategic_postures_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["develop_active_strategic_postures_task"],
+            agent=self.CCPStrategicPolicyAdvisor(),
+        )
+
+    @task
+    def assess_signaling_and_recommend_strategic_path_task(self) -> Task:
+        return Task(
+            config=self.tasks_config[
+                "assess_signaling_and_recommend_strategic_path_task"
+            ],
+            agent=self.StrategicSignalingAssessmentAgent(),
+        )
+
+    @task
+    def generate_active_pla_options_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["generate_active_pla_options_task"],
+            agent=self.PLAOptionsStrategistAgent(),
+        )
+
+    @task
+    def ideological_perception_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["ideological_perception_task"],
+            agent=self.CCPIdeologicalAnalyst(),
+        )
+
+    @task
+    def develop_active_diplomatic_strategy_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["develop_active_diplomatic_strategy_task"],
+            agent=self.MFADiplomaticStrategistAgent(),
+        )
+
+    @task
+    def curate_context_digest_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["curate_context_digest_task"],
+            agent=self.ContextCuratorAgent(),
+        )
+
+    @task
+    def develop_strategic_communication_plan_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["develop_strategic_communication_plan_task"],
+            agent=self.StrategicNarrativeAndInfluenceAgent(),
+        )
+
+    @task
+    def format_final_response_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["format_final_response_task"],
+            agent=self.ResponseSynthesizerAgent(),
         )
 
     @crew
     def crew(self) -> Crew:
-        """Creates the 22JunXjp crew"""
-        # To learn how to add knowledge sources to your crew, check out the documentation:
-        # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
-
+        """Creates the May20Xjp2 crew"""
         return Crew(
-            agents=self.agents, # Automatically created by the @agent decorator
-            tasks=self.tasks, # Automatically created by the @task decorator
+            agents=self.agents,
+            tasks=self.tasks,
             process=Process.sequential,
             verbose=True,
-            # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
+            memory=True,
+            manager_llm=self.llm,
         )
