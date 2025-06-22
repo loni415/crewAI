@@ -173,7 +173,6 @@ generate_active_pla_options_task:
       - name: "[Option name based on selected path]"
         summary: "[Detailed summary]"
         path_alignment: "[How this aligns with chosen strategic approach]"
-  is_conditional: true
   context:
     - analyze_event_task
     - assess_signaling_and_recommend_strategic_path_task
