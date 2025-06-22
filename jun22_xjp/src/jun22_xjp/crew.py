@@ -263,6 +263,10 @@ class Jun22Xjp:
         return Crew(
             agents=self.agents,
             tasks=self.tasks,
+            knowledge_sources=[
+                content_source_planner,
+                content_source_instruct
+            ],
             process=Process.sequential,
             verbose=True,
             memory=False,
