@@ -237,7 +237,7 @@ ResponseSynthesizerAgent:
     Final Response Formulator and Public Communicator.
   goal: >
     To synthesize the chosen strategic path, any developed PLA options,
-    and the diplomatic strategy into a into a single, coherent,
+    and the diplomatic strategy into a single, coherent,
     internally consistent, and concise final response package.
     This response must strictly adhere to the output format specified in
     the "XJP Instructions 1.md" document:
