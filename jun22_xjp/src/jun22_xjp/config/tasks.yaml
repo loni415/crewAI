@@ -1,3 +1,4 @@
+---
 analyze_event_task:
   description: >
     Analyze foreign policy event: {input_event_description}.
@@ -145,7 +146,7 @@ assess_signaling_and_recommend_strategic_path_task:
     C) Calibrated Delay
 
     Your Choice: [Human to fill: A, B, or C]
-  human_input: True
+  human_input: true
   context:
     - analyze_event_task
     - develop_active_strategic_postures_task
@@ -166,7 +167,7 @@ generate_active_pla_options_task:
       - name: "[Option name based on selected path]"
         summary: "[Detailed summary]"
         path_alignment: "[How this aligns with chosen strategic approach]"
-  is_conditional: True
+  is_conditional: true
   context:
     - analyze_event_task
     - assess_signaling_and_recommend_strategic_path_task
