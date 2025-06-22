@@ -63,132 +63,144 @@ class Jun22Xjp:
     # --- AGENT DEFINITIONS ---
     @agent
     def CCPStrategicPolicyAdvisor(self) -> Agent:
-        return Agent(
-            config=self.agents_config['CCPStrategicPolicyAdvisor'],
-            llm=llm,
-            verbose=True,
-        )
+      return Agent(
+        config=self.agents_config['CCPStrategicPolicyAdvisor'], # type: ignore[index]
+        llm=llm,
+        verbose=True,
+        max_reasoning_attempts=1,
+      )
 
     @agent
     def EconomicAndTechImpactAnalystAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['EconomicAndTechImpactAnalystAgent'],
+            config=self.agents_config['EconomicAndTechImpactAnalystAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_reasoning_attempts=1,
         )
 
     @agent
     def ForeignPolicyEventAnalystAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['ForeignPolicyEventAnalystAgent'],
+            config=self.agents_config['ForeignPolicyEventAnalystAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_reasoning_attempts=1,
         )
 
     @agent
     def StrategicSignalingAssessmentAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['StrategicSignalingAssessmentAgent'],
+            config=self.agents_config['StrategicSignalingAssessmentAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_reasoning_attempts=1,
         )
 
     @agent
     def PLAOptionsStrategistAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['PLAOptionsStrategistAgent'],
+            config=self.agents_config['PLAOptionsStrategistAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_reasoning_attempts=1,
         )
 
     @agent
     def MFADiplomaticStrategistAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['MFADiplomaticStrategistAgent'],
+            config=self.agents_config['MFADiplomaticStrategistAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_reasoning_attempts=1,
         )
 
     @agent
     def StrategicNarrativeAndInfluenceAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['StrategicNarrativeAndInfluenceAgent'],
+            config=self.agents_config['StrategicNarrativeAndInfluenceAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_reasoning_attempts=1,
         )
 
     @agent
     def ResponseSynthesizerAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['ResponseSynthesizerAgent'],
+            config=self.agents_config['ResponseSynthesizerAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_reasoning_attempts=1,
         )
     @agent
     def CCPIdeologicalAnalyst(self) -> Agent:
         return Agent(
-            config=self.agents_config['CCPIdeologicalAnalyst'],
+            config=self.agents_config['CCPIdeologicalAnalyst'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_reasoning_attempts=1,
         )
 
     @agent
     def DomesticSentimentStabilityAnalyst(self) -> Agent:
         return Agent(
-            config=self.agents_config['DomesticSentimentStabilityAnalyst'],
+            config=self.agents_config['DomesticSentimentStabilityAnalyst'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_reasoning_attempts=1,
         )
 
     @agent
     def HistoricalPrecedentAnalyst(self) -> Agent:
         return Agent(
-            config=self.agents_config['HistoricalPrecedentAnalyst'],
+            config=self.agents_config['HistoricalPrecedentAnalyst'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_reasoning_attempts=1,
         )
 
     @agent
     def ContextCuratorAgent(self) -> Agent:
         return Agent(
-            config=self.agents_config['ContextCuratorAgent'],
+            config=self.agents_config['ContextCuratorAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_reasoning_attempts=1,
         )
 
     # --- TASK DEFINITIONS ---
     @task
     def analyze_event_task(self) -> Task:
         return Task(
-            config=self.tasks_config['analyze_event_task'],
+            config=self.tasks_config['analyze_event_task'], # type: ignore[index]
             agent=self.ForeignPolicyEventAnalystAgent(),
         )
 
     @task
     def assess_economic_tech_impact_task(self) -> Task:
         return Task(
-            config=self.tasks_config['assess_economic_tech_impact_task'],
+            config=self.tasks_config['assess_economic_tech_impact_task'], # type: ignore[index]
             agent=self.EconomicAndTechImpactAnalystAgent(),
         )
 
     @task
     def historical_context_task(self) -> Task:
         return Task(
-            config=self.tasks_config['historical_context_task'],
+            config=self.tasks_config['historical_context_task'], # type: ignore[index]
             agent=self.HistoricalPrecedentAnalyst(),
         )
 
     @task
     def internal_impact_narrative_task(self) -> Task:
         return Task(
-            config=self.tasks_config['internal_impact_narrative_task'],
+            config=self.tasks_config['internal_impact_narrative_task'], # type: ignore[index]
             agent=self.DomesticSentimentStabilityAnalyst(),
         )
 
     @task
     def develop_active_strategic_postures_task(self) -> Task:
         return Task(
-            config=self.tasks_config['develop_active_strategic_postures_task'],
+            config=self.tasks_config['develop_active_strategic_postures_task'], # type: ignore[index]
             agent=self.CCPStrategicPolicyAdvisor(),
         )
 
@@ -196,49 +208,49 @@ class Jun22Xjp:
     def assess_signaling_and_recommend_strategic_path_task(self) -> Task:
         return Task(
             config=self.tasks_config[
-                'assess_signaling_and_recommend_strategic_path_task'],
+                'assess_signaling_and_recommend_strategic_path_task'], # type: ignore[index]
             agent=self.StrategicSignalingAssessmentAgent(),
         )
 
     @task
     def generate_active_pla_options_task(self) -> Task:
         return Task(
-            config=self.tasks_config['generate_active_pla_options_task'],
+            config=self.tasks_config['generate_active_pla_options_task'], # type: ignore[index]
             agent=self.PLAOptionsStrategistAgent(),
         )
 
     @task
     def ideological_perception_task(self) -> Task:
         return Task(
-            config=self.tasks_config['ideological_perception_task'],
+            config=self.tasks_config['ideological_perception_task'], # type: ignore[index]
             agent=self.CCPIdeologicalAnalyst(),
         )
 
     @task
     def develop_active_diplomatic_strategy_task(self) -> Task:
         return Task(
-            config=self.tasks_config['develop_active_diplomatic_strategy_task'],
+            config=self.tasks_config['develop_active_diplomatic_strategy_task'], # type: ignore[index]
             agent=self.MFADiplomaticStrategistAgent(),
         )
 
     @task
     def curate_context_digest_task(self) -> Task:
         return Task(
-            config=self.tasks_config['curate_context_digest_task'],
+            config=self.tasks_config['curate_context_digest_task'], # type: ignore[index]
             agent=self.ContextCuratorAgent(),
         )
 
     @task
     def develop_strategic_communication_plan_task(self) -> Task:
         return Task(
-            config=self.tasks_config['develop_strategic_communication_plan_task'],
+            config=self.tasks_config['develop_strategic_communication_plan_task'], # type: ignore[index]
             agent=self.StrategicNarrativeAndInfluenceAgent(),
         )
 
     @task
     def format_final_response_task(self) -> Task:
         return Task(
-            config=self.tasks_config['format_final_response_task'],
+            config=self.tasks_config['format_final_response_task'], # type: ignore[index]
             agent=self.ResponseSynthesizerAgent(),
         )
 
