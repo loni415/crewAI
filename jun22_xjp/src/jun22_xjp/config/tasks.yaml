@@ -55,9 +55,9 @@ historical_context_task:
   expected_output: >
     An analytical report connecting the current external action to relevant
     Chinese historical precedents, strategic culture, and potential lessons influencing decision-making
-  agent: HistoricalPrecedentAnalyst
   context:
     - analyze_event_task
+  agent: HistoricalPrecedentAnalyst
 
 internal_impact_narrative_task:
   description: >
@@ -71,11 +71,11 @@ internal_impact_narrative_task:
   expected_output: >
     A report on potential domestic public opinion impacts, social stability risks,
     and recommended internal narrative management strategies.
-  agent: DomesticSentimentStabilityAnalyst
   context:
     - analyze_event_task
     - assess_economic_tech_impact_task
     - historical_context_task
+  agent: DomesticSentimentStabilityAnalyst
 
 develop_active_strategic_postures_task:
   description: >
@@ -256,9 +256,9 @@ develop_strategic_communication_plan_task:
 
     **Counter-Narrative Measures:**
     - Anticipated opposing narratives
-  agent: StrategicNarrativeAndInfluenceAgent
   context:
     - curate_context_digest_task
+  agent: StrategicNarrativeAndInfluenceAgent
 
 curate_context_digest_task:
   description: >
@@ -292,7 +292,6 @@ curate_context_digest_task:
         - "Key ideological frame 2."
       historical_context_summary: "Concise summary of relevant historical precedents and strategic cultural considerations."
       internal_impact_summary: "Concise summary of potential domestic public opinion impacts, social stability risks, and narrative strategies."
-  agent: ContextCuratorAgent
   context:
     - analyze_event_task
     - assess_signaling_and_recommend_strategic_path_task
@@ -301,6 +300,7 @@ curate_context_digest_task:
     - ideological_perception_task
     - historical_context_task
     - internal_impact_narrative_task
+  agent: ContextCuratorAgent
 
 format_final_response_task:
   description: >
@@ -329,7 +329,7 @@ format_final_response_task:
 
     **Unofficial Social Media Post (Twitter):**
     [Max 280 characters reflecting chosen strategic approach, including good faith emphasis per XJP Instructions, with appropriate hashtags/emojis]
-  agent: ResponseSynthesizerAgent
   context:
     - curate_context_digest_task
+  agent: ResponseSynthesizerAgent
   output_file: output/final_response.md
