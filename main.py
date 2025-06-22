@@ -4,8 +4,9 @@ import warnings
 import json
 from datetime import datetime
 
-# from may29_xjp.src.may20_xjp_2.crew_alt import May20Xjp2
-from may20_xjp_2.crew import May20Xjp2
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), "jun22_xjp", "src"))
+from jun22_xjp.crew import Jun22Xjp
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
@@ -25,7 +26,7 @@ def run():
     }
 
     try:
-        crew_output = May20Xjp2().crew().kickoff(inputs=inputs)
+        crew_output = Jun22Xjp().crew().kickoff(inputs=inputs)
     except Exception as e:
         raise Exception(f"An error occurred while running the crew: {e}")
 
@@ -47,7 +48,7 @@ def train():
     }
 
     try:
-        crew_output = May20Xjp2().crew().kickoff(inputs=inputs)
+        crew_output = Jun22Xjp().crew().kickoff(inputs=inputs)
     except Exception as e:
         raise Exception(f"An error occurred while running the crew: {e}")
 
@@ -62,7 +63,7 @@ def train():
 def replay():
     """Replay the crew execution from a specific task."""
     try:
-        May20Xjp2().crew().replay(task_id=sys.argv[1])
+        Jun22Xjp().crew().replay(task_id=sys.argv[1])
     except Exception as e:
         raise Exception(f"An error occurred while replaying the crew: {e}")
 
@@ -75,7 +76,7 @@ def test():
     }
 
     try:
-        May20Xjp2().crew().test(
+        Jun22Xjp().crew().test(
             n_iterations=int(sys.argv[1]), eval_llm=sys.argv[2], inputs=inputs
         )
     except Exception as e:
