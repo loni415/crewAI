@@ -1,7 +1,7 @@
 [project]
-name = "22jun_xjp"
+name = "jun22_xjp"
 version = "0.1.0"
-description = "22jun_xjp using crewAI"
+description = "jun22_xjp using crewAI"
 authors = [{ name = "Your Name", email = "you@example.com" }]
 requires-python = ">=3.10,<3.14"
 dependencies = [
@@ -9,11 +9,11 @@ dependencies = [
 ]
 
 [project.scripts]
-22jun_xjp = "22jun_xjp.main:run"
-run_crew = "22jun_xjp.main:run"
-train = "22jun_xjp.main:train"
-replay = "22jun_xjp.main:replay"
-test = "22jun_xjp.main:test"
+jun22_xjp = "jun22_xjp.main:run"
+run_crew = "jun22_xjp.main:run"
+train = "jun22_xjp.main:train"
+replay = "jun22_xjp.main:replay"
+test = "jun22_xjp.main:test"
 
 [build-system]
 requires = ["hatchling"]

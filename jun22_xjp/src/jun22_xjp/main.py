@@ -4,7 +4,7 @@ import warnings
 import json
 from datetime import datetime
 
-from 22jun_xjp.crew import Jun22Xjp
+from jun22_xjp.crew import Jun22Xjp
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
