@@ -57,6 +57,10 @@ class Jun22Xjp:
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
 
+    agents: List[BaseAgent]
+    tasks: List[Task]
+
+
     #agents_config = 'src/jun22_xjp/config/agents.yaml'
     #tasks_config = 'src/jun22_xjp/config/tasks.yaml'
 
@@ -65,9 +69,9 @@ class Jun22Xjp:
     def CCPStrategicPolicyAdvisor(self) -> Agent:
       return Agent(
         config=self.agents_config['CCPStrategicPolicyAdvisor'], # type: ignore[index]
-        llm=llm,
         verbose=True,
         max_reasoning_attempts=1,
+        llm=llm,
       )
 
     @agent
@@ -256,7 +260,6 @@ class Jun22Xjp:
 
     @crew
     def crew(self) -> Crew:
-        """Creates the Jun22Xjp crew"""
         return Crew(
             agents=self.agents,
             tasks=self.tasks,
