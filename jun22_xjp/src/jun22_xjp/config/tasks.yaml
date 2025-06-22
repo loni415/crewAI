@@ -166,7 +166,7 @@ generate_active_pla_options_task:
 
     Reference {context.analyze_event_task.top_red_lines} to ensure options are appropriately calibrated.
   expected_output: |
-    Based on whether selected_path is "[Active Posture/Strategic Ambiguity/Calibrated Delay]"
+    Based on whether selected_path is Active Posture or Strategic Ambiguity or Calibrated Delay
     format your response as follows:
 
     military_options:
@@ -190,10 +190,10 @@ ideological_perception_task:
 
     Tailor ideological framing to support the selected path (active/ambiguous/delayed).
   expected_output: |
-    Based on whether selected_path is selected_path is "[Active Posture/Strategic Ambiguity/Calibrated Delay]"
+    Based on whether selected_path is selected_path is Active Posture or Strategic Ambiguity or Calibrated Delay]
     format your response as follows:
 
-    memo: |
+    memo:
       "Concise (<=300 words) Ideological Compliance & Leverage Memo tailored to chosen path"
     key_frames:
       - "Ideological frame 1 supporting selected strategy"
