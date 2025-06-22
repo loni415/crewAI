@@ -145,7 +145,7 @@ assess_signaling_and_recommend_strategic_path_task:
     C) Calibrated Delay
 
     Your Choice: [Human to fill: A, B, or C]
-  human_input: true
+  human_input: True
   context:
     - analyze_event_task
     - develop_active_strategic_postures_task
@@ -166,7 +166,7 @@ generate_active_pla_options_task:
       - name: "[Option name based on selected path]"
         summary: "[Detailed summary]"
         path_alignment: "[How this aligns with chosen strategic approach]"
-  is_conditional: true
+  is_conditional: True
   context:
     - analyze_event_task
     - assess_signaling_and_recommend_strategic_path_task

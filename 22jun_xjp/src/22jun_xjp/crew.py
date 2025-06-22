@@ -1,3 +1,6 @@
+
+    # 22jun_xjp/src/22jun_xjp/crew.py
+
 import os
 import yaml
 from typing import List
@@ -7,7 +10,6 @@ from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 
 _CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-
 
 @CrewBase
 class May20Xjp2:
@@ -91,7 +93,6 @@ class May20Xjp2:
             llm=self.llm,
             verbose=True,
         )
-
     @agent
     def CCPIdeologicalAnalyst(self) -> Agent:
         return Agent(
@@ -164,8 +165,7 @@ class May20Xjp2:
     def assess_signaling_and_recommend_strategic_path_task(self) -> Task:
         return Task(
             config=self.tasks_config[
-                "assess_signaling_and_recommend_strategic_path_task"
-            ],
+                "assess_signaling_and_recommend_strategic_path_task"],
             agent=self.StrategicSignalingAssessmentAgent(),
         )
 
