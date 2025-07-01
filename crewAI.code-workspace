@@ -5,6 +5,19 @@
 		}
 	],
 	"settings": {
-		"python.analysis.typeCheckingMode": "standard"
+		"cSpell.words": [
+			"CFAC",
+			"CGTN",
+			"compellent",
+			"crewai",
+			"docling",
+			"embedder",
+			"Jinping",
+			"LTMSQ",
+			"mixtral",
+			"ollama",
+			"Sino",
+			"Xinhua"
+		]
 	}
 }
