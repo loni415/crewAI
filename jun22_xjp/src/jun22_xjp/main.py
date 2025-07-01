@@ -15,7 +15,7 @@ from jun22_xjp.crew import Jun22Xjp
 def run():
     """Run the crew."""
     inputs = {
-        "input_event_description": "Taiwan is caught conducting cyber espionage against PRC",
+        "input_event_description": "Japan seizes an active chinese fishing vessel in the Senkaku Islands, within the EEZ of Japan",
         "current_year": str(datetime.now().year),
         "aggression_level": "",
         "domain_emphasis": "",

@@ -19,7 +19,7 @@ from crewai.knowledge.source.crew_docling_source import CrewDoclingSource
 
 
 llm = LLM(
-    model="ollama/mixtral:8x22b-instruct-v0.1-q2_K",
+    model="ollama/Phi-4-Reasoning 14B-fp16",
     base_url="http://localhost:11434"
 )
 
@@ -70,6 +70,7 @@ class Jun22Xjp:
       return Agent(
         config=self.agents_config['CCPStrategicPolicyAdvisor'], # type: ignore[index]
         verbose=True,
+        max_iter=2,
         max_reasoning_attempts=1,
         llm=llm,
       )
@@ -80,6 +81,7 @@ class Jun22Xjp:
             config=self.agents_config['EconomicAndTechImpactAnalystAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_iter=2,
             max_reasoning_attempts=1,
         )
 
@@ -89,6 +91,7 @@ class Jun22Xjp:
             config=self.agents_config['ForeignPolicyEventAnalystAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_iter=2,
             max_reasoning_attempts=1,
         )
 
@@ -98,6 +101,7 @@ class Jun22Xjp:
             config=self.agents_config['StrategicSignalingAssessmentAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_iter=2,
             max_reasoning_attempts=1,
         )
 
@@ -107,6 +111,7 @@ class Jun22Xjp:
             config=self.agents_config['PLAOptionsStrategistAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_iter=2,
             max_reasoning_attempts=1,
         )
 
@@ -116,6 +121,7 @@ class Jun22Xjp:
             config=self.agents_config['MFADiplomaticStrategistAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_iter=2,
             max_reasoning_attempts=1,
         )
 
@@ -125,6 +131,7 @@ class Jun22Xjp:
             config=self.agents_config['StrategicNarrativeAndInfluenceAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_iter=2,
             max_reasoning_attempts=1,
         )
 
@@ -134,6 +141,7 @@ class Jun22Xjp:
             config=self.agents_config['ResponseSynthesizerAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_iter=2,
             max_reasoning_attempts=1,
         )
     @agent
@@ -142,6 +150,7 @@ class Jun22Xjp:
             config=self.agents_config['CCPIdeologicalAnalyst'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_iter=2,
             max_reasoning_attempts=1,
         )
 
@@ -151,6 +160,7 @@ class Jun22Xjp:
             config=self.agents_config['DomesticSentimentStabilityAnalyst'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_iter=2,
             max_reasoning_attempts=1,
         )
 
@@ -160,6 +170,7 @@ class Jun22Xjp:
             config=self.agents_config['HistoricalPrecedentAnalyst'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_iter=2,
             max_reasoning_attempts=1,
         )
 
@@ -169,6 +180,7 @@ class Jun22Xjp:
             config=self.agents_config['ContextCuratorAgent'], # type: ignore[index]
             llm=llm,
             verbose=True,
+            max_iter=2,
             max_reasoning_attempts=1,
         )
 
