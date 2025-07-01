@@ -19,7 +19,7 @@ from crewai.knowledge.source.crew_docling_source import CrewDoclingSource
 
 
 llm = LLM(
-    model="ollama/Phi-4-Reasoning 14B-fp16",
+    model="ollama/phi4-reasoning:14B-plus-fp16",
     base_url="http://localhost:11434"
 )
 
