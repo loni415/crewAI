@@ -71,7 +71,9 @@ class Jun22Xjp:
         config=self.agents_config['CCPStrategicPolicyAdvisor'], # type: ignore[index]
         verbose=True,
         max_iter=2,
+        reasoning=True,
         max_reasoning_attempts=1,
+        allow_delegation=True,
         llm=llm,
       )
 
@@ -82,7 +84,9 @@ class Jun22Xjp:
             llm=llm,
             verbose=True,
             max_iter=2,
+            reasoning=True,
             max_reasoning_attempts=1,
+            allow_delegation=True,
         )
 
     @agent
@@ -92,7 +96,9 @@ class Jun22Xjp:
             llm=llm,
             verbose=True,
             max_iter=2,
+            reasoning=True,
             max_reasoning_attempts=1,
+            allow_delegation=True,
         )
 
     @agent
@@ -102,7 +108,9 @@ class Jun22Xjp:
             llm=llm,
             verbose=True,
             max_iter=2,
+            reasoning=True,
             max_reasoning_attempts=1,
+            allow_delegation=True,
         )
 
     @agent
@@ -112,7 +120,9 @@ class Jun22Xjp:
             llm=llm,
             verbose=True,
             max_iter=2,
+            reasoning=True,
             max_reasoning_attempts=1,
+            allow_delegation=True,
         )
 
     @agent
@@ -122,7 +132,9 @@ class Jun22Xjp:
             llm=llm,
             verbose=True,
             max_iter=2,
+            reasoning=True,
             max_reasoning_attempts=1,
+            allow_delegation=True,
         )
 
     @agent
@@ -132,7 +144,9 @@ class Jun22Xjp:
             llm=llm,
             verbose=True,
             max_iter=2,
+            reasoning=True,
             max_reasoning_attempts=1,
+            allow_delegation=True,
         )
 
     @agent
@@ -142,7 +156,9 @@ class Jun22Xjp:
             llm=llm,
             verbose=True,
             max_iter=2,
+            reasoning=True,
             max_reasoning_attempts=1,
+            allow_delegation=True,
         )
     @agent
     def CCPIdeologicalAnalyst(self) -> Agent:
@@ -151,7 +167,9 @@ class Jun22Xjp:
             llm=llm,
             verbose=True,
             max_iter=2,
+            reasoning=True,
             max_reasoning_attempts=1,
+            allow_delegation=True,
         )
 
     @agent
@@ -161,7 +179,9 @@ class Jun22Xjp:
             llm=llm,
             verbose=True,
             max_iter=2,
+            reasoning=True,
             max_reasoning_attempts=1,
+            allow_delegation=True,
         )
 
     @agent
@@ -171,7 +191,9 @@ class Jun22Xjp:
             llm=llm,
             verbose=True,
             max_iter=2,
+            reasoning=True,
             max_reasoning_attempts=1,
+            allow_delegation=True,
         )
 
     @agent
@@ -181,7 +203,9 @@ class Jun22Xjp:
             llm=llm,
             verbose=True,
             max_iter=2,
+            reasoning=True,
             max_reasoning_attempts=1,
+            allow_delegation=True,
         )
 
     # --- TASK DEFINITIONS ---
